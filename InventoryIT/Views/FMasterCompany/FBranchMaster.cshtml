@@ -1,0 +1,93 @@
+﻿<html>
+<head>
+	<link href="~/css/Style.css" rel="stylesheet" />
+</head>
+<body>
+	<form>
+		<div class="panel">
+			<div class="header">
+				<h4>Branch Details</h4>
+				<input type="button" id="return-to-view" value="Return to View" />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="BranchName">Branch Name:</label>
+				<input type="text" id="BranchName" class="input-large" required><br />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="address">Address:</label>
+				<input type="text" id="address" class="input-large" required><br />
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<span class="required">*</span><label for="companyShortName">Branch Short Name:</label>
+					<input type="text" id="branchShortName" class="input-small" required><br />
+				</div>
+				<div class="form-group">
+					<span class="required">*</span><label for="ownerName">Owner Name:</label>
+					<input type="text" id="ownerName" class="input-small" required><br />
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<span class="required">*</span><label for="city">City:</label>
+					<select id="city" class="input-small" required>
+						<option value="" disabled selected>Select City</option>
+						<option value="Indore">Indore</option>
+						<option value="Pune">Pune</option>
+						<option value="Dhar">Dhar</option>
+						<option value="Mumbai">Mumbai</option>
+					</select><br />
+				</div>
+				<div class="form-group">
+					<label for="state">State:</label>
+					<input type="text" id="state" class="input-small"><br />
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="email" id="email" class="input-small"><br />
+				</div>
+				<div class="form-group">
+					<label for="pinNo">PIN No:</label>
+					<input type="text" id="pinNo" class="input-small"><br />
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<label for="mobileNo">Mobile No:</label>
+					<input type="text" id="mobileNo" class="input-small"><br />
+				</div>
+				<div class="form-group">
+					<label for="phoneNo">Phone No:</label>
+					<input type="text" id="phoneNo" class="input-small"><br />
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<label for="gstNo">GST No:</label>
+					<input type="text" id="gstNo" class="input-small"><br />
+				</div>
+				<div class="form-group">
+					<label for="panNo">PAN No:</label>
+					<input type="text" id="panNo" class="input-small"><br />
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<label for="contactPerson">Contact Person:</label>
+					<input type="text" id="contactPerson" class="input-small"><br />
+				</div>
+				<div class="form-group">
+					<label for="website">Website:</label>
+					<input type="url" id="website" class="input-small"><br />
+				</div>
+			</div>
+			<div class="form-group form-group-flex">
+				<input type="button" id="Save" value="Save" />
+				<input type="button" id="Refresh" value="Refresh" />
+			</div>
+		</div>
+	</form>
+</body>
+</html>
