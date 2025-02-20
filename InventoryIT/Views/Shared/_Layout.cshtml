@@ -3,44 +3,64 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - InventoryIT</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/InventoryIT.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">InventoryIT</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"></a>
-                        </li>
+        <nav class="nav">
+            <ul class="list-unstyled">
+                <li class="nav-item">
+                    <a href="@Url.Action("Inventory", "MasterSetUp")" class="nav-link">DashBoard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">MasterSetUp</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("FCompanyMaster", "MasterSetUp")" class="dropdown-item">Company SetUp</a></li>
+                        <li><a href="@Url.Action("FBranchMaster", "MasterSetUp")" class="dropdown-item">Branch SetUp</a></li>
+                        <li><a href="@Url.Action("FinancialYear", "MasterSetUp")" class="dropdown-item">Finanacial Year</a></li>
                     </ul>
-                </div>
-            </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Purchase Mgmt</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("MasterData", "MasterSetUp")" class="dropdown-item">Master Data</a></li>
+                        <li><a href="@Url.Action("Transaction", "MasterSetUp")" class="dropdown-item">Transaction</a></li>
+                        <li><a href="@Url.Action("Reports", "MasterSetUp")" class="dropdown-item">Reports</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Client Mgmt</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("MasterData", "MasterSetUp")" class="dropdown-item">Master Data</a></li>
+                        <li><a href="@Url.Action("Transaction", "MasterSetUp")" class="dropdown-item">Transaction</a></li>
+                        <li><a href="@Url.Action("Reports", "MasterSetUp")" class="dropdown-item">Reports</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Stores", "MasterSetUp")" class="nav-link">Stores</a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("WareHouse", "MasterSetUp")" class="nav-link">WareHouse</a>
+                </li>
+            </ul>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-   @*  <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-white">
         <div class="container">
-            &copy; 2025 - InventoryIT - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            Thanks You
         </div>
-    </footer> *@
+    </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

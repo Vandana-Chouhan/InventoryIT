@@ -22,6 +22,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=FMasterCompany}/{action=FBranchMaster}/{id?}");
+    pattern: "{controller=MasterSetUp}/{action=Inventory}/{id?}");
 
 app.Run();

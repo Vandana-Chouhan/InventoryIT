@@ -37,5 +37,5 @@ public partial class MastComp
 
     public int CreatedBy { get; set; }
 
-    public DateTime DateTime { get; set; }
+    public DateTime DateTime { get; set; } = DateTime.Now;
 }

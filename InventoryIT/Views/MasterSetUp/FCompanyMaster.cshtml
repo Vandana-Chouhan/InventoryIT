@@ -1,36 +1,36 @@
 ﻿<html>
 <head>
-	<link href="~/css/Style.css" rel="stylesheet" />
+	<link href="~/css/mastersetup.css" rel="stylesheet" />
 </head>
 <body>
-	<form>
+	<form asp-action="FCompanyMaster" method="post">
 		<div class="panel">
 			<div class="header">
-				<h4>Branch Details</h4>
+				<h4>Company Details</h4>
 				<input type="button" id="return-to-view" value="Return to View" />
 			</div>
 			<div class="form-group">
-				<span class="required">*</span><label for="BranchName">Branch Name:</label>
-				<input type="text" id="BranchName" class="input-large" required><br />
+				<span class="required">*</span><label for="companyName">Company Name:</label>
+				<input type="text" id="companyName" class="input-large" name="CompanyName" required><br />
 			</div>
 			<div class="form-group">
 				<span class="required">*</span><label for="address">Address:</label>
-				<input type="text" id="address" class="input-large" required><br />
+				<input type="text" id="address" class="input-large" name="Address" required><br />
 			</div>
 			<div class="row">
 				<div class="form-group">
-					<span class="required">*</span><label for="companyShortName">Branch Short Name:</label>
-					<input type="text" id="branchShortName" class="input-small" required><br />
+					<span class="required">*</span><label for="companyShortName">Comp.Short Name:</label>
+					<input type="text" id="companyShortName" class="input-small" name="CompShortName" required><br />
 				</div>
 				<div class="form-group">
 					<span class="required">*</span><label for="ownerName">Owner Name:</label>
-					<input type="text" id="ownerName" class="input-small" required><br />
+					<input type="text" id="ownerName" class="input-small" name="OwnerName" required><br />
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group">
 					<span class="required">*</span><label for="city">City:</label>
-					<select id="city" class="input-small" required>
+					<select id="city" class="input-small" name="City" required>
 						<option value="" disabled selected>Select City</option>
 						<option value="Indore">Indore</option>
 						<option value="Pune">Pune</option>
@@ -40,47 +40,47 @@
 				</div>
 				<div class="form-group">
 					<label for="state">State:</label>
-					<input type="text" id="state" class="input-small"><br />
+					<input type="text" id="state"name="State" class="input-small"><br />
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group">
 					<label for="email">Email:</label>
-					<input type="email" id="email" class="input-small"><br />
+					<input type="email" id="email" name="Email" class="input-small"><br />
 				</div>
 				<div class="form-group">
 					<label for="pinNo">PIN No:</label>
-					<input type="text" id="pinNo" class="input-small"><br />
+					<input type="text" id="pinNo" name="PinNo" class="input-small"><br />
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group">
 					<label for="mobileNo">Mobile No:</label>
-					<input type="text" id="mobileNo" class="input-small"><br />
+					<input type="text" id="mobileNo" name="MobileNo" class="input-small"><br />
 				</div>
 				<div class="form-group">
 					<label for="phoneNo">Phone No:</label>
-					<input type="text" id="phoneNo" class="input-small"><br />
+					<input type="text" id="phoneNo" name="PhoneNo" class="input-small"><br />
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group">
 					<label for="gstNo">GST No:</label>
-					<input type="text" id="gstNo" class="input-small"><br />
+					<input type="text" id="gstNo" name="GstNo" class="input-small"><br />
 				</div>
 				<div class="form-group">
 					<label for="panNo">PAN No:</label>
-					<input type="text" id="panNo" class="input-small"><br />
+					<input type="text" id="panNo" name="PanNo" class="input-small"><br />
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group">
 					<label for="contactPerson">Contact Person:</label>
-					<input type="text" id="contactPerson" class="input-small"><br />
+					<input type="text" id="contactPerson" name="ContactPerson" class="input-small"><br />
 				</div>
 				<div class="form-group">
 					<label for="website">Website:</label>
-					<input type="url" id="website" class="input-small"><br />
+					<input type="url" id="website" name="Website" class="input-small"><br />
 				</div>
 			</div>
 			<div class="form-group form-group-flex">
@@ -91,3 +91,15 @@
 	</form>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

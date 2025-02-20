@@ -26,9 +26,10 @@
 .header {
     display: flex;
     justify-content: space-between;
-    font-size: 28px;
+    font-size: 5px;
     font-weight: bold;
     color: white;
+    height:20px;
     padding: 25px 0 30px 25px;
     background: #5c1769;
     border-bottom: 1px solid #370e3f;
@@ -41,9 +42,8 @@ label {
     text-align: left;
     font-weight: bold;
 }
-
 body {
-    background-color: mediumaquamarine;
+    background-color:lightslategray;
 }
 
 input[type="button"] {
@@ -63,6 +63,9 @@ input[type="button"] {
     margin-right: 30px;
     background-color: black;
     color: white;
+    width:120px;
+    height:30px;
+    margin-top:0px;
 }
 
 .input-small {

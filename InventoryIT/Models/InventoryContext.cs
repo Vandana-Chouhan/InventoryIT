@@ -15,9 +15,13 @@ public partial class InventoryContext : DbContext
     {
     }
 
+    public virtual DbSet<FinancialYear> FinancialYears { get; set; }
+
     public virtual DbSet<MastBranch> MastBranches { get; set; }
 
     public virtual DbSet<MastComp> MastComps { get; set; }
+
+    public virtual DbSet<UserMaster> UserMasters { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -25,6 +29,13 @@ public partial class InventoryContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<FinancialYear>(entity =>
+        {
+            entity.HasKey(e => e.FinanYearId).HasName("PK_Financial Year");
+
+            entity.ToTable("FinancialYear");
+        });
+
         modelBuilder.Entity<MastBranch>(entity =>
         {
             entity.HasKey(e => e.BranchId);
@@ -102,8 +113,8 @@ public partial class InventoryContext : DbContext
                 .HasColumnName("Contact Person");
             entity.Property(e => e.CreatedBy).HasColumnName("Created By");
             entity.Property(e => e.DateTime)
-                .HasColumnType("datetime")
-                .HasColumnName("Date Time");
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -131,6 +142,35 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Website)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<UserMaster>(entity =>
+        {
+            entity.HasKey(e => e.UserId);
+
+            entity.ToTable("UserMaster");
+
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.Password)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.PersonName)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("Person Name");
+            entity.Property(e => e.UpdationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Updation DateTime");
+            entity.Property(e => e.UserName)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("User Name");
+            entity.Property(e => e.UserType)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("User Type");
         });
 
         OnModelCreatingPartial(modelBuilder);
