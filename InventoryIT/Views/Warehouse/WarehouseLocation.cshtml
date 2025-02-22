@@ -1,0 +1,36 @@
+﻿<html>
+<head>
+	<link href="~/css/mastersetup.css" rel="stylesheet" />
+</head>
+<body>
+	<form asp-action="WarehouseLocation" method="post">
+		<div class="panel">
+			<div class="header">
+				<h4>Warehouse Location Details</h4>
+				<input type="button" id="return-to-view" value="Return to View" />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="warehouseLocationName">Warehouse Location Name:</label>
+				<input type="text" id="warehouseLocationName" class="input-small" name="warehouseLocationName" required><br />
+			</div>
+			
+			<div class="form-group form-group-flex">
+				<input type="button" id="Save" value="Save" />
+				<input type="button" id="Refresh" value="Refresh" />
+			</div>
+		</div>
+	</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

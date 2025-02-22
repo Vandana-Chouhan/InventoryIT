@@ -1,69 +1,94 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/InventoryIT.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/layout.css" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/InventoryIT.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/layout.css" />
+	<style>
+		.abc, .abc .nav-link, .abc {
+			color: white !important;
+		}</style>
+
 </head>
+
 <body>
-    <header>
-        <nav class="nav">
-            <ul class="list-unstyled">
+	<header>
+		<nav class="abc">
+            <ul class="nav">
                 <li class="nav-item">
-                    <a href="@Url.Action("Inventory", "MasterSetUp")" class="nav-link">DashBoard</a>
+                    <a href="#" class="nav-link">Dashboard</a>
                 </li>
+
                 <li class="nav-item">
                     <a href="#" class="nav-link">MasterSetUp</a>
-                    <ul class="dropdown-menu">
+                    <ul>
                         <li><a href="@Url.Action("FCompanyMaster", "MasterSetUp")" class="dropdown-item">Company SetUp</a></li>
                         <li><a href="@Url.Action("FBranchMaster", "MasterSetUp")" class="dropdown-item">Branch SetUp</a></li>
-                        <li><a href="@Url.Action("FinancialYear", "MasterSetUp")" class="dropdown-item">Finanacial Year</a></li>
+                        <li><a href="@Url.Action("FinancialYear", "MasterSetUp")" class="dropdown-item">Financial Year</a></li>
                     </ul>
                 </li>
+
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Purchase Mgmt</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="@Url.Action("MasterData", "MasterSetUp")" class="dropdown-item">Master Data</a></li>
+                    <a href="#" class="nav-link" id="purchaseMgmtLink">Purchase Mgmt</a>
+                    <ul>
+                        <li class="has-child">
+                            <a class="dropdown-item">Master Data</a>
+                            <ul class="child-menu">
+                                <li><a href="@Url.Action("ItemType", "ItemSetUp")" class="dropdown-item">Item Type</a></li>
+                                <li><a href="@Url.Action("ItemUnit", "ItemSetUp")" class="dropdown-item">Item Unit</a></li>
+                                <li><a href="@Url.Action("ItemCompany", "ItemSetUp")" class="dropdown-item">Item Company</a></li>
+                                <li><a href="@Url.Action("ItemCatagory", "ItemSetUp")" class="dropdown-item">Item Category</a></li>
+                                <li><a href="@Url.Action("ItemSubCatagory", "ItemSetUp")" class="dropdown-item">Item SubCategory</a></li>
+                            </ul>
+                        </li>
                         <li><a href="@Url.Action("Transaction", "MasterSetUp")" class="dropdown-item">Transaction</a></li>
                         <li><a href="@Url.Action("Reports", "MasterSetUp")" class="dropdown-item">Reports</a></li>
                     </ul>
                 </li>
+
                 <li class="nav-item">
                     <a href="#" class="nav-link">Client Mgmt</a>
-                    <ul class="dropdown-menu">
+                    <ul>
                         <li><a href="@Url.Action("MasterData", "MasterSetUp")" class="dropdown-item">Master Data</a></li>
                         <li><a href="@Url.Action("Transaction", "MasterSetUp")" class="dropdown-item">Transaction</a></li>
                         <li><a href="@Url.Action("Reports", "MasterSetUp")" class="dropdown-item">Reports</a></li>
                     </ul>
                 </li>
+
                 <li class="nav-item">
                     <a href="@Url.Action("Stores", "MasterSetUp")" class="nav-link">Stores</a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="@Url.Action("WareHouse", "MasterSetUp")" class="nav-link">WareHouse</a>
+                    <a href="#" class="nav-link">Warehouse</a>
+                    <ul>
+                        <li><a href="@Url.Action("WarehouseLocation", "Warehouse")" class="dropdown-item">Warehouse Location</a></li>
+                        <li><a href="@Url.Action("WarehouseArea", "Warehouse")" class="dropdown-item">Warehouse Area</a></li>
+                        <li><a href="@Url.Action("WarehouseRack", "Warehouse")" class="dropdown-item">Warehouse Rack</a></li>
+                        <li><a href="@Url.Action("WarehouseShelf", "Warehouse")" class="dropdown-item">Warehouse Shelf</a></li>
+                    </ul>
                 </li>
             </ul>
-        </nav>
-    </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+		</nav>
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+	<footer class="border-top footer text-white">
+		<div class="container">
+			Design & Developed By |<b>Aanshi Solutions</b>
+		</div>
+	</footer>
 
-    <footer class="border-top footer text-white">
-        <div class="container">
-            Thanks You
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

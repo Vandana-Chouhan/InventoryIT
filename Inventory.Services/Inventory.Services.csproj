@@ -10,4 +10,9 @@
     <Folder Include="Converter\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Inventory.Repository\Inventory.Repository.csproj" />
+    <ProjectReference Include="..\InventoryIT\InventoryIT.csproj" />
+  </ItemGroup>
+
 </Project>
