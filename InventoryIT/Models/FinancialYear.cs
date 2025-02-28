@@ -7,11 +7,17 @@ public partial class FinancialYear
 {
     public int FinanYearId { get; set; }
 
-    public DateOnly FinancialYearName { get; set; }
+    public string FinancialYearName { get; set; } = null!;
 
-    public DateOnly FinancialYearFrom { get; set; }
+    public string FinancialYearFrom { get; set; } = null!;
 
-    public DateOnly FinancialYearTo { get; set; }
+    public string FinancialYearTo { get; set; } = null!;
 
     public int CompId { get; set; }
+
+    public DateTime CreationDate { get; set; } = DateTime.Now;
+
+    public int CreatedBy { get; set; }
+
+    public virtual MastComp Comp { get; set; } = null!;
 }

@@ -129,3 +129,49 @@ button {
     margin-top: 30px;
     color: #fff;
 }
+.input-field select {
+    width: 100%;
+    height: 40px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #fff;
+    border-bottom: 2px solid #ccc;
+    appearance: none; /* Hide default dropdown arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 30px; /* Space for custom arrow */
+    cursor: pointer;
+}
+
+    .input-field select:focus {
+        border-bottom: 2px solid #fff; /* Focus border color */
+    }
+
+    .input-field select::after {
+        content: '▼'; /* Custom down arrow */
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fff;
+        font-size: 18px;
+        pointer-events: none; /* Prevent arrow click */
+    }
+
+.input-field {
+    position: relative;
+}
+
+    .input-field select option {
+        background-color: #000;
+        color: #fff;
+        padding: 10px;
+        border: none;
+    }
+
+        .input-field select option:hover {
+            background-color: #444;
+        }
+

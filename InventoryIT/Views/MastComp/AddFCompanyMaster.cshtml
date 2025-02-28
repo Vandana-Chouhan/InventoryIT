@@ -1,0 +1,117 @@
+﻿<html>
+<head>
+	<link href="~/css/mastersetup.css" rel="stylesheet" />
+	<style>
+		#city {
+			height: 30px;
+		}
+	</style>
+</head>
+<body>
+	<form asp-action="AddFCompanyMaster" method="post">
+		<table class="panel">
+			<thead class="header">
+				<tr>
+					<th>
+						<h4>Company Details</h4>
+					</th>
+					<th>
+						<input type="button" id="return-to-view" value="Return to View" />
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- First group with two fields (company name and address) -->
+				<tr class="form-group">
+					<td><span class="required">*</span><label for="companyName">Company Name:</label></td>
+					<td><input type="text" style="margin-right:10px !important" id="companyName" class="input-large" name="CompanyName" required><br /></td>
+				</tr>
+				<tr class="form-group">
+					<td><span class="required">*</span><label for="address">Address:</label></td>
+					<td><input type="text" style="margin-right:10px !important" id="address" class="input-large" name="Address" required><br /></td>
+				</tr>
+
+				<!-- Second group (Company Short Name and Owner Name) -->
+				<tr class="form-group">
+					<td><span class="required">*</span><label for="companyShortName">Comp.Short Name:</label></td>
+					<td><input type="text" id="companyShortName" class="input-small" name="CompShortName" required><br /></td>
+
+					<td><span class="required">*</span><label for="ownerName">Owner Name:</label></td>
+					<td><input type="text" id="ownerName" class="input-small" name="OwnerName" required><br /></td>
+				</tr>
+
+				<!-- Third group (City and State) -->
+				<tr class="form-group">
+					<td><span class="required">*</span><label for="city">City:</label></td>
+					<td>
+						<select id="city" class="input-small" name="City" required>
+							<option value="" disabled selected>Select City</option>
+							<option value="Indore">Indore</option>
+							<option value="Pune">Pune</option>
+							<option value="Dhar">Dhar</option>
+							<option value="Mumbai">Mumbai</option>
+						</select><br />
+					</td>
+
+					<td><label for="state">State:</label></td>
+					<td><input type="text" id="state" name="State" class="input-small"><br /></td>
+				</tr>
+
+				<!-- Fourth group (Email, Pin No, Mobile No, Phone No) -->
+				<tr class="form-group">
+					<td><label for="email">Email:</label></td>
+					<td><input type="email" id="email" name="Email" class="input-small"><br /></td>
+
+					<td><label for="pinNo">PIN No:</label></td>
+					<td><input type="text" id="pinNo" name="PinNo" class="input-small"><br /></td>
+				</tr>
+				<tr class="form-group">
+					<td><label for="mobileNo">Mobile No:</label></td>
+					<td><input type="text" id="mobileNo" name="MobileNo" class="input-small"><br /></td>
+
+					<td><label for="phoneNo">Phone No:</label></td>
+					<td><input type="text" id="phoneNo" name="PhoneNo" class="input-small"><br /></td>
+				</tr>
+
+				<!-- Fifth group (GST No, PAN No) -->
+				<tr class="form-group">
+					<td><label for="gstNo">GST No:</label></td>
+					<td><input type="text" id="gstNo" name="GstNo" class="input-small"><br /></td>
+
+					<td><label for="panNo">PAN No:</label></td>
+					<td><input type="text" id="panNo" name="PanNo" class="input-small"><br /></td>
+				</tr>
+
+				<!-- Sixth group (Contact Person and Website) -->
+				<tr class="form-group">
+					<td><label for="contactPerson">Contact Person:</label></td>
+					<td><input type="text" id="contactPerson" name="ContactPerson" class="input-small"><br /></td>
+
+					<td><label for="website">Website:</label></td>
+					<td><input type="url" id="website" name="Website" class="input-small"><br /></td>
+				</tr>
+
+				<!-- Action Buttons (Save, Refresh) -->
+				<tr>
+					<td class="form-group form-group-flex">
+						<input type="submit" id="Save" value="Save" />
+						<input type="button" id="Refresh" value="Refresh" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -19,7 +19,7 @@ public partial class UserMaster
 
     public int BranchId { get; set; }
 
-    public DateTime CreationDateTime { get; set; }
+    public DateTime CreationDateTime { get; set; } = DateTime.Now;
 
     public DateTime UpdationDateTime { get; set; }
 }

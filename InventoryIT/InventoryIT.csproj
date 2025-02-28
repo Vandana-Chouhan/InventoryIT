@@ -22,9 +22,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Inventory.Models\Inventory.Models.csproj" />
-    <ProjectReference Include="..\InventoryPortable\InventoryPortable.csproj" />
-  </ItemGroup>
-
 </Project>

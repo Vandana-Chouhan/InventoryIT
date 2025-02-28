@@ -1,13 +1,32 @@
 ﻿<html>
 <head>
 	<link href="~/css/mastersetup.css" rel="stylesheet" />
+	<style>
+		#CompId {
+			height:30px;
+		}
+
+		#city{
+			height:30px;
+		}
+	</style>
 </head>
 <body>
-	<form asp-action="FBranchMaster" method="post">
+	<form asp-action="AddFBranchMaster" method="post">
 		<div class="panel">
 			<div class="header">
 				<h4>Branch Details</h4>
 				<input type="button" id="return-to-view" value="Return to View" />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="city">Company Name:</label>
+				<select name="CompId" class="input-large" required>
+					<option value="" disabled selected>Select Company</option>
+					@foreach (var company in ViewBag.MastComps)
+					{
+						<option value="@company.Value">@company.Text</option>
+					}
+				</select>
 			</div>
 			<div class="form-group">
 				<span class="required">*</span><label for="BranchName">Branch Name:</label>
@@ -84,7 +103,7 @@
 				</div>
 			</div>
 			<div class="form-group form-group-flex">
-				<input type="button" id="Save" value="Save" />
+				<input type="submit" id="Save" value="Save" />
 				<input type="button" id="Refresh" value="Refresh" />
 			</div>
 		</div>

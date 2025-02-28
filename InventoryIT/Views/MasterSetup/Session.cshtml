@@ -1,0 +1,107 @@
+﻿@{
+	Layout = null;
+}
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Session Creation page</title>
+	<link rel="stylesheet" href="~/css/login.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+				  $(document).ready(function() {
+					  debugger;
+		// When a company is selected, update the branches dropdown
+				   $('select[name="CompId"]').on('change', function() {
+						  var selectedCompanyId = $(this).val();
+
+						  // Use AJAX to get branches based on selected company
+						  $.ajax({
+
+							  url: '@Url.Action("Session", "MasterSetup")',
+							  data: { selectedCompId: selectedCompanyId }, // Pass selected company id to controller
+							  type: 'GET',
+							  success: function(data) {
+								  // Replace the existing options in the Branch dropdown with new ones
+								  var branchDropdown = $('select[name="BranchId"]');
+								  branchDropdown.empty();  // Clear existing options
+								  branchDropdown.append('<option value="" disabled selected>Select Branch</option>');  // Add default option
+								  console.log(data);
+								  // Add new options based on the response
+								  $.each(data.filteredBranches, function(index, branch) {
+									  branchDropdown.append('<option value="' + branch.value + '">' + branch.text + '</option>');
+								  });
+								   // Update Financial Year dropdown
+								var yearDropdown = $('select[name="FinanYearId"]');
+								yearDropdown.empty();  // Clear existing options
+								yearDropdown.append('<option value="" disabled selected>Select Year</option>');  // Add default option
+
+								 // Add new options based on the response for Financial Years
+							   $.each(data.filteredYears, function(index, year) {
+								yearDropdown.append('<option value="' + year.value + '">' + year.text + '</option>');
+						  });
+							  },
+							  error: function() {
+								  alert("Error loading branches");
+							  }
+						  });
+					  });
+				  });
+	</script>
+</head>
+<body>
+	<div class="wrapper">
+		<form action="@Url.Action("Session", "MasterSetup")" method="post">
+			<!-- Ensure the form is properly opened -->
+			<h5>SELECT COMPANY/Branch </h5>
+			<select name="CompId" class="input-field" required>
+				<option value="" disabled selected>Select Company</option>
+				@foreach (var company in ViewBag.MastComps)
+				{
+					<option value="@company.Value">@company.Text</option>
+				}
+			</select>
+
+			<!-- Branch Dropdown will be populated dynamically via AJAX -->
+			<select name="BranchId" class="input-field" required>
+				<option value="" disabled selected>Select Branch</option>
+				<!-- Initially empty, will be populated by AJAX -->
+			</select>
+
+			<!-- Financial Year Dropdown -->
+			<select name="FinanYearId" class="input-field" required>
+				<option value="" disabled selected>Select Year</option>
+			</select>
+
+			<button type="submit">Continue</button>
+		</form>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

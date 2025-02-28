@@ -38,4 +38,8 @@ public partial class MastComp
     public int CreatedBy { get; set; }
 
     public DateTime DateTime { get; set; } = DateTime.Now;
+
+    public virtual ICollection<FinancialYear> FinancialYears { get; set; } = new List<FinancialYear>();
+
+    public virtual ICollection<MastBranch> MastBranches { get; set; } = new List<MastBranch>();
 }

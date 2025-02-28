@@ -2,7 +2,7 @@
 
 namespace InventoryIT.Controllers
 {
-    public class ItemSetUpController : Controller
+    public class ItemSetupController : Controller
     {
        
         public IActionResult ItemType()
