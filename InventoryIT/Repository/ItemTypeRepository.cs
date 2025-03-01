@@ -18,7 +18,7 @@ namespace InventoryIT.Repository
             return _inventoryContext.ItemTypes.ToList();
         }
         // Fetch a MastComp by its ID
-        public ItemType GetbyId(int itemid)
+        public ItemType? GetbyId(int itemid)
         {
             return _inventoryContext.ItemTypes.Find(itemid);
         }

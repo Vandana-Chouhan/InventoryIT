@@ -18,7 +18,7 @@ namespace InventoryIT.Repository
             return _inventoryContext.MastBranches.ToList();
         }
         // Fetch a MastBranch by its ID
-        public MastBranch GetbyId(int branchid)
+        public MastBranch? GetbyId(int branchid)
         {
             return _inventoryContext.MastBranches.Find(branchid);
         }

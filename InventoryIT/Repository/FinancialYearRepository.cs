@@ -16,7 +16,7 @@ namespace InventoryIT.Repository
         {
             return _inventoryContext.FinancialYears.ToList();
         }
-        public FinancialYear GetbyId(int finanid)
+        public FinancialYear? GetbyId(int finanid)
         {
             return _inventoryContext.FinancialYears.Find(finanid);
         }

@@ -11,6 +11,7 @@ builder.Services.AddScoped<IMastCompRepository, MastCompRepository>();
 builder.Services.AddScoped<IMastBranchRepository, MastBranchRepository>();
 builder.Services.AddScoped<IFinancialYearRepository, FinancialYearRepository>();
 builder.Services.AddScoped<IItemTypeRepository, ItemTypeRepository>();
+builder.Services.AddScoped<IUserMasterRepository, UserMasterRepository>();
 
 builder.Services.AddDbContext<InventoryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("connect")));

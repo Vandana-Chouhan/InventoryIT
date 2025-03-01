@@ -21,5 +21,5 @@ public partial class UserMaster
 
     public DateTime CreationDateTime { get; set; } = DateTime.Now;
 
-    public DateTime UpdationDateTime { get; set; }
+    public DateTime UpdationDateTime { get; set; } = DateTime.Now;
 }
