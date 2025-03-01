@@ -82,7 +82,7 @@ namespace InventoryIT.Controllers
                     Text = y.FinancialYearName
                 }).ToList();
 
-                return Json( new { filteredBranches = branchList, filteredYears = yearlist });
+                return Json(new { filteredBranches = branchList, filteredYears = yearlist });
             }
             // If not an AJAX request, return the page with all branches
             ViewBag.MastBranches = filteredBranches.Select(b => new SelectListItem
@@ -116,10 +116,7 @@ namespace InventoryIT.Controllers
 
             if (financialYear != null)
                 HttpContext.Session.SetString("FinancialYear", financialYear.FinancialYearName);
-
-            // Redirect to the Inventory page after form submission
             return RedirectToAction("Inventory");
         }
-
     }
 }

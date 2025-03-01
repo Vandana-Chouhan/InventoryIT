@@ -14,7 +14,6 @@ public partial class InventoryContext : DbContext
         : base(options)
     {
     }
-
     public virtual DbSet<FinancialYear> FinancialYears { get; set; }
 
     public virtual DbSet<ItemCatagory> ItemCatagories { get; set; }

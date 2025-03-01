@@ -10,11 +10,20 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IMastCompRepository, MastCompRepository>();
 builder.Services.AddScoped<IMastBranchRepository, MastBranchRepository>();
 builder.Services.AddScoped<IFinancialYearRepository, FinancialYearRepository>();
+builder.Services.AddScoped<IItemTypeRepository, ItemTypeRepository>();
 
 builder.Services.AddDbContext<InventoryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("connect")));
 
 builder.Services.AddSession();
+// Add and configure session
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); 
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+
+});
 
 var app = builder.Build();
 
