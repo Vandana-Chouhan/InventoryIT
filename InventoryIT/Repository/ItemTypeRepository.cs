@@ -8,29 +8,24 @@ namespace InventoryIT.Repository
     public class ItemTypeRepository : IItemTypeRepository
     {
         private readonly InventoryContext _inventoryContext;
-
         public ItemTypeRepository(InventoryContext inventoryContext)
         {
             _inventoryContext = inventoryContext;
         }
-
         // Fetch all MastComp records
         public IEnumerable<ItemType> GetAllItemType()
         {
             return _inventoryContext.ItemTypes.ToList();
         }
-
         // Fetch a MastComp by its ID
         public ItemType GetbyId(int itemid)
         {
             return _inventoryContext.ItemTypes.Find(itemid);
         }
-
         // Add a new MastComp to the database
         public int AddItemType(ItemType itemType)
         {
             int result = 0;
-
             if (itemType != null)
             {
                 try
@@ -49,15 +44,12 @@ namespace InventoryIT.Repository
             {
                 throw new ArgumentNullException(nameof(itemType), "The itemtype cannot be null");
             }
-
             return result;
         }
-
         // Update an existing MastComp in the database
         public int Update(ItemType itemType)
         {
             int result = -1;
-
             if (itemType != null)
             {
                 try
@@ -76,15 +68,12 @@ namespace InventoryIT.Repository
             {
                 throw new ArgumentNullException(nameof(itemType), "The itemtype cannot be null");
             }
-
             return result;
         }
-
         // Delete a MastComp by its ID
         public void Delete(int itemid)
         {
             var itemtype = _inventoryContext.ItemTypes.Find(itemid);
-
             if (itemtype != null)
             {
                 try

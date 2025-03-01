@@ -14,7 +14,6 @@ namespace InventoryIT.Controllers
             _mastBranchRepository = mastBranchRepository;
             _mastCompRepository = mastCompRepository;
         }
-
         public IActionResult AddFBranchMaster()
         {
             var companies = _mastCompRepository.GetAllMastcomp();
@@ -23,23 +22,18 @@ namespace InventoryIT.Controllers
                 Value = c.CompId.ToString(),
                 Text = c.CompanyName
             });
-
             return View();
         }
         [HttpPost]
         public IActionResult AddFBranchMaster(MastBranch mastBranch)
         {
-
             int result = _mastBranchRepository.AddFBranchMaster(mastBranch);
-
             if (result > 0)
             {
-
                 return RedirectToAction("Inventory", "MasterSetup");
             }
             else
             {
-
                 TempData["Failed"] = "Failed to add the Branch master.";
                 return RedirectToAction("AddFBranchMaster");
             }

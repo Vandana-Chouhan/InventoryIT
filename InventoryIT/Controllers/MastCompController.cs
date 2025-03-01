@@ -19,9 +19,7 @@ namespace InventoryIT.Controllers
         [HttpPost]
         public IActionResult AddFCompanyMaster(MastComp mastComp)
         {
-
             int result = _mastCompRepository.AddFCompanyMaster(mastComp);
-
             if (result > 0)
             {
                 return RedirectToAction("Inventory", "MasterSetup");

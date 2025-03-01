@@ -7,7 +7,6 @@ namespace InventoryIT.Controllers
 {
     public class MasterSetupController : Controller
     {
-
         private readonly IMastBranchRepository _mastBranchRepository;
         private readonly IMastCompRepository _mastCompRepository;
         private readonly IFinancialYearRepository _financialYearRepository;
@@ -48,7 +47,6 @@ namespace InventoryIT.Controllers
                     Value = b.BranchId.ToString(),
                     Text = b.BranchName
                 });
-
                 // Get all financial years
                 var years = _financialYearRepository.GetAllFinancialYear();
                 ViewBag.FinancialYears = years.Select(y => new SelectListItem
@@ -58,7 +56,6 @@ namespace InventoryIT.Controllers
                 });
                 return View();
             }
-
             // If a company is selected, filter branches by the company
             var filteredBranches = _mastBranchRepository
                 .GetAllMastBranch()
@@ -75,13 +72,11 @@ namespace InventoryIT.Controllers
                     Value = b.BranchId.ToString(),
                     Text = b.BranchName
                 }).ToList();
-
                 var yearlist = filteredYears.Select(y => new
                 {
                     Value = y.FinanYearId.ToString(),
                     Text = y.FinancialYearName
                 }).ToList();
-
                 return Json(new { filteredBranches = branchList, filteredYears = yearlist });
             }
             // If not an AJAX request, return the page with all branches
@@ -96,7 +91,6 @@ namespace InventoryIT.Controllers
                 Value = y.FinanYearId.ToString(),
                 Text = y.FinancialYearName
             });
-
             return View();
         }
         [HttpPost]
@@ -106,14 +100,11 @@ namespace InventoryIT.Controllers
             var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompId == CompId);
             var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchId == BranchId);
             var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinanYearId == FinanYearId);
-
             // Store selected values in session
             if (company != null)
                 HttpContext.Session.SetString("CompanyName", company.CompanyName);
-
             if (branch != null)
                 HttpContext.Session.SetString("BranchName", branch.BranchName);
-
             if (financialYear != null)
                 HttpContext.Session.SetString("FinancialYear", financialYear.FinancialYearName);
             return RedirectToAction("Inventory");

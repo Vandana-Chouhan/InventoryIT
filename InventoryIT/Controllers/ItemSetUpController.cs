@@ -4,7 +4,6 @@ namespace InventoryIT.Controllers
 {
     public class ItemSetupController : Controller
     {
-       
         public IActionResult ItemType()
         {
             return View();

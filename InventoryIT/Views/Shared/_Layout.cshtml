@@ -21,7 +21,6 @@
                     <img src = "~/images/power.png"  rel= " stylesheet" />
                 </li> *@
 				<li class="nav-item">
-
 					<a href="@Url.Action("Inventory", "MasterSetup")" class="nav-link">Dashboard</a>
 				</li>
 				<li class="nav-item">
@@ -45,7 +44,6 @@
 								<li><a href="@Url.Action("ItemSubCatagory", "ItemSetup")" class="dropdown-item">Item SubCategory</a></li>
 							</ul>
 						</li>
-
 						<li class="has-child">
 							<a class="dropdown-item">Transactions</a>
 							<ul class="child-menu">
@@ -73,10 +71,8 @@
 								<li><a href="@Url.Action("ItemSubCatagory", "ItemSetup")" class="dropdown-item">Supplier Wise Item Register</a></li>
 							</ul>
 						</li>
-
 					</ul>
 				</li>
-
 				<li class="nav-item">
 					<a href="#" class="nav-link">Client Mgmt</a>
 					<ul>
@@ -102,11 +98,9 @@
 						</li>
 					</ul>
 				</li>
-
 				<li class="nav-item">
 					<a href=" @Url.Action("Inventory", "MasterSetup")" class="nav-link">Stores</a>
 				</li>
-
 				<li class="nav-item">
 					<a href="#" class="nav-link">Warehouse</a>
 					<ul>
@@ -123,7 +117,6 @@
 			@Context.Session.GetString("CompanyName")/
 			@Context.Session.GetString("BranchName")/
 			@Context.Session.GetString("FinancialYear")
-
 		</h5>
 	</header>
 	<div class="container">
@@ -136,7 +129,6 @@
 			Design & Developed By |<b>Aanshi Solutions</b>
 		</div>
 	</footer>
-
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>

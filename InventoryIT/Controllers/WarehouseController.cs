@@ -4,7 +4,6 @@ namespace InventoryIT.Controllers
 {
     public class WarehouseController : Controller
     {
-        
         public IActionResult WarehouseLocation()
         {
             return View();

@@ -8,29 +8,24 @@ namespace InventoryIT.Repository
     public class MastCompRepository : IMastCompRepository
     {
         private readonly InventoryContext _inventoryContext;
-
         public MastCompRepository(InventoryContext inventoryContext)
         {
             _inventoryContext = inventoryContext;
         }
-
         // Fetch all MastComp records
         public IEnumerable<MastComp> GetAllMastcomp()
         {
             return _inventoryContext.MastComps.ToList();
         }
-
         // Fetch a MastComp by its ID
         public MastComp GetbyId(int compid)
         {
             return _inventoryContext.MastComps.Find(compid);
         }
-
         // Add a new MastComp to the database
         public int AddFCompanyMaster(MastComp mastComp)
         {
             int result = 0;
-
             if (mastComp != null)
             {
                 try
@@ -49,15 +44,12 @@ namespace InventoryIT.Repository
             {
                 throw new ArgumentNullException(nameof(mastComp), "The mastComp cannot be null");
             }
-
             return result;
         }
-
         // Update an existing MastComp in the database
         public int Update(MastComp mastComp)
         {
             int result = -1;
-
             if (mastComp != null)
             {
                 try
@@ -76,15 +68,12 @@ namespace InventoryIT.Repository
             {
                 throw new ArgumentNullException(nameof(mastComp), "The mastComp cannot be null");
             }
-
             return result;
         }
-
         // Delete a MastComp by its ID
         public void Delete(int compid)
         {
             var mastComp = _inventoryContext.MastComps.Find(compid);
-
             if (mastComp != null)
             {
                 try

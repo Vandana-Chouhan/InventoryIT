@@ -8,17 +8,14 @@ namespace InventoryIT.Repository
     public class FinancialYearRepository : IFinancialYearRepository
     {
         private readonly InventoryContext _inventoryContext;
-
         public FinancialYearRepository(InventoryContext inventoryContext)
         {
             _inventoryContext = inventoryContext;
         }
-
         public IEnumerable<FinancialYear> GetAllFinancialYear()
         {
             return _inventoryContext.FinancialYears.ToList();
         }
-
         public FinancialYear GetbyId(int finanid)
         {
             return _inventoryContext.FinancialYears.Find(finanid);
@@ -26,7 +23,6 @@ namespace InventoryIT.Repository
         public int AddFinancialYear(FinancialYear financialYear)
         {
             int result = 0;
-
             if (financialYear != null)
             {
                 try
@@ -37,7 +33,6 @@ namespace InventoryIT.Repository
                 }
                 catch (Exception ex)
                 {
-
                     throw new Exception("Error adding Financial Year", ex);
                 }
             }
@@ -45,13 +40,11 @@ namespace InventoryIT.Repository
             {
                 throw new ArgumentNullException(nameof(financialYear), "The Financial Year cannot be null");
             }
-
             return result;
         }
         public int Update(FinancialYear financialYear)
         {
             int result = -1;
-
             if (financialYear != null)
             {
                 try
@@ -62,7 +55,6 @@ namespace InventoryIT.Repository
                 }
                 catch (Exception ex)
                 {
-
                     throw new Exception("Error updating Financial Year", ex);
                 }
             }
@@ -70,14 +62,11 @@ namespace InventoryIT.Repository
             {
                 throw new ArgumentNullException(nameof(financialYear), "The Financial  Year cannot be null");
             }
-
             return result;
         }
-
         public void Delete(int finanid)
         {
             var year = _inventoryContext.FinancialYears.Find(finanid);
-
             if (year != null)
             {
                 try
@@ -87,7 +76,6 @@ namespace InventoryIT.Repository
                 }
                 catch (Exception ex)
                 {
-
                     throw new Exception("Error deleting Financial year details", ex);
                 }
             }

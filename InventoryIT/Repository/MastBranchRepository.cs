@@ -8,29 +8,24 @@ namespace InventoryIT.Repository
     public class MastBranchRepository : IMastBranchRepository
     {
         private readonly InventoryContext _inventoryContext;
-
         public MastBranchRepository(InventoryContext inventoryContext)
         {
             _inventoryContext = inventoryContext;
         }
-
         // Fetch all MastBranch records
         public IEnumerable<MastBranch> GetAllMastBranch()
         {
             return _inventoryContext.MastBranches.ToList();
         }
-
         // Fetch a MastBranch by its ID
         public MastBranch GetbyId(int branchid)
         {
             return _inventoryContext.MastBranches.Find(branchid);
         }
-
         // Add a new mastbranch to the database
         public int AddFBranchMaster(MastBranch mastBranch)
         {
             int result = 0;
-
             if (mastBranch != null)
             {
                 try
@@ -49,15 +44,12 @@ namespace InventoryIT.Repository
             {
                 throw new ArgumentNullException(nameof(mastBranch), "The mastBranch cannot be null");
             }
-
             return result;
         }
-
         // Update an existing MastComp in the database
         public int Update(MastBranch mastBranch)
         {
             int result = -1;
-
             if (mastBranch != null)
             {
                 try
@@ -76,15 +68,12 @@ namespace InventoryIT.Repository
             {
                 throw new ArgumentNullException(nameof(mastBranch), "The mastBranch cannot be null");
             }
-
             return result;
         }
-
         // Delete a MastComp by its ID
         public void Delete(int branchid)
         {
             var mastBranch = _inventoryContext.MastComps.Find(branchid);
-
             if (mastBranch != null)
             {
                 try
