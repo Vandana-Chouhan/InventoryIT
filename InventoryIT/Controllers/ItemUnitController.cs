@@ -1,31 +1,30 @@
-﻿using System.Diagnostics;
-using InventoryIT.Models;
+﻿using InventoryIT.Models;
 using InventoryIT.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryIT.Controllers
 {
-    public class ItemTypeController : Controller
+    public class ItemUnitController : Controller
     {
-        private readonly IItemTypeRepository _typeRepository;
+        private readonly IItemUnitRepository _itemUnitRepository;
         private readonly IMastBranchRepository _mastBranchRepository;
         private readonly IMastCompRepository _mastCompRepository;
         private readonly IFinancialYearRepository _financialYearRepository;
         private readonly IUserMasterRepository _userMasterRepository;
-        public ItemTypeController(IItemTypeRepository typeRepository, IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository, IFinancialYearRepository financialYearRepository, IUserMasterRepository userMasterRepository)
+        public ItemUnitController(IItemUnitRepository itemUnitRepository, IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository, IFinancialYearRepository financialYearRepository, IUserMasterRepository userMasterRepository)
         {
-            _typeRepository = typeRepository;
+            _itemUnitRepository = itemUnitRepository;
             _mastBranchRepository = mastBranchRepository;
             _mastCompRepository = mastCompRepository;
             _financialYearRepository = financialYearRepository;
             _userMasterRepository = userMasterRepository;
         }
-        public ActionResult AddItemType()
+        public ActionResult AddItemUnit()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult AddItemType(ItemType itemType)
+        public ActionResult AddItemUnit(ItemUnit itemUnit)
         {
             // Retrieve session values as strings
             string? compName = HttpContext.Session.GetString("CompanyName");
@@ -35,7 +34,7 @@ namespace InventoryIT.Controllers
             int? userId = HttpContext.Session.GetInt32("UserId");
 
             // Check if session data exists, otherwise redirect to error page
-            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName)|| userId==null)
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName) || userId == null)
             {
                 return RedirectToAction("ErrorPage");
             }
@@ -45,23 +44,23 @@ namespace InventoryIT.Controllers
             var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
             if (company != null && branch != null && financialYear != null)
             {
-                itemType.CompId = company.CompId;
-                itemType.BranchId = branch.BranchId;
-                itemType.FinancialYearId = financialYear.FinanYearId;
-                itemType.CreatedBy = userId.Value; 
+                itemUnit.CompId = company.CompId;
+                itemUnit.BranchId = branch.BranchId;
+                itemUnit.FinanYearId = financialYear.FinanYearId;
+                itemUnit.CreatedBy = userId.Value;
 
             }
-            // Create a new ItemType object using the data
-            var item = new ItemType
+            // Create a new ItemUnit object using the data
+            var item = new ItemUnit
             {
-                ItemName = itemType.ItemName,
-                CompId = itemType.CompId,
-                BranchId = itemType.BranchId,
-                FinancialYearId = itemType.FinancialYearId,
-                CreatedBy = itemType.CreatedBy
+                ItemUnitName = itemUnit.ItemUnitName,
+                CompId = itemUnit.CompId,
+                BranchId = itemUnit.BranchId,
+                FinanYearId = itemUnit.FinanYearId,
+                CreatedBy = itemUnit.CreatedBy
             };
-            // Save the itemType to the database
-            _typeRepository.AddItemType(item);
+            // Save the itemUnit to the database
+            _itemUnitRepository.AddItemUnit(item);
             // Redirect to another page or show a success message
             return RedirectToAction("Inventory", "MasterSetup");
         }

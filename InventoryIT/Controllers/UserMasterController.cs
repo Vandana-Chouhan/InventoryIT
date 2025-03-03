@@ -11,16 +11,15 @@ namespace InventoryIT.Controllers
         {
             _userMasterRepository = userMasterRepository;
         }
-
         public ActionResult AddUserMaster()
         {
             return View();
         }
         [HttpPost]
-        public  ActionResult AddUserMaster(UserMaster userMaster)
+        public ActionResult AddUserMaster(UserMaster userMaster)
         {
             _userMasterRepository.AddUserMaster(userMaster);
-            return RedirectToAction("Inventory","MasterSetup");
+            return RedirectToAction("Inventory", "MasterSetup");
         }
     }
 }

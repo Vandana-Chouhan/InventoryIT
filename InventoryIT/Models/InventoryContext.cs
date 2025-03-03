@@ -14,6 +14,7 @@ public partial class InventoryContext : DbContext
         : base(options)
     {
     }
+
     public virtual DbSet<FinancialYear> FinancialYears { get; set; }
 
     public virtual DbSet<ItemCatagory> ItemCatagories { get; set; }
@@ -28,7 +29,13 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<MastBranch> MastBranches { get; set; }
 
+    public virtual DbSet<MastCity> MastCities { get; set; }
+
     public virtual DbSet<MastComp> MastComps { get; set; }
+
+    public virtual DbSet<MastCountry> MastCountries { get; set; }
+
+    public virtual DbSet<MastState> MastStates { get; set; }
 
     public virtual DbSet<UserMaster> UserMasters { get; set; }
 
@@ -209,6 +216,34 @@ public partial class InventoryContext : DbContext
                 .HasConstraintName("fk_CompId");
         });
 
+        modelBuilder.Entity<MastCity>(entity =>
+        {
+            entity.HasKey(e => e.CityId);
+
+            entity.ToTable("Mast_City");
+
+            entity.Property(e => e.CityName)
+                .HasMaxLength(150)
+                .IsUnicode(false)
+                .HasColumnName("City Name");
+            entity.Property(e => e.CityShortName)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("City Short Name");
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDatetime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation Datetime");
+            entity.Property(e => e.PinCode)
+                .HasMaxLength(10)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.State).WithMany(p => p.MastCities)
+                .HasForeignKey(d => d.StateId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Mast_City_StateId");
+        });
+
         modelBuilder.Entity<MastComp>(entity =>
         {
             entity.HasKey(e => e.CompId);
@@ -261,6 +296,51 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Website)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<MastCountry>(entity =>
+        {
+            entity.HasKey(e => e.CountryId);
+
+            entity.ToTable("Mast_Country");
+
+            entity.Property(e => e.CountryName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Country Name");
+            entity.Property(e => e.CountryShortName)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("Country Short Name");
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+        });
+
+        modelBuilder.Entity<MastState>(entity =>
+        {
+            entity.HasKey(e => e.StateId);
+
+            entity.ToTable("Mast_State");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDatetime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation Datetime");
+            entity.Property(e => e.StateName)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("State Name");
+            entity.Property(e => e.StateShortName)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("State Short Name");
+
+            entity.HasOne(d => d.Country).WithMany(p => p.MastStates)
+                .HasForeignKey(d => d.CountryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Mast_State_CountryId");
         });
 
         modelBuilder.Entity<UserMaster>(entity =>

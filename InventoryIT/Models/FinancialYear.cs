@@ -15,7 +15,7 @@ public partial class FinancialYear
 
     public int CompId { get; set; }
 
-    public DateTime CreationDate { get; set; } = DateTime.Now;
+    public DateTime CreationDate { get; set; } = DateTime.Now; 
 
     public int CreatedBy { get; set; }
 

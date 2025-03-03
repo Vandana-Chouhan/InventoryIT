@@ -1,4 +1,5 @@
-﻿using InventoryIT.Models;
+﻿using Azure.Identity;
+using InventoryIT.Models;
 using InventoryIT.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,15 +11,31 @@ namespace InventoryIT.Controllers
         private readonly IMastBranchRepository _mastBranchRepository;
         private readonly IMastCompRepository _mastCompRepository;
         private readonly IFinancialYearRepository _financialYearRepository;
-        public MasterSetupController(IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository, IFinancialYearRepository financialYearRepository)
+        private readonly IUserMasterRepository _userMasterRepository;
+        public MasterSetupController(IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository, IFinancialYearRepository financialYearRepository, IUserMasterRepository userMasterRepository)
         {
             _mastBranchRepository = mastBranchRepository;
             _mastCompRepository = mastCompRepository;
             _financialYearRepository = financialYearRepository;
+            _userMasterRepository = userMasterRepository;
         }
         public ActionResult Login()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult Login(UserMaster userMaster)
+        {
+            var userDetails = _userMasterRepository.GetAllUserMaster();
+            var user = userDetails.FirstOrDefault(x => x.UserName == userMaster.UserName && x.Password == userMaster.Password);
+            if (user != null)
+            {
+                HttpContext.Session.SetInt32("UserId", user.UserId);
+
+                return RedirectToAction("Session", "MasterSetup");
+            }
+            ModelState.AddModelError("", "Invalid username or password.");
+            return View("Login");
         }
         public ActionResult Inventory()
         {

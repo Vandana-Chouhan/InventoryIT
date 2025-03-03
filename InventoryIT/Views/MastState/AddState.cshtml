@@ -1,0 +1,36 @@
+﻿<html>
+<head>
+	<link href="~/css/mastersetup.css" rel="stylesheet" />
+</head>
+<body>
+	<form asp-action="AddState" method="post">
+		<div class="panel">
+			<div class="header">
+				<h5>Item Catagory Details</h5>
+				<input type="button" id="return-to-view" value="Return to View" />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="ItemCatagoryName">Item Catagory Name:</label>
+				<input type="text" id="ItemCatagoryName" class="input-small" name="ItemCatagoryName" required><br />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="ItemSubCatagory">Item  Sub Catagory Name:</label>
+				<input type="text" id="ItemSubCatagory" class="input-small" name="ItemSubCatagory" required><br />
+			</div>
+			<div class="form-group form-group-flex">
+				<input type="submit" id="Save" value="Save" />
+				<input type="button" id="Refresh" value="Refresh" />
+			</div>
+		</div>
+	</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
