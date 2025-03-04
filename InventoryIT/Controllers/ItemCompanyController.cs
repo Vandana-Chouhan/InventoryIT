@@ -10,14 +10,12 @@ namespace InventoryIT.Controllers
         private readonly IMastBranchRepository _mastBranchRepository;
         private readonly IMastCompRepository _mastCompRepository;
         private readonly IFinancialYearRepository _financialYearRepository;
-        private readonly IUserMasterRepository _userMasterRepository;
-        public ItemCompanyController(IItemCompanytRepository itemCompanytRepository, IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository, IFinancialYearRepository financialYearRepository, IUserMasterRepository userMasterRepository)
+        public ItemCompanyController(IItemCompanytRepository itemCompanytRepository, IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository, IFinancialYearRepository financialYearRepository)
         {
             _itemCompanytRepository = itemCompanytRepository;
             _mastBranchRepository = mastBranchRepository;
             _mastCompRepository = mastCompRepository;
             _financialYearRepository = financialYearRepository;
-            _userMasterRepository = userMasterRepository;
         }
         public ActionResult AddItemCompany()
         {

@@ -1,26 +1,35 @@
 ﻿using InventoryIT.Models;
 using InventoryIT.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace InventoryIT.Controllers
 {
     public class ItemSubCatagoryController : Controller
     {
-        private readonly ItemSubCatagoryController _itemSubCatagoryRepository;
+        private readonly IItemSubCatagoryRepository _itemSubCatagoryRepository;
         private readonly IMastBranchRepository _mastBranchRepository;
         private readonly IMastCompRepository _mastCompRepository;
         private readonly IFinancialYearRepository _financialYearRepository;
-        private readonly IUserMasterRepository _userMasterRepository;
-        public ItemSubCatagoryController(ItemSubCatagoryController itemSubCatagoryController, IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository, IFinancialYearRepository financialYearRepository, IUserMasterRepository userMasterRepository)
+        private readonly IItemCatagoryRepository _itemCatagoryRepository;
+        public ItemSubCatagoryController(IItemSubCatagoryRepository itemSubCatagoryRepository, IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository,
+            IFinancialYearRepository financialYearRepository, IItemCatagoryRepository itemCatagoryRepository)
         {
-            _itemSubCatagoryRepository = itemSubCatagoryController;
+            _itemSubCatagoryRepository = itemSubCatagoryRepository;
             _mastBranchRepository = mastBranchRepository;
             _mastCompRepository = mastCompRepository;
             _financialYearRepository = financialYearRepository;
-            _userMasterRepository = userMasterRepository;
+            _itemCatagoryRepository = itemCatagoryRepository;
         }
         public ActionResult AddItemSubCat()
         {
+            var catagories = _itemCatagoryRepository.GetAllItemCatagory();
+            ViewBag.ItemCatagories = catagories.Select(c => new SelectListItem
+            {
+                Value = c.ItemCatId.ToString(),
+                Text = c.ItemCatagoryName
+            });
             return View();
         }
         [HttpPost]
@@ -54,6 +63,7 @@ namespace InventoryIT.Controllers
             var item = new ItemSubCatagory
             {
                 SubCatagoryName = itemSubCatagory.SubCatagoryName,
+                ItemMainCatId = itemSubCatagory.ItemMainCatId,
                 CompId = itemSubCatagory.CompId,
                 BranchId = itemSubCatagory.BranchId,
                 FinanYearId = itemSubCatagory.FinanYearId,

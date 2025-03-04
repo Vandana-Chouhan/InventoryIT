@@ -30,6 +30,14 @@
 						<li><a href="@Url.Action("AddFBranchMaster", "MastBranch")" class="dropdown-item">Branch Setup</a></li>
 						<li><a href="@Url.Action("AddFinancialYear", "FinancialYear")" class="dropdown-item">Financial Year</a></li>
 						<li><a href="@Url.Action("AddUserMaster", "UserMaster")" class="dropdown-item">User Creation</a></li>
+						<li class="has-child">
+							<a class="dropdown-item">Country Setup</a>
+							<ul class="child-menu">
+								<li><a href="@Url.Action("AddCountry", "MastCountry")" class="dropdown-item">Country Setup</a></li>
+								<li><a href="@Url.Action("AddState", "MastState")" class="dropdown-item">State Setup</a></li>
+								<li><a href="@Url.Action("AddMastCity", "MastCity")" class="dropdown-item">City Setup</a></li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 				<li class="nav-item">
