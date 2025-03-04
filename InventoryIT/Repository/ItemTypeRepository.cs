@@ -12,17 +12,14 @@ namespace InventoryIT.Repository
         {
             _inventoryContext = inventoryContext;
         }
-        // Fetch all MastComp records
         public IEnumerable<ItemType> GetAllItemType()
         {
             return _inventoryContext.ItemTypes.ToList();
         }
-        // Fetch a MastComp by its ID
         public ItemType? GetbyId(int itemid)
         {
             return _inventoryContext.ItemTypes.Find(itemid);
         }
-        // Add a new MastComp to the database
         public int AddItemType(ItemType itemType)
         {
             int result = 0;
@@ -32,11 +29,10 @@ namespace InventoryIT.Repository
                 {
                     _inventoryContext.ItemTypes.Add(itemType);
                     _inventoryContext.SaveChanges();
-                    result = itemType.ItemId;  // Assuming CompId is the primary key
+                    result = itemType.ItemId;  // Assuming itemId is the primary key
                 }
                 catch (Exception ex)
                 {
-                    // Log exception (depending on your logging mechanism)
                     throw new Exception("Error adding ItemType Name", ex);
                 }
             }
@@ -46,7 +42,6 @@ namespace InventoryIT.Repository
             }
             return result;
         }
-        // Update an existing MastComp in the database
         public int Update(ItemType itemType)
         {
             int result = -1;
@@ -70,7 +65,7 @@ namespace InventoryIT.Repository
             }
             return result;
         }
-        // Delete a MastComp by its ID
+        // Delete a ItemType by its ID
         public void Delete(int itemid)
         {
             var itemtype = _inventoryContext.ItemTypes.Find(itemid);
@@ -83,7 +78,6 @@ namespace InventoryIT.Repository
                 }
                 catch (Exception ex)
                 {
-                    // Log exception (depending on your logging mechanism)
                     throw new Exception("Error deleting itemtype", ex);
                 }
             }

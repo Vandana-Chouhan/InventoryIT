@@ -10,15 +10,22 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IMastCompRepository, MastCompRepository>();
 builder.Services.AddScoped<IMastBranchRepository, MastBranchRepository>();
 builder.Services.AddScoped<IFinancialYearRepository, FinancialYearRepository>();
-builder.Services.AddScoped<IItemTypeRepository, ItemTypeRepository>();
 builder.Services.AddScoped<IUserMasterRepository, UserMasterRepository>();
-builder.Services.AddScoped<IItemCatagoryRepository, ItemCatagoryRepository>();
-builder.Services.AddScoped<IMastStateRepository, MastStateRepository>();
-builder.Services.AddScoped<IItemCompanytRepository, ItemCompanyRepository>();
-builder.Services.AddScoped<IMastCountryRepository, MastCountryRepository>();
-builder.Services.AddScoped<IItemUnitRepository, ItemUnitRepository>();
+
 builder.Services.AddScoped<IMastCityRepository, MastCityRepository>();
+builder.Services.AddScoped<IMastStateRepository, MastStateRepository>();
+builder.Services.AddScoped<IMastCountryRepository, MastCountryRepository>();
+
+builder.Services.AddScoped<IItemCatagoryRepository, ItemCatagoryRepository>();
+builder.Services.AddScoped<IItemTypeRepository, ItemTypeRepository>();
+builder.Services.AddScoped<IItemCompanytRepository, ItemCompanyRepository>();
+builder.Services.AddScoped<IItemUnitRepository, ItemUnitRepository>();
 builder.Services.AddScoped<IItemSubCatagoryRepository, ItemSubCatagoryRepository>();
+
+builder.Services.AddScoped<IWarehouseLocationRepository, WarehouseLocationRepository>();
+builder.Services.AddScoped<IWarehouseAreaRepository, WarehouseAreaRepository>();
+builder.Services.AddScoped<IWarehouseRackRepository, WarehouseRackRepository>();
+builder.Services.AddScoped<IWarehouseShelfRepository, WarehouseShelfRepository>();
 
 builder.Services.AddDbContext<InventoryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("connect")));

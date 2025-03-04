@@ -10,17 +10,14 @@ namespace InventoryIT.Repository
         {
             _inventoryContext = inventoryContext;
         }
-
         public IEnumerable<ItemCompany> GetAllItemCompany()
         {
             return _inventoryContext.ItemCompanies.ToList();
         }
-
         public ItemCompany? GetbyId(int itemcompid)
         {
             return _inventoryContext.ItemCompanies.Find(itemcompid);
         }
-
         public int AddItemCompany(ItemCompany itemCompany)
         {
             int result = 0;
@@ -65,7 +62,6 @@ namespace InventoryIT.Repository
             }
             return result;
         }
-
         public void Delete(int itemcompid)
         {
             var itemtcomp = _inventoryContext.ItemCompanies.Find(itemcompid);

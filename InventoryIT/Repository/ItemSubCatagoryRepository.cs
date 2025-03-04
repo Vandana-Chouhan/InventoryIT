@@ -79,7 +79,7 @@ namespace InventoryIT.Repository
             }
             else
             {
-                throw new KeyNotFoundException($"ItemCatagory with ID {itemSubCatId} not found.");
+                throw new KeyNotFoundException($"ItemSubCatagory with ID {itemSubCatId} not found.");
             }
         }
     }

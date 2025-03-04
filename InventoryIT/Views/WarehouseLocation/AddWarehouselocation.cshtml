@@ -3,15 +3,15 @@
 	<link href="~/css/mastersetup.css" rel="stylesheet" />
 </head>
 <body>
-	<form asp-action="ItemCompany" method="post">
+	<form asp-action="AddWarehouselocation" method="post">
 		<div class="panel">
 			<div class="header">
-				<h5>Item Company Details</h5>
+				<h4>Warehouse Location Details</h4>
 				<input type="button" id="return-to-view" value="Return to View" />
 			</div>
 			<div class="form-group">
-				<span class="required">*</span><label for="ItemCompanyName">Item Company Name:</label>
-				<input type="text" id="ItemCompanyName" class="input-small" name="ItemCompanyName" required><br />
+				<span class="required">*</span><label for="WarehouseName">Warehouse Location Name:</label>
+				<input type="text" id="WarehouseName" class="input-small" name="WarehouseName" required><br />
 			</div>
 			<div class="form-group form-group-flex">
 				<input type="submit" id="Save" value="Save" />

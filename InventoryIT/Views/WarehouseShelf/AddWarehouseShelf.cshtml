@@ -1,0 +1,70 @@
+﻿<html>
+<head>
+	<link href="~/css/mastersetup.css" rel="stylesheet" />
+	<style>
+		#Area, #location,#Rack{
+			height:30px;
+		}
+	</style>
+</head>
+<body>
+	<form asp-action="AddWarehouseShelf" method="post">
+		<div class="panel">
+			<div class="header">
+				<h4>Warehouse Shelf Details</h4>
+				<input type="button" id="return-to-view" value="Return to View" />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="WarehouseLocId">Warehouse Location:</label>
+				<select name="WarehouseLocId" class="input-small" required>
+					<option value="" disabled selected>Select warehouse location</option>
+					@foreach (var location in ViewBag.WarehouseLocationMasters)
+					{
+						<option value="@location.Value">@location.Text</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="WarehouseAreaId">Warehouse Area:</label>
+				<select name="WarehouseAreaId" class="input-small" required>
+					<option value="" disabled selected>Select warehouse area</option>
+					@foreach (var area in ViewBag.WarehouseAreaMasters)
+					{
+						<option value="@area.Value">@area.Text</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="WarehouseRackId">Warehouse Rack:</label>
+				<select name="WarehouseRackId" class="input-small" required>
+					<option value="" disabled selected>Select warehouse rack</option>
+					@foreach (var rack in ViewBag.WarehouseRackMasters)
+					{
+						<option value="@rack.Value">@rack.Text</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="warehouseShelfName">Warehouse Shelf Name:</label>
+				<input type="text" id="warehouseShelfName" class="input-small" name="warehouseShelfName" required><br />
+			</div>
+			<div class="form-group form-group-flex">
+				<input type="submit" id="Save" value="Save" />
+				<input type="button" id="Refresh" value="Refresh" />
+			</div>
+		</div>
+	</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
