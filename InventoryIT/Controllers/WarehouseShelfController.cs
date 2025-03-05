@@ -35,19 +35,33 @@ namespace InventoryIT.Controllers
                 Value = c.WarehouseLocId.ToString(),
                 Text = c.WarehouseName
             });
-            var areas = _warehouseAreaRepository.GetAllWarehouseArea();
-            ViewBag.WarehouseAreaMasters = areas.Select(c => new SelectListItem
-            {
-                Value = c.WarehouseAreaId.ToString(),
-                Text = c.WarehouseAreaName
-            });
-            var racks = _warehouseRackRepository.GetAllWarehouseRack();
-            ViewBag.WarehouseRackMasters = racks.Select(c => new SelectListItem
-            {
-                Value = c.WarehouseRackId.ToString(),
-                Text = c.WarehouseRackName
-            });
             return View();
+        }
+        // Action to fetch areas by selected location
+        [HttpGet]
+        public JsonResult GetAreasByLocation(int locationId)
+        {
+            var areas = _warehouseAreaRepository.GetAllWarehouseArea()
+                        .Where(a => a.WarehouseLocId == locationId)
+                        .Select(c => new SelectListItem
+                        {
+                            Value = c.WarehouseAreaId.ToString(),
+                            Text = c.WarehouseAreaName
+                        }).ToList();
+            return Json(areas); // Return areas as JSON
+        }
+        //Action to fetch racks by selected Areas
+        [HttpGet]
+        public JsonResult GetRackByAreas(int areaId)
+        {
+            var racks = _warehouseRackRepository.GetAllWarehouseRack()
+                        .Where(a => a.WarehouseAreaId == areaId)
+                        .Select(c => new SelectListItem
+                        {
+                            Value = c.WarehouseRackId.ToString(),
+                            Text = c.WarehouseRackName
+                        }).ToList();
+            return Json(racks); // Return racks as JSON
         }
         [HttpPost]
         public ActionResult AddWarehouseShelf(WarehouseShelfMaster warehouseShelfMaster)
@@ -95,4 +109,3 @@ namespace InventoryIT.Controllers
         }
     }
 }
-

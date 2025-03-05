@@ -37,6 +37,8 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<MastState> MastStates { get; set; }
 
+    public virtual DbSet<SupplierMaster> SupplierMasters { get; set; }
+
     public virtual DbSet<UserMaster> UserMasters { get; set; }
 
     public virtual DbSet<WarehouseAreaMaster> WarehouseAreaMasters { get; set; }
@@ -341,6 +343,51 @@ public partial class InventoryContext : DbContext
                 .HasForeignKey(d => d.CountryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Mast_State_CountryId");
+        });
+
+        modelBuilder.Entity<SupplierMaster>(entity =>
+        {
+            entity.HasKey(e => e.SuppId);
+
+            entity.ToTable("Supplier Master");
+
+            entity.Property(e => e.Address)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.ContactPerson)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Contact Person");
+            entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation_DateTime");
+            entity.Property(e => e.EmailId)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("Email Id");
+            entity.Property(e => e.GstNo)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("GST No");
+            entity.Property(e => e.MobileNo)
+                .HasColumnType("numeric(12, 0)")
+                .HasColumnName("Mobile No");
+            entity.Property(e => e.PhoneNo)
+                .HasColumnType("numeric(12, 0)")
+                .HasColumnName("Phone No");
+            entity.Property(e => e.PinNo)
+                .HasMaxLength(7)
+                .IsUnicode(false)
+                .HasColumnName("PIN No");
+            entity.Property(e => e.SupplierGstCertificate).HasColumnName("Supplier GST Certificate");
+            entity.Property(e => e.SupplierName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Supplier Name");
+            entity.Property(e => e.Website)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<UserMaster>(entity =>

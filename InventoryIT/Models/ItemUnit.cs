@@ -15,7 +15,7 @@ public partial class ItemUnit
 
     public int FinanYearId { get; set; }
 
-    public DateTime CreationDateTime { get; set; } = DateTime.Now; 
+    public DateTime CreationDateTime { get; set; } = DateTime.Now;
 
     public int CreatedBy { get; set; }
 }

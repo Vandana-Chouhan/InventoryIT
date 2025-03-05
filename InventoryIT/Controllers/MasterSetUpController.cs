@@ -41,6 +41,10 @@ namespace InventoryIT.Controllers
         {
             return View();
         }
+        public ActionResult SupplierMaster()
+        {
+            return View();
+        }
         public ActionResult ReturnToView()
         {
             return View();
