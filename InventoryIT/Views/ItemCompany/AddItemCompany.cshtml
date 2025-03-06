@@ -1,35 +1,78 @@
-﻿<html>
-<head>
-	<link href="~/css/mastersetup.css" rel="stylesheet" />
-</head>
-<body>
-	<form asp-action="AddItemCompany" method="post">
-		<div class="panel">
-			<div class="header">
-				<h5>Item Company Details</h5>
-				<input type="button" id="return-to-view" value="Return to View" />
-			</div>
-			<div class="form-group">
-				<span class="required">*</span><label for="ItemCompanyName">Item Company Name:</label>
-				<input type="text" id="ItemCompanyName" class="input-small" name="ItemCompanyName" required><br />
-			</div>
-			<div class="form-group form-group-flex">
-				<input type="submit" id="Save" value="Save" />
-				<input type="button" id="Refresh" value="Refresh" />
-			</div>
+﻿<style>
+	body {
+		background-color: whitesmoke;
+	}
+
+	.container {
+		background-color: whitesmoke;
+		padding: 20px;
+		border-radius: 10px;
+	}
+
+	.card {
+		background-color: whitesmoke;
+		border-radius: 3px;
+		padding: 0;
+		margin: 0 auto;
+	}
+
+	.heade {
+		background-color: #4268a1;
+		color: white;
+		padding: 0px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-radius: 2px;
+		width: calc(100% - 0px);
+	}
+
+	.form-control {
+		padding: 5px;
+		width: 100%;
+	}
+
+	.btn-dark {
+		background-color: black;
+		color: white;
+		padding: 2px;
+	}
+
+	.form-group {
+		display: flex;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+
+		.form-group label {
+			width: 200px;
+			text-align: right;
+			font-weight: 600;
+			margin-right: 10px;
+		}
+
+		.form-group input {
+			flex-grow: 1;
+		}
+</style>
+<div class="container mt-4">
+	<div class="card">
+		<div class="heade">
+			<h4>ITEM COMPANY DETAILS</h4>
+			<a asp-action="Index" class="btn btn-dark">RETURN TO VIEW</a>
 		</div>
-	</form>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
+		<div class="card-body">
+			<form asp-action="AddItemCompany" method="post" asp-controller="ItemCompany">
+				<div class="form-group">
+					<label for="ItemCompanyName">Item Company Name:</label>
+					<input class="form-control" name="ItemCompanyName" required>
+					<span class="text-danger"></span>
+				</div>
+				<div class="text-center mt-3">
+					<button type="submit" class="btn btn-success">Save</button>
+					<button type="reset" class="btn btn-primary">Refresh</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -30,7 +30,7 @@ namespace InventoryIT.Controllers
                 Value = c.ItemCatId.ToString(),
                 Text = c.ItemCatagoryName
             });
-            return View();
+            return PartialView("AddItemSubCat");
         }
         [HttpPost]
         public ActionResult AddItemSubCat(ItemSubCatagory itemSubCatagory)

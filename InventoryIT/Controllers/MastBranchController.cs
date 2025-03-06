@@ -22,7 +22,7 @@ namespace InventoryIT.Controllers
                 Value = c.CompId.ToString(),
                 Text = c.CompanyName
             });
-            return View();
+            return PartialView("AddFBranchMaster");
         }
         [HttpPost]
         public IActionResult AddFBranchMaster(MastBranch mastBranch)

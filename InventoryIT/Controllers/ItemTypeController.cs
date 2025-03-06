@@ -20,7 +20,7 @@ namespace InventoryIT.Controllers
         }
         public ActionResult AddItemType()
         {
-            return View();
+            return PartialView("AddItemType");
         }
         [HttpPost]
         public ActionResult AddItemType(ItemType itemType)

@@ -20,7 +20,7 @@ namespace InventoryIT.Controllers
         }
         public ActionResult AddItemCatagory()
         {
-            return View();
+            return PartialView("AddItemCatagory");
         }
         [HttpPost]
         public ActionResult AddItemCatagory(ItemCatagory itemCatagory)

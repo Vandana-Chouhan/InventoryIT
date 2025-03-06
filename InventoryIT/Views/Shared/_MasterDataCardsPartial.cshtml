@@ -1,0 +1,162 @@
+﻿
+<style>
+	.image-back {
+		background-image: url('/assets/img/card.jpg');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		width: 100%;
+		height: 100vh;
+		margin-left: -10px;
+		margin-top: 19px;
+	}
+
+	.container-items {
+		margin-top: 18px;
+	}
+
+	.item-container {
+		height: 143px;
+		width: 152px;
+		border-radius: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #f8f9fa; /* Light background */
+		box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+	}
+
+	.item-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
+
+	.item-icon {
+		width: 68px;
+		height: 68px;
+		background-color: #007bff;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+		font-weight: bold;
+	}
+
+	.item-title {
+		margin-top: 12px;
+		font-size: 16px;
+		font-weight: bold;
+		color: #333;
+	}
+
+	.col-md-2 {
+		flex: 0 0 auto;
+		width: 18%;
+		margin-top: 60px;
+	}
+</style>
+<div class="image-back">
+	<div class="container-items">
+		<div class="row" style="margin-left: 61px;">
+			<div class="col-md-2 mb-2">
+				<div class="item-container" id="loadItemType">
+					<div class="item-content">
+						<div class="item-icon"></div>
+						<p class="item-title">Item Type</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2 mb-2">
+				<div class="item-container" id="loadItemUnit">
+					<div class="item-content">
+						<div class="item-icon"></div>
+						<p class="item-title">Item Unit</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2 mb-2">
+				<div class="item-container" id="loadItemCompany">
+					<div class="item-content">
+						<div class="item-icon"></div>
+						<p class="item-title">Item Company</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2 mb-2">
+				<div class="item-container" id="loadItemCategory">
+					<div class="item-content">
+						<div class="item-icon"></div>
+						<p class="item-title">Item Category</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2 mb-2">
+				<div class="item-container" id="loadItemSubCatagory">
+					<div class="item-content">
+						<div class="item-icon"></div>
+						<p class="item-title">Item Subcategory</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function () {
+		$("#loadItemType").click(function (e) {
+			e.preventDefault();
+			$.get("@Url.Action("AddItemType", "ItemType")", function (data) {
+				$("#partialContent").html(data);
+			});
+		});
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		$("#loadItemUnit").click(function (e) {
+			e.preventDefault();
+			$.get("@Url.Action("AddItemUnit", "ItemUnit")", function (data) {
+				$("#partialContent").html(data);
+			});
+		});
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		$("#loadItemCompany").click(function (e) {
+			e.preventDefault();
+			$.get("@Url.Action("AddItemCompany", "ItemCompany")", function (data) {
+				$("#partialContent").html(data);
+			});
+		});
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		$("#loadItemCategory").click(function (e) {
+			e.preventDefault();
+			$.get("@Url.Action("AddItemCatagory", "ItemCatagory")", function (data) {
+				$("#partialContent").html(data);
+			});
+		});
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		$("#loadItemSubCatagory").click(function (e) {
+			e.preventDefault();
+			$.get("@Url.Action("AddItemSubCat", "ItemSubCatagory")", function (data) {
+				$("#partialContent").html(data);
+			});
+		});
+	});
+</script>

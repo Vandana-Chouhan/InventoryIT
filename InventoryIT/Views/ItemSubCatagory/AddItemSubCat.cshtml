@@ -1,9 +1,9 @@
-﻿<html>
+﻿@* <html>
 <head>
 	<link href="~/css/mastersetup.css" rel="stylesheet" />
 </head>
 <body>
-	<form asp-action="AddItemSubCat" method="post">
+	<form asp-action="ItemSubCatagory" method="post">
 		<div class="panel">
 			<div class="header">
 				<h5>Item Catagory Details</h5>
@@ -11,26 +11,144 @@
 			</div>
 			<div class="form-group">
 				<span class="required">*</span><label for="ItemCatagoryName">Item Catagory Name:</label>
-				<select name="ItemMainCatId" class="input-small" required>
-					<option value="" disabled selected>Select item Catagory</option>
-					@foreach (var catagory in ViewBag.ItemCatagories)
-					{
-						<option value="@catagory.Value">@catagory.Text</option>
-					}
-				</select>
+				<input type="text" id="ItemCatagoryName" class="input-small" name="ItemCatagoryName" required><br />
 			</div>
 			<div class="form-group">
 				<span class="required">*</span><label for="ItemSubCatagory">Item  Sub Catagory Name:</label>
-				<input type="text" id="SubCatagoryName" class="input-small" name="SubCatagoryName" required><br />
+				<input type="text" id="ItemSubCatagory" class="input-small" name="ItemSubCatagory" required><br />
 			</div>
+
 			<div class="form-group form-group-flex">
-				<input type="submit" id="Save" value="Save" />
+				<input type="button" id="Save" value="Save" />
 				<input type="button" id="Refresh" value="Refresh" />
 			</div>
 		</div>
 	</form>
 </body>
-</html>
+</html> *@
+
+<!--ITEM SUBCATEGORY DESIGN-->
+<style>
+	body {
+		background-color: whitesmoke;
+	}
+
+	.container {
+		background-color: whitesmoke;
+		padding: 20px;
+		border-radius: 10px;
+	}
+
+	.card {
+		background-color: whitesmoke;
+		border-radius: 3px;
+		padding: 0px;
+		margin: 0 auto;
+	}
+
+	.header {
+		background-color: #4268a1;
+		color: white;
+		padding: 8px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-radius: 2px;
+	}
+
+	.form-container {
+		padding: 15px;
+	}
+
+	.form-group {
+		display: flex;
+		align-items: center;
+		margin-bottom: 15px;
+		gap: 15px; /* Space between items */
+	}
+
+		.form-group label {
+			font-weight: 600;
+			min-width: 200px; /* Set label width */
+			text-align: right;
+		}
+
+		.form-group input {
+			flex-grow: 1; /* Input takes remaining space */
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+	.btn-dark {
+		background-color: black;
+		color: white;
+		padding: 5px 10px;
+		text-decoration: none;
+		border-radius: 3px;
+	}
+
+	.buttons {
+		text-align: center;
+		margin-top: 20px;
+	}
+
+	.btn-success, .btn-primary {
+		padding: 5px 15px;
+	}
+
+	.row {
+		display: flex;
+		justify-content: space-between;
+		gap: 20px; /* Space between columns */
+	}
+
+	.column {
+		flex: 1; /* Each column takes equal space */
+	}
+</style>
+
+<div class="container mt-4">
+	<div class="card">
+		<div class="header">
+			<h4>ITEM SUB CATEGORY DETAILS</h4>
+			<a asp-action="Index" class="btn btn-dark">RETURN TO VIEW</a>
+		</div>
+		<div class="form-container">
+			<form asp-action="AddItemSubCat" method="post" asp-controller="ItemSubCatagory">
+				<div class="row">
+					<div class="column">
+						<div class="form-group">
+							<span class="required">*</span><label for="ItemCatagoryName">Item Catagory Name:</label>
+							<select name="ItemMainCatId" class="input-small" required>
+								<option value="" disabled selected>Select item Catagory</option>
+								@foreach (var catagory in ViewBag.ItemCatagories)
+								{
+									<option value="@catagory.Value">@catagory.Text</option>
+								}
+							</select>
+						</div>
+					</div>
+					<div class="column">
+						<div class="form-group">
+							<label for="ItemSubCatagory">Item Sub Category Name:</label>
+							<input class="form-control" name="SubCatagoryName" required>
+						</div>
+					</div>
+				</div>
+				<div class="buttons">
+					<button type="submit" class="btn btn-success">Save</button>
+					<button type="reset" class="btn btn-primary">Refresh</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+
+
 
 
 

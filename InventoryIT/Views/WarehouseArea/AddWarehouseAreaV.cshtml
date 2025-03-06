@@ -1,0 +1,50 @@
+﻿<html>
+<head>
+	<link href="~/css/mastersetup.css" rel="stylesheet" />
+	<style>
+		#location {
+			height: 30px;
+		}
+	</style>
+</head>
+<body>
+	<form asp-action="AddWarehouseArea" method="post">
+		<div class="panel">
+			<div class="header">
+				<h4>Warehouse Area Details</h4>
+				<input type="button" id="return-to-view" value="Return to View" />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="WarehouseLocId">Warehouse Location:</label>
+				<select name="WarehouseLocId" class="input-small" required>
+					<option value="" disabled selected>Select warehouse location</option>
+					@foreach (var location in ViewBag.WarehouseLocationMasters)
+					{
+						<option value="@location.Value">@location.Text</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="warehouseAreaName">Warehouse Area Name:</label>
+				<input type="text" id="warehouseAreaName" class="input-small" name="warehouseAreaName" required><br />
+			</div>
+			<div class="form-group form-group-flex">
+				<input type="submit" id="Save" value="Save" />
+				<input type="button" id="Refresh" value="Refresh" />
+			</div>
+		</div>
+	</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

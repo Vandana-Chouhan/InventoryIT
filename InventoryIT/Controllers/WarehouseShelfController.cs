@@ -35,7 +35,7 @@ namespace InventoryIT.Controllers
                 Value = c.WarehouseLocId.ToString(),
                 Text = c.WarehouseName
             });
-            return View();
+            return PartialView("AddWarehouseShelf");
         }
         // Action to fetch areas by selected location
         [HttpGet]

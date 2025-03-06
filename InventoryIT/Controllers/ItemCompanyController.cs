@@ -19,7 +19,7 @@ namespace InventoryIT.Controllers
         }
         public ActionResult AddItemCompany()
         {
-            return View();
+            return PartialView("AddItemCompany");
         }
         [HttpPost]
         public ActionResult AddItemCompany(ItemCompany itemCompany)

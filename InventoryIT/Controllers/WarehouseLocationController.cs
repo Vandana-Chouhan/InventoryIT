@@ -19,7 +19,7 @@ namespace InventoryIT.Controllers
         }
         public IActionResult AddWarehouselocation()
         {
-            return View();
+            return PartialView("AddWarehouselocation");
         }
         [HttpPost]
         public ActionResult AddWarehouselocation(WarehouseLocationMaster warehouseLocationMaster)

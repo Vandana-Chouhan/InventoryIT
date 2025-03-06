@@ -29,7 +29,7 @@ namespace InventoryIT.Controllers
                 Value = c.WarehouseLocId.ToString(),
                 Text = c.WarehouseName
             });
-            return View();
+            return PartialView("AddWarehouseArea");
         }
         [HttpPost]
         public ActionResult AddWarehouseArea(WarehouseAreaMaster warehouseAreaMaster)
