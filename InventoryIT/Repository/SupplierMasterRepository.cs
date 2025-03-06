@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryIT.Repository
 {
-    public class SupplierMasterRepository
+    public class SupplierMasterRepository : ISupplierMasterRepository
     {
         private readonly InventoryContext _inventoryContext;
         public SupplierMasterRepository(InventoryContext inventoryContext)

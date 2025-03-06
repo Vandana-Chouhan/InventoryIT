@@ -21,6 +21,7 @@ builder.Services.AddScoped<IItemTypeRepository, ItemTypeRepository>();
 builder.Services.AddScoped<IItemCompanytRepository, ItemCompanyRepository>();
 builder.Services.AddScoped<IItemUnitRepository, ItemUnitRepository>();
 builder.Services.AddScoped<IItemSubCatagoryRepository, ItemSubCatagoryRepository>();
+builder.Services.AddScoped<ISupplierMasterRepository, SupplierMasterRepository>();
 
 builder.Services.AddScoped<IWarehouseLocationRepository, WarehouseLocationRepository>();
 builder.Services.AddScoped<IWarehouseAreaRepository, WarehouseAreaRepository>();
