@@ -1,35 +1,32 @@
-﻿<html>
+﻿
 <head>
-	<link href="~/css/mastersetup.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Warehouse/style.css" asp-append-version="true" />
 </head>
-<body>
-	<form asp-action="AddWarehouselocation" method="post">
-		<div class="panel">
-			<div class="header">
-				<h4>Warehouse Location Details</h4>
-				<input type="button" id="return-to-view" value="Return to View" />
-			</div>
-			<div class="form-group">
-				<span class="required">*</span><label for="WarehouseName">Warehouse Location Name:</label>
-				<input type="text" id="WarehouseName" class="input-small" name="WarehouseName" required><br />
-			</div>
-			<div class="form-group form-group-flex">
-				<input type="submit" id="Save" value="Save" />
-				<input type="button" id="Refresh" value="Refresh" />
-			</div>
-		</div>
-	</form>
-</body>
-</html>
 
+    <div class="container mt-4">
+        <div class="ard">
+            <div class="heade">
+                <h4>WAREHOUSE LOCATION DETAILS</h4>
+                <a href="/Warehouse/Index" class="btn btn-dark">RETURN TO VIEW</a>
+            </div>
 
+            <div class="card-body">
+                <form action="/Warehouse/Save" method="post">
+                    <div class="row mb-2">
+                        <label class="col-sm-3 col-form-label text-end">
+                            <span class="text-danger">*</span> Warehouse Location Name:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="WarehouseLocationName" required>
+                        </div>
+                    </div>
 
-
-
-
-
-
-
-
-
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="reset" class="btn btn-primary">Refresh</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 

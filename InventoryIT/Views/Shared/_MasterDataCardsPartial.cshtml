@@ -107,6 +107,22 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-2 mb-2">
+				<div class="item-container" id="loadSupplier">
+					<div class="item-content">
+						<div class="item-icon"></div>
+						<p class="item-title">Supplier Master</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2 mb-2">
+				<div class="item-container" id="loadItemmaster">
+					<div class="item-content">
+						<div class="item-icon"></div>
+						<p class="item-title">Item Master</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -155,6 +171,26 @@
 		$("#loadItemSubCatagory").click(function (e) {
 			e.preventDefault();
 			$.get("@Url.Action("AddItemSubCat", "ItemSubCatagory")", function (data) {
+				$("#partialContent").html(data);
+			});
+		});
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		$("#loadSupplier").click(function (e) {
+			e.preventDefault();
+			$.get("@Url.Action("AddSupplierMaster", "SupplierMaster")", function (data) {
+				$("#partialContent").html(data);
+			});
+		});
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		$("#loadItemmaster").click(function (e) {
+			e.preventDefault();
+			$.get("@Url.Action("ItemMaster", "ItemType")", function (data) {
 				$("#partialContent").html(data);
 			});
 		});

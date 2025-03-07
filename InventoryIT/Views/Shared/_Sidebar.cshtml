@@ -49,7 +49,7 @@
 						<i class="bi bi-chevron-down ms-auto big-dropdown-icon"></i>
 					</a>
 				</li>
-				<li>
+				@* <li>
 					<a class="nav-link collapsed" data-bs-target="#transaction-nav" data-bs-toggle="collapse" href="#">
 						<i class="bi bi-circle"></i>
 						<span>Transactions</span>
@@ -93,7 +93,18 @@
 							</a>
 						</li>
 					</ul>
+				</li> *@
+				<li class="nav-item">
+					<a id="transactionDataCardsLink" class="nav-link collapsed" data-bs-target="#transaction-nav" data-bs-toggle="collapse" href="#">
+						<i class="bi bi-circle"></i>
+						<span>Transactions</span>
+						<i class="bi bi-chevron-down ms-auto"></i>
+					</a>
+
 				</li>
+
+
+
 				<li>
 					<a class="nav-link collapsed" data-bs-target="#reports-nav" data-bs-toggle="collapse" href="#">
 						<i class="bi bi-circle"></i>
@@ -251,6 +262,18 @@
 		</li>
 	</ul>
 </aside>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$("#transactionDataCardsLink").click(function (e) {
+			e.preventDefault();
+			$.get("@Url.Action("LoadTransactionCard", "PurchaseMgmt")", function (data) {
+				$("#partialContent").html(data);
+			});
+		});
+	});
+</script>
+
 
 
 

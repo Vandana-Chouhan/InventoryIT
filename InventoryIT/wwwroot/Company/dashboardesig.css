@@ -1,0 +1,16 @@
+﻿.container {
+    max-width: 914px;
+}
+
+.card {
+    border-radius: 1.25rem;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-body {
+    margin-top: 18px;
+}
+.mt-4 {
+    margin-top: 6.5rem !important;
+    margin-left: 366px;
+}

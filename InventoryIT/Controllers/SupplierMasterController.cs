@@ -38,7 +38,7 @@ namespace InventoryIT.Controllers
                 Value = c.CityId.ToString(),
                 Text = c.CityName
             });
-            return View();
+            return PartialView("AddSupplierMaster");
         }
         [HttpPost]
         public ActionResult AddSupplierMaster(SupplierMaster supplierMaster)

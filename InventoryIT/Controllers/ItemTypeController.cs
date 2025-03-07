@@ -22,6 +22,10 @@ namespace InventoryIT.Controllers
         {
             return PartialView("AddItemType");
         }
+        public ActionResult ItemMaster()
+        {
+            return PartialView("ItemMaster");
+        }
         [HttpPost]
         public ActionResult AddItemType(ItemType itemType)
         {
@@ -33,7 +37,7 @@ namespace InventoryIT.Controllers
             int? userId = HttpContext.Session.GetInt32("UserId");
 
             // Check if session data exists, otherwise redirect to error page
-            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName)|| userId==null)
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName) || userId == null)
             {
                 return RedirectToAction("ErrorPage");
             }
@@ -46,7 +50,7 @@ namespace InventoryIT.Controllers
                 itemType.CompId = company.CompId;
                 itemType.BranchId = branch.BranchId;
                 itemType.FinancialYearId = financialYear.FinanYearId;
-                itemType.CreatedBy = userId.Value; 
+                itemType.CreatedBy = userId.Value;
 
             }
             // Create a new ItemType object using the data

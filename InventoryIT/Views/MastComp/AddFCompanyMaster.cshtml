@@ -1,108 +1,123 @@
-﻿<html>
+﻿
 <head>
-	<link href="~/css/mastersetup.css" rel="stylesheet" />
-	<style>
-		#city {
-			height: 30px;
-		}
-	</style>
+    <link rel="stylesheet" href="~/Company/style.css" asp-append-version="true" />
 </head>
-<body>
-	<form asp-action="AddFCompanyMaster" method="post">
-		<table class="panel">
-			<thead class="header">
-				<tr>
-					<th>
-						<h4>Company Details</h4>
-					</th>
-					<th>
-						<input type="button" id="return-to-view" value="Return to View" />
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<!-- First group with two fields (company name and address) -->
-				<tr class="form-group">
-					<td><span class="required">*</span><label for="companyName">Company Name:</label></td>
-					<td><input type="text" style="margin-right:10px !important" id="companyName" class="input-large" name="CompanyName" required><br /></td>
-				</tr>
-				<tr class="form-group">
-					<td><span class="required">*</span><label for="address">Address:</label></td>
-					<td><input type="text" style="margin-right:10px !important" id="address" class="input-large" name="Address" required><br /></td>
-				</tr>
-				<!-- Second group (Company Short Name and Owner Name) -->
-				<tr class="form-group">
-					<td><span class="required">*</span><label for="companyShortName">Comp.Short Name:</label></td>
-					<td><input type="text" id="companyShortName" class="input-small" name="CompShortName" required><br /></td>
+@{
+    ViewData["Title"] = "Company Details";
+}
 
-					<td><span class="required">*</span><label for="ownerName">Owner Name:</label></td>
-					<td><input type="text" id="ownerName" class="input-small" name="OwnerName" required><br /></td>
-				</tr>
-				<!-- Third group (City and State) -->
-				<tr class="form-group">
-					<td><span class="required">*</span><label for="city">City:</label></td>
-					<td>
-						<select id="city" class="input-small" name="City" required>
-							<option value="" disabled selected>Select City</option>
-							<option value="Indore">Indore</option>
-							<option value="Pune">Pune</option>
-							<option value="Dhar">Dhar</option>
-							<option value="Mumbai">Mumbai</option>
-						</select><br />
-					</td>
-					<td><label for="state">State:</label></td>
-					<td><input type="text" id="state" name="State" class="input-small"><br /></td>
-				</tr>
-				<!-- Fourth group (Email, Pin No, Mobile No, Phone No) -->
-				<tr class="form-group">
-					<td><label for="email">Email:</label></td>
-					<td><input type="email" id="email" name="Email" class="input-small"><br /></td>
+<div class="container mt-4">
+    <div class="car">
+        <div class="card-heade text-white d-flex justify-content-between" style="border-radius:5px;">
+            <h4>COMPANY DETAILS</h4>
+            <a href="/CompanyMaster/Index" style="background-color:#f8f9fa;color:black;">RETURN TO VIEW</a>
+        </div>
+        <div class="card-body bg-light">
+            <form action="/CompanyMaster/Save" method="post">
 
-					<td><label for="pinNo">PIN No:</label></td>
-					<td><input type="text" id="pinNo" name="PinNo" class="input-small"><br /></td>
-				</tr>
-				<tr class="form-group">
-					<td><label for="mobileNo">Mobile No:</label></td>
-					<td><input type="text" id="mobileNo" name="MobileNo" class="input-small"><br /></td>
-					<td><label for="phoneNo">Phone No:</label></td>
-					<td><input type="text" id="phoneNo" name="PhoneNo" class="input-small"><br /></td>
-				</tr>
-				<!-- Fifth group (GST No, PAN No) -->
-				<tr class="form-group">
-					<td><label for="gstNo">GST No:</label></td>
-					<td><input type="text" id="gstNo" name="GstNo" class="input-small"><br /></td>
-
-					<td><label for="panNo">PAN No:</label></td>
-					<td><input type="text" id="panNo" name="PanNo" class="input-small"><br /></td>
-				</tr>
-				<!-- Sixth group (Contact Person and Website) -->
-				<tr class="form-group">
-					<td><label for="contactPerson">Contact Person:</label></td>
-					<td><input type="text" id="contactPerson" name="ContactPerson" class="input-small"><br /></td>
-
-					<td><label for="website">Website:</label></td>
-					<td><input type="url" id="website" name="Website" class="input-small"><br /></td>
-				</tr>
-				<!-- Action Buttons (Save, Refresh) -->
-				<tr>
-					<td class="form-group form-group-flex">
-						<input type="submit" id="Save" value="Save" />
-						<input type="button" id="Refresh" value="Refresh" />
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
-</body>
-</html>
-
-
-
-
-
-
-
-
+                <div class="row mb-2 align-items-center">
+                    <label class="col-sm-2 col-form-label text-end">Company Name :</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="Enter Company Name" id="txtcompanyName" name="CompanyName" required>
+                    </div>
+                </div>
+                <div class="row mb-2 align-items-center">
+                    <label class="col-sm-2 col-form-label text-end">Address :</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="Enter Address" id="txtaddress" name="Address" required>
+                    </div>
+                </div>
+                <div class="row mb-2 align-items-center">
+                    <label class="col-sm-2 col-form-label text-end">Comp. Short Name :</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Enter Short Name" id="txtcompanyShortName" name="CompShortName" required>
+                    </div>
+                    <label class="col-sm-2 col-form-label text-end">Owner Name :</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Enter Owner Name" id="txtownerName" name="OwnerName" required>
+                    </div>
+                </div>
+               @*  <div class="row mb-2 align-items-center">
+                    <label class="col-sm-2 col-form-label text-end">City :</label>
+                    <div class="col-sm-4 d-flex">
+                        <select class="form-control" id="ddlcity" name="City" required>
+                            <option value="" disabled selected>Select City</option>
+                            <option value="Indore">Indore</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Dhar">Dhar</option>
+                            <option value="Mumbai">Mumbai</option>
+                        </select>
+                     
+                    </div>
+                    <label class="col-sm-2 col-form-label text-end">State :</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Enter State" id="txtstate" name="State">
+                    </div>
+                </div> *@
+                <div class="row mb-2">
+                    <label class="col-sm-2 col-form-label text-end">City:</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="City" id="ddlcity" required>
+                            <option value="" disabled selected>Select City</option>
+                            <option value="Indore">Indore</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Dhar">Dhar</option>
+                            <option value="Mumbai">Mumbai</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 col-form-label text-end">State:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="txtstate" name="State">
+                    </div>
+                </div>
+                <div class="row mb-2 align-items-center">
+                    <label class="col-sm-2 col-form-label text-end">Email :</label>
+                    <div class="col-sm-4">
+                        <input type="email" class="form-control" placeholder="Enter Email" id="txtemail" name="Email">
+                    </div>
+                    <label class="col-sm-2 col-form-label text-end">PIN No :</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Enter PIN No" id="txtpinNo" name="PinNo">
+                    </div>
+                </div>
+                <div class="row mb-2 align-items-center">
+                    <label class="col-sm-2 col-form-label text-end">Mobile No :</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Enter Mobile No" id="txtmobileNo" name="MobileNo">
+                    </div>
+                    <label class="col-sm-2 col-form-label text-end">Phone No :</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Enter Phone No" id="txtphoneNo" name="PhoneNo">
+                    </div>
+                </div>
+                <div class="row mb-2 align-items-center">
+                    <label class="col-sm-2 col-form-label text-end">GST No :</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Enter GST No" id="txtgstNo" name="GstNo">
+                    </div>
+                    <label class="col-sm-2 col-form-label text-end">PAN No :</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Enter PAN No" id="txtpanNo" name="PanNo">
+                    </div>
+                </div>
+                <div class="row mb-2 align-items-center">
+                    <label class="col-sm-2 col-form-label text-end">Contact Person :</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Enter Contact Person" id="txtcontactPerson" name="ContactPerson">
+                    </div>
+                    <label class="col-sm-2 col-form-label text-end">Website :</label>
+                    <div class="col-sm-4">
+                        <input type="url" class="form-control" placeholder="Enter Website" id="txtwebsite" name="Website">
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="reset" class="btn btn-primary">Refresh</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>  
 
 
 

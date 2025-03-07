@@ -1,0 +1,85 @@
+﻿
+.container {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%;
+}
+
+.ard {
+    background-color: whitesmoke;
+    border-radius: 3px;
+    padding: 0px;
+    margin: 0 auto;
+    width: 95%;
+    margin-left: 54px;
+    min-height: 500px;
+    margin-top: -36px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.heade {
+    background-color: #4268a1;
+    color: white;
+    padding: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 2px;
+    width: 100%;
+}
+
+.form-control {
+    padding: 5px;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.btn-dark {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+}
+
+.btn-success, .btn-primary {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+}
+
+.form-group, .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+    .form-group label, .row label {
+        flex: 0 0 25%;
+        text-align: right;
+        margin-right: 10px;
+        font-weight: normal;
+    }
+
+    .form-group .form-control, .row div {
+        flex: 1;
+    }
+
+.required {
+    color: red;
+    margin-right: 3px;
+}
+
+/* Responsive Design */
+@@media (min-width: 1200px) {
+    .container {
+        max-width: 1161px;
+    }
+}
+
+
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
