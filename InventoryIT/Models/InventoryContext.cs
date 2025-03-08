@@ -9,23 +9,23 @@ public partial class InventoryContext : DbContext
     public InventoryContext()
     {
     }
-
     public InventoryContext(DbContextOptions<InventoryContext> options)
-        : base(options)
+            : base(options)
     {
     }
-
     public virtual DbSet<FinancialYear> FinancialYears { get; set; }
 
     public virtual DbSet<ItemCatagory> ItemCatagories { get; set; }
 
     public virtual DbSet<ItemCompany> ItemCompanies { get; set; }
 
+    public virtual DbSet<ItemMaster> ItemMasters { get; set; }
+
     public virtual DbSet<ItemSubCatagory> ItemSubCatagories { get; set; }
 
     public virtual DbSet<ItemType> ItemTypes { get; set; }
 
-    public virtual DbSet<ItemUnit> ItemUnits { get; set; }
+    public virtual DbSet<ItemUnit1> ItemUnits { get; set; }
 
     public virtual DbSet<MastBranch> MastBranches { get; set; }
 
@@ -34,6 +34,10 @@ public partial class InventoryContext : DbContext
     public virtual DbSet<MastComp> MastComps { get; set; }
 
     public virtual DbSet<MastCountry> MastCountries { get; set; }
+
+    public virtual DbSet<MastItemStk> MastItemStks { get; set; }
+
+    public virtual DbSet<MastItemSupplierRate> MastItemSupplierRates { get; set; }
 
     public virtual DbSet<MastState> MastStates { get; set; }
 
@@ -50,9 +54,9 @@ public partial class InventoryContext : DbContext
     public virtual DbSet<WarehouseShelfMaster> WarehouseShelfMasters { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-P99NB78;Database=Inventory;Integrated Security=True;TrustServerCertificate=True;");
-
+    {
+        optionsBuilder.UseSqlServer("Server=DESKTOP-P99NB78;Database=Inventory;Integrated Security=True;TrustServerCertificate=True;");
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<FinancialYear>(entity =>
@@ -114,6 +118,36 @@ public partial class InventoryContext : DbContext
                 .HasColumnName("Item Company Name");
         });
 
+        modelBuilder.Entity<ItemMaster>(entity =>
+        {
+            entity.HasKey(e => e.ItemId);
+
+            entity.ToTable("Item Master");
+
+            entity.Property(e => e.CreationDateTime).HasColumnType("datetime");
+            entity.Property(e => e.ItemCatagory).HasColumnName("Item Catagory");
+            entity.Property(e => e.ItemCode)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("Item Code");
+            entity.Property(e => e.ItemCompany).HasColumnName("Item Company");
+            entity.Property(e => e.ItemName)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("Item Name");
+            entity.Property(e => e.ItemSubCatagory).HasColumnName("Item SubCatagory");
+            entity.Property(e => e.ItemType).HasColumnName("Item Type");
+            entity.Property(e => e.ItemUnit1).HasColumnName("[Item Unit1");
+            entity.Property(e => e.ItemUnit2).HasColumnName("Item Unit2");
+            entity.Property(e => e.PartNo)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.WarehouseArea).HasColumnName("Warehouse Area");
+            entity.Property(e => e.WarehouseLocation).HasColumnName("Warehouse Location");
+            entity.Property(e => e.WarehouseRack).HasColumnName("Warehouse Rack");
+            entity.Property(e => e.WarehouseShelf).HasColumnName("Warehouse Shelf");
+        });
+
         modelBuilder.Entity<ItemSubCatagory>(entity =>
         {
             entity.HasKey(e => e.ItemSubCatId);
@@ -145,9 +179,11 @@ public partial class InventoryContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<ItemUnit>(entity =>
+        modelBuilder.Entity<ItemUnit1>(entity =>
         {
-            entity.ToTable("ItemUnit");
+            entity.HasKey(e => e.ItemUnitId1);
+
+            entity.ToTable("ItemUnit1");
 
             entity.Property(e => e.CreatedBy).HasColumnName("Created By");
             entity.Property(e => e.CreationDateTime)
@@ -318,6 +354,56 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.CreationDateTime)
                 .HasColumnType("datetime")
                 .HasColumnName("Creation DateTime");
+        });
+
+        modelBuilder.Entity<MastItemStk>(entity =>
+        {
+            entity.HasKey(e => e.StockId);
+
+            entity.ToTable("Mast_ItemSTK");
+
+            entity.Property(e => e.StockId).HasColumnName("Stock Id");
+            entity.Property(e => e.BufferStock).HasColumnName("Buffer Stock");
+            entity.Property(e => e.ClosingQuantity).HasColumnName("Closing Quantity");
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.CurrentQuantity).HasColumnName("Current Quantity");
+            entity.Property(e => e.Gst).HasColumnName("GST%");
+            entity.Property(e => e.OpeningQuantity).HasColumnName("Opening Quantity");
+            entity.Property(e => e.OpeningValue).HasColumnName("Opening Value");
+            entity.Property(e => e.PurchaseRate).HasColumnName("Purchase Rate");
+            entity.Property(e => e.SalesRate).HasColumnName("Sales Rate");
+
+            entity.HasOne(d => d.Item).WithMany(p => p.MastItemStks)
+                .HasForeignKey(d => d.ItemId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ItemId");
+        });
+
+        modelBuilder.Entity<MastItemSupplierRate>(entity =>
+        {
+            entity.HasKey(e => e.SuppId);
+
+            entity.ToTable("Mast_ItemSupplierRate");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime).HasColumnName("Creation DateTime");
+            entity.Property(e => e.SupplierCompanyName)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("Supplier Company  Name");
+            entity.Property(e => e.SupplierName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Supplier Name");
+            entity.Property(e => e.SupplierRate).HasColumnName("Supplier Rate");
+
+            entity.HasOne(d => d.Item).WithMany(p => p.MastItemSupplierRates)
+                .HasForeignKey(d => d.ItemId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ItemId_ItemSupplier");
         });
 
         modelBuilder.Entity<MastState>(entity =>

@@ -9,16 +9,16 @@
             <a href="/WarehouseArea/Index" class="btn btn-dark">RETURN TO VIEW</a>
         </div>
         <div class="card-body">
-            <form action="/WarehouseArea/Save" method="post">
+            <form action="AddWarehouseArea" method="post">
                 <div class="row mb-2 align-items-center">
                     <label class="col-form-label" for="ddlWarehouseLocation">Warehouse Location Name:</label>
                     <div>
-                        <select class="form-control" name="WarehouseLocationName" id="ddlWarehouseLocation" required>
-                            <option value="" disabled selected>Select Location</option>
-                            <option value="Indore">Location1</option>
-                            <option value="Pune">Location2</option>
-                            <option value="Dhar">Location3</option>
-                            <option value="Mumbai">Location4</option>
+                        <select name="WarehouseLocId" class="form-control" required>
+                            <option value="">--Select warehouse location--</option>
+                            @foreach (var location in ViewBag.WarehouseLocationMasters)
+                            {
+                                <option value="@location.Value">@location.Text</option>
+                            }
                         </select>
                     </div>
                 </div>

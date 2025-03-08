@@ -1,0 +1,338 @@
+﻿@{
+	ViewData["Title"] = "Product Master";
+}
+<html>
+<head>
+	<style>
+		body {
+			background-color: whitesmoke;
+		}
+
+		.bg-warning {
+			background-color: #4268a1 !important;
+		}
+
+		.container {
+			border-radius: 10px !important;
+		}
+
+		.mt-4 {
+			margin-top: 5.5rem !important;
+		}
+
+		.card-header {
+			padding: 4px;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- Load jQuery -->
+	<script type="text/javascript">
+				// Wait until the DOM is fully loaded before running the script
+				$(document).ready(function () {
+					// When the location dropdown changes, update the areas dropdown.
+					$('#WarehouseLocId').change(function () {
+						debugger;
+						var locationId = $(this).val();
+
+						if (locationId) {
+							$.ajax({
+								url: '@Url.Action("GetAreasByLocation", "ItemMaster")',  // Controller action to fetch areas
+								type: 'GET',
+								data: { locationId: locationId },
+								success: function (data) {
+									var areaDropdown = $('#WarehouseAreaId');
+									areaDropdown.empty();  // Clear existing options
+									areaDropdown.append('<option value="">Select warehouse area</option>'); // Default option
+
+									// Populate the area dropdown with new options
+									$.each(data, function (index, item) {
+										areaDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+									});
+								},
+								error: function () {
+									alert('Error fetching areas. Please try again.');
+								}
+							});
+						} else {
+							// If no location is selected, clear the areas dropdown
+							$('#WarehouseAreaId').empty();
+							$('#WarehouseAreaId').append('<option value="">Select warehouse area</option>');
+						}
+					});
+
+					// When the area dropdown changes, update the racks dropdown.
+					$('#WarehouseAreaId').change(function () {
+						var areaId = $(this).val();
+						if (areaId) {
+							$.ajax({
+								url: '@Url.Action("GetRackByAreas", "ItemMaster")', // Controller action to fetch racks
+								type: 'GET',
+								data: { areaId: areaId },
+								success: function (data) {
+									var rackDropdown = $('#WarehouseRackId');
+									rackDropdown.empty();  // Clear existing options
+									rackDropdown.append('<option value="">Select warehouse rack</option>'); // Default option
+							   // Check if racks are available
+							   if (data.length === 0) {
+								   // Show message if no racks are available
+								   $('#noRacksMessage').show();
+							   } else {
+								   // Hide message if racks are available
+								   $('#noRacksMessage').hide();
+							   }
+									// Populate the rack dropdown with new options
+									$.each(data, function (index, item) {
+										rackDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+									});
+								},
+								error: function () {
+									alert('Error fetching rack details. Please try again.');
+								}
+							});
+						} else {
+							// If no area is selected, clear the racks dropdown
+							$('#WarehouseRackId').empty();
+							$('#WarehouseRackId').append('<option value="">Select warehouse rack</option>');
+						}
+					});
+					// When the rack dropdown changes, update the Shelf dropdown.
+					$('#WarehouseRackId').change(function () {
+						var rackId = $(this).val();
+						if (rackId) {
+							$.ajax({
+								url: '@Url.Action("GetShelvesByRack", "ItemMaster")', // Controller action to fetch shelves
+								type: 'GET',
+								data: { rackId: rackId },
+								success: function (data) {
+									var shelfDropdown = $('#WarehouseShelfId');
+									shelfDropdown.empty();  // Clear existing options
+									shelfDropdown.append('<option value="">Select warehouse shelf</option>'); // Default option
+							   // Check if shelves are available
+							   if (data.length === 0) {
+								   // Show message if no shelves are available
+								   $('#noShelfMessage').show();
+							   } else {
+								   // Hide message if shelf are available
+								   $('#noShelfMessage').hide();
+							   }
+									// Populate the shelf dropdown with new options
+									$.each(data, function (index, item) {
+										shelfDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+									});
+								},
+								error: function () {
+									alert('Error fetching shelf details. Please try again.');
+								}
+							});
+						} else {
+							// If no shelf is selected, clear the shelf dropdown
+							$('#WarehouseShelfId').empty();
+							$('#WarehouseShelfId').append('<option value="">Select warehouse shelf</option>');
+						}
+					});
+		});
+	</script>
+</head>
+<body>
+	<div class="container mt-4">
+		<div class="card">
+			<div class="card-header bg-warning text-white d-flex justify-content-between">
+				<h5>PRODUCT DETAILS</h5>
+				<a href="/SpareItem/Index" class="btn btn-dark">View All Products</a>
+			</div>
+			<div class="card-body bg-light">
+				<form action="AddItemMaster" method="post">
+					<div class="row mb-3 text-end">
+						<label class="col-sm-2 col-form-label">* Item Name :</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="txtitemName" placeholder="Enter Item Name" name="ItemName" style="margin-top: 4px;">
+						</div>
+					</div>
+					<div class="row mb-3 text-end">
+						<label class="col-sm-2 col-form-label">* Item Company :</label>
+						<div class="col-sm-10">
+							<select id="ItemCompany" class="form-control" name="ItemCompany" required>
+								<option value="" disabled selected>--Select Item Company--</option>
+								@foreach (var itemcompany in ViewBag.ItemCompanies)
+								{
+									<option value="@itemcompany.Value">@itemcompany.Text</option>
+								}
+							</select>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-sm-1 col-form-label text-black">Item Type:</label>
+						<div class="col-sm-4">
+							<select id="ItemType" class="form-control" name="ItemType" required>
+								<option value="" disabled selected>--Select ItemType--</option>
+								@foreach (var itemtype in ViewBag.ItemTypes)
+								{
+									<option value="@itemtype.Value">@itemtype.Text</option>
+								}
+							</select>
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Item Unit :</label>
+						<div class="col-sm-4">
+							<select id="ItemUnit1" class="form-control" name="ItemUnit1" required>
+								<option value="" disabled selected>--Select ItemUnit--</option>
+								@foreach (var itemunit in ViewBag.ItemUnits)
+								{
+									<option value="@itemunit.Value">@itemunit.Text</option>
+								}
+							</select>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label text-end">Item Category:</label>
+						<div class="col-sm-4">
+							<select id="ItemCatagory" class="form-control" name="ItemCatagory" required>
+								<option value="" disabled selected>--Select ItemCatagory--</option>
+								@foreach (var itemcatagory in ViewBag.ItemCatagories)
+								{
+									<option value="@itemcatagory.Value">@itemcatagory.Text</option>
+								}
+							</select>
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Item SubCategory :</label>
+						<div class="col-sm-4">
+							<select id="ItemSubCatagory" class="form-control" name="ItemSubCatagory" required>
+								<option value="" disabled selected>--Select Item Sub Catagory--</option>
+								@foreach (var itemsubcatagory in ViewBag.ItemSubCatagories)
+								{
+									<option value="@itemsubcatagory.Value">@itemsubcatagory.Text</option>
+								}
+							</select>
+						</div>
+					</div>
+					<div class="row mb-3 text-end">
+						<label class="col-sm-4 col-form-label" style="margin-left:-101px;">*Ware House Location :</label>
+						<div class="col-sm-6">
+							<select id="WarehouseLocId" class="form-control" name="WarehouseLocationName" required>
+								<option value="" disabled selected>--Select warehouse location--</option>
+								@foreach (var location in ViewBag.WarehouseLocationMasters)
+								{
+									<option value="@location.Value">@location.Text</option>
+								}
+							</select>
+						</div>
+					</div>
+					<div class="row mb-3 text-end">
+						<label class="col-sm-4 col-form-label" style="margin-left:-101px;">*Ware House Area:</label>
+						<div class="col-sm-6">
+							<select id="WarehouseAreaId" name="WarehouseAreaId" class="form-control" required>
+								<option value="" disabled selected>--Select warehouse area--</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mb-3 text-end">
+						<label class="col-sm-4 col-form-label" style="margin-left:-101px;">*Ware House Rack :</label>
+						<div class="col-sm-6">
+							<select id="WarehouseRackId" name="WarehouseRackId" class="form-control" required>
+								<option value="" disabled selected>--Select warehouse rack--</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mb-3 text-end">
+						<label class="col-sm-4 col-form-label" style="margin-left:-101px;">*Ware House Shelf :</label>
+						<div class="col-sm-6">
+							<select id="WarehouseShelfId" name="WarehouseShelfId" class="form-control" required>
+								<option value="" disabled selected>--Select warehouse Shelf--</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label text-end">Opening Stock :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtopeningstk" name="OpeningStock">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Current Stock :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtcurrentstk" name="CurrentStock">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Buffer Stock :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtbufferstk" name="BufferStock">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label text-end">Rate :</label>
+						<diva class="col-sm-2">
+							<input type="text" class="form-control" id="txtRate" name="Rate">
+						</diva>
+						<label class="col-sm-2 col-form-label text-end">GST % :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtvat" name="Vat">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Value Of Stock :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtvalueofstk" name="ValueOfStock">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label text-end">Part No :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtpartno" name="PartNo">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Sales Price :</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="txtsalesprice" name="SalesPrice">
+						</div>
+					</div>
+					<div class="card mt-3">
+						<div class="card-header bg-warning text-white">
+							<h5>SUPPLIER INFORMATION FOR ABOVE PRODUCT</h5>
+						</div>
+						<div class="card-body">
+							<div class="row mb-3 text-end align-items-center">
+								<label class="col-sm-2 col-form-label">* Supplier Name :</label>
+								<div class="col-sm-2">
+									<select class="form-control" id="ddlsuppliername" name="SupplierName">
+										<option>--Select Supplier Name--</option>
+									</select>
+								</div>
+								<label class="col-sm-2 col-form-label" style="margin-left:-48px">* Company Name :</label>
+								<div class="col-sm-2">
+									<select class="form-control" id="ddlcompanyname" name="companyname">
+										<option value="">--select company name--</option>
+										<option value="company1">FSP Technologies</option>
+										<option value="company2">Lenskart</option>
+										<option value="company3">Myntra</option>
+									</select>
+								</div>
+								<label class="col-sm-2 col-form-label" style="margin-left:-109px">Rate :</label>
+								<div class="col-sm-2">
+									<input type="text" class="form-control" placeholder="Enter Supplier Rate" id="txtrate" name="SupplierRate">
+								</div>
+								<div class="col-sm-1 text-start">
+									<button type="button" class="btn btn-warning" style="margin-left: 84px;">OK</button>
+								</div>
+							</div>
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Supplier Name</th>
+											<th>Company Name</th>
+											<th>Rate</th>
+											<th>Action</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td colspan="3" class="text-center">No data available</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="text-center mt-3">
+						<button type="submit" class="btn btn-success">Save</button>
+						<button type="reset" class="btn btn-primary">Refresh</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

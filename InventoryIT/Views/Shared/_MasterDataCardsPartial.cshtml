@@ -76,7 +76,7 @@
 				<div class="item-container" id="loadItemUnit">
 					<div class="item-content">
 						<div class="item-icon"></div>
-						<p class="item-title">Item Unit</p>
+						<p class="item-title">Item Unit1</p>
 					</div>
 				</div>
 			</div>
@@ -140,7 +140,7 @@
 	$(document).ready(function () {
 		$("#loadItemUnit").click(function (e) {
 			e.preventDefault();
-			$.get("@Url.Action("AddItemUnit", "ItemUnit")", function (data) {
+			$.get("@Url.Action("AddItemUnit1", "ItemUnit1")", function (data) {
 				$("#partialContent").html(data);
 			});
 		});
@@ -190,7 +190,7 @@
 	$(document).ready(function () {
 		$("#loadItemmaster").click(function (e) {
 			e.preventDefault();
-			$.get("@Url.Action("ItemMaster", "ItemType")", function (data) {
+			$.get("@Url.Action("AddItemMaster", "ItemMaster")", function (data) {
 				$("#partialContent").html(data);
 			});
 		});

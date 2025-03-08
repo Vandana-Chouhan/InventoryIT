@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace InventoryIT.Models;
 
-public partial class ItemUnit
+public partial class ItemUnit1
 {
-    public int ItemUnitId { get; set; }
+    public int ItemUnitId1 { get; set; }
 
     public string ItemUnitName { get; set; } = null!;
 
