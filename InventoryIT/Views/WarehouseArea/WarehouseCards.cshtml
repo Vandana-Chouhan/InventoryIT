@@ -1,0 +1,170 @@
+﻿@* <style>
+    .image-back {
+        background-image: url('/assets/img/warehousemenu2.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 66%;
+        height: 100vh;
+        margin-left: 195px;
+        margin-top: 19px;
+    }
+
+    body {
+        background-color: white;
+    }
+
+    .container-items {
+        margin-top: 18px;
+    }
+
+    .item-container {
+        height: 143px;
+        width: 152px;
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white; /* Light background */
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .item-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    .item-icon {
+        width: 68px;
+        height: 68px;
+        background-color: #007bff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .item-title {
+        margin-top: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .col-md-2 {
+        flex: 0 0 auto;
+        width: 18%;
+        margin-top: 41%;
+        margin-left: 49px !important;
+    }
+
+</style>
+ *@
+
+
+<style>
+    .image-back {
+        background-image: url('/assets/img/warehousemenu2.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+     /*    width: 66%; */
+     width:89%;
+        height: 100vh;
+       /*  margin-left: 195px; */
+       margin-left:-37px;
+        margin-top: 19px;
+    }
+
+    body {
+        background-color: white;
+    }
+
+    .container-items {
+        margin-top: 18px;
+    }
+
+    .item-container {
+        height: 118px;
+        width: 152px;
+        border-radius: 24px;
+        background: white;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        overflow: hidden; 
+        position: relative;
+    }
+
+    .item-content {
+        width: 100%;
+        height: 100%;
+    }
+
+        .item-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            border-radius: 24px; 
+            display: block;
+        }
+
+
+
+    .col-md-2 {
+        flex: 0 0 auto;
+        width: 18%;
+        margin-top: 41%;
+        margin-left: 31px !important;
+    }
+</style>
+<div class="image-back">
+    <div class="container-items">
+        <div class="row" style="margin-left: 61px;">
+            <div class="col-md-2 mb-2">
+                <div class="item-container">
+                    <a href="/WarehouseLocation/AddWarehouselocation" id="warehouseLocationLink">
+                    <div class="item-content">
+                        <img src="/assets/img/warehouselocations.png" alt="LOCATION">
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <div class="item-container">
+                    <a href="/Warehouse/ShowWhereHouseArea" id="houseArea">
+                    <div class="item-content">
+                        <img src="/assets/img/warehousearea.png" alt="AREA">
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <div class="item-container">
+                    <a href="/Warehouse/ShowWarehouseRack" id="houseRack">
+                    <div class="item-content">
+                        <img src="/assets/img/warehouseracks.png" alt="RACKS"
+                        style="width: 195px; height: 140px;margin-top: -12px; margin-left: -26px;">
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <div class="item-container">
+                    <a href="/Warehouse/ShowWarehouseShelf" id="houseSelf">
+                    <div class="item-content">
+                        <img src="/assets/img/warehouseshelf.png" alt="SHELF"
+                             style="width: 195px; height: 140px;margin-top: -12px; margin-left: -26px;">>
+                    </div>
+                    </a>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+

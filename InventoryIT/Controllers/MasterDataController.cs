@@ -6,11 +6,11 @@ namespace InventoryIT.Controllers
     {
         public IActionResult Index()
         {
-            return PartialView("_MasterDataCardsPartial");
+            return View("_MasterDataCardsPartial");
         }
         public IActionResult LoadFormPartial()
         {
-            return PartialView("_FormPartial");
+            return View("_FormPartial");
         }
     }
 }

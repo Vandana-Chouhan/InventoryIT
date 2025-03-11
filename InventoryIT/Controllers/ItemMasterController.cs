@@ -99,7 +99,7 @@ namespace InventoryIT.Controllers
                 Value = c.ItemCatId.ToString(),
                 Text = c.ItemCatagoryName
             });
-            return PartialView("AddItemMaster");
+            return View();
         }
         //Action to fetch Subcatagory by selected Catagory
         [HttpGet]

@@ -29,7 +29,7 @@ namespace InventoryIT.Controllers
                 Value = c.WarehouseLocId.ToString(),
                 Text = c.WarehouseName
             });
-            return PartialView("AddWarehouseArea");
+            return View();
         }
         [HttpPost]
         public ActionResult AddWarehouseArea(WarehouseAreaMaster warehouseAreaMaster)
@@ -72,6 +72,14 @@ namespace InventoryIT.Controllers
             _warehouseAreaRepository.AddWarehouseArea(area);
             // Redirect to another page or show a success message
             return RedirectToAction("Inventory", "MasterSetup");
+        }
+        public IActionResult ShowWarehousecards()
+        {
+            return View("WarehouseCards");
+        }
+        public IActionResult ShowTranctionCards()
+        {
+            return View("TransactionCards");
         }
     }
 }

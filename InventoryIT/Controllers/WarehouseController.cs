@@ -20,5 +20,8 @@ namespace InventoryIT.Controllers
         {
             return View();
         }
+
+
+
     }
 }

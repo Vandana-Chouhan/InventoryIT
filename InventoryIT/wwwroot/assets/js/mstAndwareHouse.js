@@ -32,15 +32,15 @@ $(document).on("click", "#warehouseLocationLink, #masterDataLink, #openFormCard,
     e.preventDefault();
 
     var urls = {
-        "warehouseLocationLink": "/Warehouselocation/AddWarehouselocation",
+        "warehouseLocationLink": "/Warehouse/OpenWareHouseLocation",
         "masterDataLink": "/MasterData/Index",
         "openFormCard": "/MasterData/LoadFormPartial",
-        "financialSetupLink": "/FinancialYear/AddFinancialYear",
-        "companySetupLink": "/MastComp/AddFCompanyMaster",
+        "financialSetupLink": "/FinancialYear/AddFinancial",
+        "companySetupLink": "/MastComp/AddCompany",
         "branchSetupLink": "/MastBranch/AddFBranchMaster",
-        "houseArea": "/WarehouseArea/AddWarehouseArea",
-        "houseRack": "/WarehouseRack/AddWarehouseRack",
-        "houseSelf": "/WarehouseShelf/AddWarehouseShelf",
+        "houseArea": "/Warehouse/ShowWhereHouseArea",
+        "houseRack": "/Warehouse/ShowWarehouseRack",
+        "houseSelf": "/Warehouse/ShowWarehouseShelf",
         "loadDashboard": "/Das/LoadDashboard"
     };
 

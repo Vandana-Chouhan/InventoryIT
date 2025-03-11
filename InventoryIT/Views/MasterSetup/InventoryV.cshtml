@@ -1,0 +1,333 @@
+﻿@* <html>
+<head>
+	<style>
+		p {
+			margin-top: 30px;
+			text-align: center;
+			font-family: Britannic;
+			font-size: 35px;
+			color: darkblue;
+			text-shadow: 2px;
+		}
+img {
+			align-content: center;
+			margin-left: 500px;
+			margin-top: 100PX;
+			width: 80px;
+			height: 80px;
+		}
+	</style>
+</head>
+<body>
+	<img src="~/images/fsplogo.png" />
+	<p>Welcome to FSP Technologies Management Portal.</p>
+</body>
+</html> *@
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+
+<style>
+    .mt-4 {
+        margin-top: 6.5rem !important;
+    }
+
+    .p-3 {
+        padding: 3rem !important;
+    }
+
+    .mt-4 {
+        width: 71%
+    }
+
+    .mb {
+        align-items: center;
+        margin-left: 27px;
+        margin-top: 25px;
+        font-size: 17px;
+        color: blue;
+    }
+
+    .box-item {
+        font-size: 12px;
+        margin-top: -24px;
+        font-weight: bolder;
+        align-items: center;
+    }
+
+    .container {
+        width: 677px;
+    }
+</style>
+<!-- Purchase Management Section -->
+<div class="container mb-5 p-3 border rounded shadow">
+    <h5 class="bg-primary text-white p-2 rounded" style="margin-top: -48px; width: 675px;margin-left: -48px;">
+        Purchase Management
+    </h5>
+    <div class="d-flex flex-wrap gap-3">
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            <div class="box-item">
+                <span>Total MTR</span>
+                <div class="mb">5</div>
+            </div>
+        </div>
+
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            <div class="box-item">
+                <span>Total PO</span>
+                <div class="mb">5</div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            <div class="box-item">
+                <span>Partial PO</span>
+                <div class="mb">0</div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            <div class="box-item">
+                <span>Total GRN</span>
+                <div class="mb">5</div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Total item stockin
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    5
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Store Section -->
+<div class="container mb-5 p-3 border rounded shadow">
+    <h5 class="bg-success text-white p-2 rounded" style="margin-top: -48px; width: 675px;margin-left: -48px;">Client Order</h5>
+    <div class="d-flex flex-wrap gap-3">
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*   <span>Total orders</span> *@
+            <div class="box-item">
+                <span>Total orders</span>
+                <div class="mb">3</div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*  <span>Completed Orders</span>  *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Completed Orders
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    1
+                </div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*  <span>Orders in Progress</span>  *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Orders in Progress
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    2
+                </div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @* <span>Orders with item short</span> *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Orders with item short
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    1
+                </div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @* <span>Order ready for dispath</span> *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Order ready for dispath
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    1
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mb-5 p-3 border rounded shadow">
+    <h5 class="bg-primary text-white p-2 rounded" style="margin-top: -48px; width: 675px;margin-left: -48px;">
+        Stores
+    </h5>
+    <div class="d-flex flex-wrap gap-3">
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*   <span>Overall stockqty/amt</span> *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Overall stockqty/amt
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    2000
+                </div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*   <span>Buffer stock item</span> *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Buffer stock item
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    10
+                </div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @* <span>R1 stock</span> *@
+            <div class="box-item">
+                <span>R1 stock</span>
+                <div class="mb">1000</div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*    <span>R2 stock</span> *@
+            <div class="box-item">
+                <span>R2 stock</span>
+                <div class="mb">200</div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*  <span>Reusable stock</span> *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Reusable stock
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    100
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Store Section -->
+<div class="container mb-5 p-3 border rounded shadow">
+    <h5 class="bg-success text-white p-2 rounded" style="margin-top: -48px; width: 675px;margin-left: -48px;">Warehouse</h5>
+    <div class="d-flex flex-wrap gap-3">
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*  <span>overall warehouse stock</span> *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    overall warehouse stock
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    2500
+                </div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*  <span>Areawise stock</span> *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Areawise stock
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    500
+                </div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*  <span>Rackwise Stock</span> *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Rackwise Stock
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    100
+                </div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            @*  <span>Shelf wise stock</span> *@
+            <div class="box-item">
+                <h6 style="margin-left: 14px;
+                           margin-top: 17px;
+                         font-size: 13px;
+                         font-weight: bolder">
+                    Shelf wise stock
+                </h6>
+                <div class="m" style="margin-left: 37px;
+                         font-size: 17px;
+                         color: blue;">
+                    50
+                </div>
+            </div>
+        </div>
+        <div class="box border rounded shadow d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            <span>Empty..</span>
+        </div>
+    </div>
+</div>

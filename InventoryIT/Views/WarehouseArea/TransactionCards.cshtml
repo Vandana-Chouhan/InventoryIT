@@ -1,12 +1,12 @@
 ﻿<style>
     .image-back {
-        background-image: url('/wwwroot/images/image2.jpg');
+        background-image: url('/assets/img/card.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         width: 100%;
         height: 100vh;
-        margin-left: -10px;
+        margin-left: -160px;
         margin-top: 19px;
     }
     .container-items {
@@ -59,62 +59,87 @@
         <div class="row" style="margin-left: 61px;">
             <div class="col-md-2 mb-2">
                 <div class="item-container" id="loadMaterialRequest">
+                    <a href="/PurchageMgmt/LoadProductRqst">
                     <div class="item-content">
                         <div class="item-icon"></div>
                         <p class="item-title">Material Request</p>
                     </div>
-                </div>
+                    </a>
+                </div> 
+
             </div>
             <div class="col-md-2 mb-2">
                 <div class="item-container" id="loadProductOrder">
+                    <a href="/PurchageMgmt/LoadProductOrder">
                     <div class="item-content">
                         <div class="item-icon"></div>
-                        <p class="item-title">Purchase Order</p>
+                        <p class="item-title">Purchage Order</p>
                     </div>
+                   </a>
                 </div>
             </div>
 
             <div class="col-md-2 mb-2">
                 <div class="item-container" id="loadGRN">
+                    <a href="/PurchageMgmt/LoadGrn">
                     <div class="item-content">
                         <div class="item-icon"></div>
                         <p class="item-title">GRN</p>
                     </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-2 mb-2">
                 <div class="item-container" id="loadProduct">
+                    <a href="/PurchageMgmt/LoadProduIssue">
                     <div class="item-content">
                         <div class="item-icon"></div>
                         <p class="item-title">Item Issue</p>
                     </div>
+                    </a>
                 </div>
             </div>
 
             <div class="col-md-2 mb-2">
                 <div class="item-container" id="loadProductReturn">
+                    <a href="/PurchageMgmt/ItemReturn">
                     <div class="item-content">
                         <div class="item-icon"></div>
                         <p class="item-title">Item Return</p>
                     </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-2 mb-2">
-                <div class="item-container" id="itemstockupdate">
+                <div class="item-container" id="loadStockDetails">
+                    <a href="/PurchageMgmt/LoadStockDetails">
                     <div class="item-content">
                         <div class="item-icon"></div>
-                        <p class="item-title">Item Stock Update</p>
+                        <p class="item-title">Product Details</p>
                     </div>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#loadStockDetails").click(function (e) {
+            e.preventDefault();
+            $.get("@Url.Action("LoadStockDetails", "PurchageMgmt")", function (data) {
+                $("#partialContent").html(data);
+            });
+        });
+    });
+
+</script>
 <script>
     $(document).ready(function () {
         $("#loadMaterialRequest").click(function (e) {
             e.preventDefault();
-            $.get("@Url.Action("MaterialRequest", "PurchaseMgmt")", function (data) {
+            $.get("@Url.Action("LoadProductRqst", "PurchageMgmt")", function (data) {
                 $("#partialContent").html(data);
             });
         });
@@ -125,7 +150,7 @@
     $(document).ready(function () {
         $("#loadProductOrder").click(function (e) {
             e.preventDefault();
-            $.get("@Url.Action("PurchaseOrder", "PurchaseMgmt")", function (data) {
+            $.get("@Url.Action("LoadProductOrder", "PurchageMgmt")", function (data) {
                 $("#partialContent").html(data);
             });
         });
@@ -135,7 +160,7 @@
     $(document).ready(function () {
         $("#loadGRN").click(function (e) {
             e.preventDefault();
-            $.get("@Url.Action("GRN", "PurchaseMgmt")", function (data) {
+            $.get("@Url.Action("LoadGrn", "PurchageMgmt")", function (data) {
                 $("#partialContent").html(data);
             });
         });
@@ -145,7 +170,7 @@
     $(document).ready(function () {
         $("#loadProduct").click(function (e) {
             e.preventDefault();
-            $.get("@Url.Action("ItemIssue", "PurchaseMgmt")", function (data) {
+            $.get("@Url.Action("ProduIssue", "PurchageMgmt")", function (data) {
                 $("#partialContent").html(data);
             });
         });
@@ -155,18 +180,30 @@
     $(document).ready(function () {
         $("#loadProductReturn").click(function (e) {
             e.preventDefault();
-            $.get("@Url.Action("ItemReturn", "PurchaseMgmt")", function (data) {
+            $.get("@Url.Action("ItemReturn", "PurchageMgmt")", function (data) {
                 $("#partialContent").html(data);
             });
         });
     });
 </script>
+<div id="partialViewContainer"></div>
+
 <script>
     $(document).ready(function () {
-        $("#itemstockupdate").click(function (e) {
-            e.preventDefault();
-            $.get("@Url.Action("ItemStockUpdate", "PurchaseMgmt")", function (data) {
-                $("#partialContent").html(data);
+        $(".loadPartialView").click(function (event) {
+            event.preventDefault(); // Page reload hone se roke
+
+            var url = $(this).attr("href"); // URL from anchor tag
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (data) {
+                    $("#partialViewContainer").html(data);
+                },
+                error: function () {
+                    alert("Failed to load data.");
+                }
             });
         });
     });
