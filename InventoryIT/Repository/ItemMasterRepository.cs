@@ -63,6 +63,10 @@ namespace InventoryIT.Repository
             }
             return result;
         }
+        public void Save()
+        {
+            _inventoryContext.SaveChanges();
+        }
         // Delete a ItemMaster by its ID
         public void Delete(int imasterid)
         {
@@ -86,5 +90,3 @@ namespace InventoryIT.Repository
         }
     }
 }
-
-

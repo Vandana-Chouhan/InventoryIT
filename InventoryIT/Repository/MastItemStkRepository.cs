@@ -18,6 +18,10 @@ namespace InventoryIT.Repository
         {
             return _inventoryContext.MastItemStks.Find(stockId);
         }
+        public void Save()
+        {
+            _inventoryContext.SaveChanges();
+        }
         public int AddItemStk(MastItemStk mastItemStk)
         {
             int result = 0;
@@ -86,4 +90,3 @@ namespace InventoryIT.Repository
         }
     }
 }
-

@@ -69,4 +69,3 @@ namespace InventoryIT.Controllers
         }
     }
 }
-

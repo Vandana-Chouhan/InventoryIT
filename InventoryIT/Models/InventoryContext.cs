@@ -389,7 +389,7 @@ public partial class InventoryContext : DbContext
             entity.ToTable("Mast_ItemSupplierRate");
 
             entity.Property(e => e.CreatedBy).HasColumnName("Created By");
-            entity.Property(e => e.CreationDateTime).HasColumnName("Creation DateTime");
+            entity.Property(e => e.CreationDateTime).HasColumnName("CreationDateTime");
             entity.Property(e => e.SupplierCompanyName)
                 .HasMaxLength(300)
                 .IsUnicode(false)

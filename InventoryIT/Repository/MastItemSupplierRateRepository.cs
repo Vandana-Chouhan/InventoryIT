@@ -27,7 +27,7 @@ namespace InventoryIT.Repository
                 {
                     _inventoryContext.MastItemSupplierRates.Add(mastItemSupplierRate);
                     _inventoryContext.SaveChanges();
-                    result = mastItemSupplierRate.SuppId; // Assuming ItemMastSuppID is the primary key
+                    result = mastItemSupplierRate.SuppId; 
                 }
                 catch (Exception ex)
                 {
@@ -39,6 +39,10 @@ namespace InventoryIT.Repository
                 throw new ArgumentNullException(nameof(mastItemSupplierRate), "ItemSupplierRates cannot be null");
             }
             return result;
+        }
+        public void Save()
+        {
+            _inventoryContext.SaveChanges();
         }
         public int Update(MastItemSupplierRate mastItemSupplierRate)
         {
@@ -86,4 +90,3 @@ namespace InventoryIT.Repository
         }
     }
 }
-

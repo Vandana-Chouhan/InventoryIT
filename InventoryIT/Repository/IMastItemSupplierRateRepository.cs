@@ -9,5 +9,6 @@ namespace InventoryIT.Repository
         public int AddItemSupplierRate(MastItemSupplierRate mastItemSupplierRate);
         public int Update(MastItemSupplierRate mastItemSupplierRate);
         public void Delete(int suppId);
+        void Save();
     }
 }

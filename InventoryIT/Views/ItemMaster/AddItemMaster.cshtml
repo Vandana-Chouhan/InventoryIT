@@ -1,4 +1,5 @@
-﻿@{
+﻿@model InventoryIT.ViewModels.ItemMasterViewModel
+@{
 	ViewData["Title"] = "Product Master";
 }
 <html>
@@ -29,19 +30,17 @@
 				// Wait until the DOM is fully loaded before running the script
 				$(document).ready(function () {
 					// When the location dropdown changes, update the areas dropdown.
-					$('#WarehouseLocId').change(function () {
-						debugger;
-						var locationId = $(this).val();
-
-						if (locationId) {
+					$('#WarehouseLocation').change(function () {
+					var locationId = $(this).val();
+						 if (locationId) {
 							$.ajax({
 								url: '@Url.Action("GetAreasByLocation", "ItemMaster")',  // Controller action to fetch areas
 								type: 'GET',
 								data: { locationId: locationId },
 								success: function (data) {
-									var areaDropdown = $('#WarehouseAreaId');
+									var areaDropdown = $('#WarehouseArea');
 									areaDropdown.empty();  // Clear existing options
-									areaDropdown.append('<option value="">Select warehouse area</option>'); // Default option
+									areaDropdown.append('<option value="">--Select warehouse area--</option>'); // Default option
 
 									// Populate the area dropdown with new options
 									$.each(data, function (index, item) {
@@ -54,23 +53,22 @@
 							});
 						} else {
 							// If no location is selected, clear the areas dropdown
-							$('#WarehouseAreaId').empty();
-							$('#WarehouseAreaId').append('<option value="">Select warehouse area</option>');
+							$('#WarehouseArea').empty();
+							$('#WarehouseArea').append('<option value="">--Select warehouse area--</option>');
 						}
 					});
-
-					// When the area dropdown changes, update the racks dropdown.
-					$('#WarehouseAreaId').change(function () {
-						var areaId = $(this).val();
+				   // When the area dropdown changes, update the racks dropdown.
+					$('#WarehouseArea').change(function () {
+					var areaId = $(this).val();
 						if (areaId) {
 							$.ajax({
 								url: '@Url.Action("GetRackByAreas", "ItemMaster")', // Controller action to fetch racks
 								type: 'GET',
 								data: { areaId: areaId },
 								success: function (data) {
-									var rackDropdown = $('#WarehouseRackId');
+									var rackDropdown = $('#WarehouseRack');
 									rackDropdown.empty();  // Clear existing options
-									rackDropdown.append('<option value="">Select warehouse rack</option>'); // Default option
+									rackDropdown.append('<option value="">--Select warehouse rack--</option>'); // Default option
 							   // Check if racks are available
 							   if (data.length === 0) {
 								   // Show message if no racks are available
@@ -90,22 +88,57 @@
 							});
 						} else {
 							// If no area is selected, clear the racks dropdown
-							$('#WarehouseRackId').empty();
-							$('#WarehouseRackId').append('<option value="">Select warehouse rack</option>');
+							$('#WarehouseRack').empty();
+							$('#WarehouseRack').append('<option value="">--Select warehouse rack--</option>');
+						}
+					});
+					// When the Catagory  dropdown changes, update the Subcatagory dropdown.
+					$('#ItemCatagory').change(function () {
+						var catagoryId = $(this).val();
+						if (catagoryId) {
+							$.ajax({
+								url: '@Url.Action("GetSubCatagoryByCatagory", "ItemMaster")', // Controller action to fetch Subcatagory
+								type: 'GET',
+								data: { catagoryId: catagoryId },
+								success: function (data) {
+									var subCatDropdown = $('#ItemSubCatagory');
+									subCatDropdown.empty();  // Clear existing options
+									subCatDropdown.append('<option value="">--Select Item Subcatagory--</option>'); // Default option
+							   // Check if SubCatagories are available
+							   if (data.length === 0) {
+								   // Show message if no Subcatagories are available
+								   $('#noSubCatagoriesMessage').show();
+							   } else {
+								   // Hide message if Subcatagories are available
+								   $('#noSubCatagoriesMessage').hide();
+							   }
+									// Populate the Subcatagory dropdown with new options
+									$.each(data, function (index, item) {
+										subCatDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+									});
+								},
+								error: function () {
+									alert('Error fetching Subcatagory details. Please try again.');
+								}
+							});
+						} else {
+							// If no SubCatagories is selected, clear the Subcatagory dropdown
+							$('#ItemSubCatagory').empty();
+							$('#ItemSubCatagory').append('<option value="">--Select Item Subcatagory--</option>');
 						}
 					});
 					// When the rack dropdown changes, update the Shelf dropdown.
-					$('#WarehouseRackId').change(function () {
-						var rackId = $(this).val();
+					$('#WarehouseRack').change(function () {
+					 var rackId = $(this).val();
 						if (rackId) {
 							$.ajax({
 								url: '@Url.Action("GetShelvesByRack", "ItemMaster")', // Controller action to fetch shelves
 								type: 'GET',
 								data: { rackId: rackId },
 								success: function (data) {
-									var shelfDropdown = $('#WarehouseShelfId');
+									var shelfDropdown = $('#WarehouseShelf');
 									shelfDropdown.empty();  // Clear existing options
-									shelfDropdown.append('<option value="">Select warehouse shelf</option>'); // Default option
+									shelfDropdown.append('<option value="">--Select warehouse shelf--</option>'); // Default option
 							   // Check if shelves are available
 							   if (data.length === 0) {
 								   // Show message if no shelves are available
@@ -125,8 +158,8 @@
 							});
 						} else {
 							// If no shelf is selected, clear the shelf dropdown
-							$('#WarehouseShelfId').empty();
-							$('#WarehouseShelfId').append('<option value="">Select warehouse shelf</option>');
+							$('#WarehouseShelf').empty();
+							$('#WarehouseShelf').append('<option value="">--Select warehouse shelf--</option>');
 						}
 					});
 		});
@@ -140,17 +173,17 @@
 				<a href="/SpareItem/Index" class="btn btn-dark">View All Products</a>
 			</div>
 			<div class="card-body bg-light">
-				<form action="AddItemMaster" method="post">
+				<form action="/ItemMaster/AddItemMaster" method="post">
 					<div class="row mb-3 text-end">
 						<label class="col-sm-2 col-form-label">* Item Name :</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="txtitemName" placeholder="Enter Item Name" name="ItemName" style="margin-top: 4px;">
+							<input type="text" class="form-control" id="txtitemName" placeholder="Enter Item Name" name="itemMaster.ItemName" style="margin-top: 4px;">
 						</div>
 					</div>
 					<div class="row mb-3 text-end">
 						<label class="col-sm-2 col-form-label">* Item Company :</label>
 						<div class="col-sm-10">
-							<select id="ItemCompany" class="form-control" name="ItemCompany" required>
+							<select id="ItemCompany" class="form-control" name="itemMaster.ItemCompany" required>
 								<option value="" disabled selected>--Select Item Company--</option>
 								@foreach (var itemcompany in ViewBag.ItemCompanies)
 								{
@@ -160,9 +193,9 @@
 						</div>
 					</div>
 					<div class="row mb-3">
-						<label class="col-sm-1 col-form-label text-black">Item Type:</label>
-						<div class="col-sm-4">
-							<select id="ItemType" class="form-control" name="ItemType" required>
+						<label class="col-sm-2 col-form-label text-end">Item Type:</label>
+						<div class="col-sm-2">
+							<select id="ItemType" class="form-control" name="itemMaster.ItemType" required>
 								<option value="" disabled selected>--Select ItemType--</option>
 								@foreach (var itemtype in ViewBag.ItemTypes)
 								{
@@ -170,9 +203,9 @@
 								}
 							</select>
 						</div>
-						<label class="col-sm-2 col-form-label text-end">Item Unit :</label>
-						<div class="col-sm-4">
-							<select id="ItemUnit1" class="form-control" name="ItemUnit1" required>
+						<label class="col-sm-2 col-form-label text-end">Item Unit1:</label>
+						<div class="col-sm-2">
+							<select id="ItemUnit1" class="form-control" name="itemMaster.ItemUnit1" required>
 								<option value="" disabled selected>--Select ItemUnit--</option>
 								@foreach (var itemunit in ViewBag.ItemUnits)
 								{
@@ -180,11 +213,15 @@
 								}
 							</select>
 						</div>
+						<label class="col-sm-2 col-form-label text-end">Item Unit2:</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtitemUnit2" name="itemMaster.ItemUnit2">
+						</div>
 					</div>
 					<div class="row mb-3">
 						<label class="col-sm-2 col-form-label text-end">Item Category:</label>
 						<div class="col-sm-4">
-							<select id="ItemCatagory" class="form-control" name="ItemCatagory" required>
+							<select id="ItemCatagory" class="form-control" name="itemMaster.ItemCatagory" required>
 								<option value="" disabled selected>--Select ItemCatagory--</option>
 								@foreach (var itemcatagory in ViewBag.ItemCatagories)
 								{
@@ -194,19 +231,15 @@
 						</div>
 						<label class="col-sm-2 col-form-label text-end">Item SubCategory :</label>
 						<div class="col-sm-4">
-							<select id="ItemSubCatagory" class="form-control" name="ItemSubCatagory" required>
-								<option value="" disabled selected>--Select Item Sub Catagory--</option>
-								@foreach (var itemsubcatagory in ViewBag.ItemSubCatagories)
-								{
-									<option value="@itemsubcatagory.Value">@itemsubcatagory.Text</option>
-								}
+							<select id="ItemSubCatagory" class="form-control" name="itemMaster.ItemSubCatagory" required>
+								<option value="" disabled selected>--Select Item Subcatagory--</option>
 							</select>
 						</div>
 					</div>
-					<div class="row mb-3 text-end">
-						<label class="col-sm-4 col-form-label" style="margin-left:-101px;">*Ware House Location :</label>
-						<div class="col-sm-6">
-							<select id="WarehouseLocId" class="form-control" name="WarehouseLocationName" required>
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label text-end">Warehouse Location:</label>
+						<div class="col-sm-4">
+							<select id="WarehouseLocation" class="form-control" name="itemMaster.WarehouseLocation" required>
 								<option value="" disabled selected>--Select warehouse location--</option>
 								@foreach (var location in ViewBag.WarehouseLocationMasters)
 								{
@@ -214,67 +247,73 @@
 								}
 							</select>
 						</div>
-					</div>
-					<div class="row mb-3 text-end">
-						<label class="col-sm-4 col-form-label" style="margin-left:-101px;">*Ware House Area:</label>
-						<div class="col-sm-6">
-							<select id="WarehouseAreaId" name="WarehouseAreaId" class="form-control" required>
+						<label class="col-sm-2 col-form-label text-end">Warehouse Area:</label>
+						<div class="col-sm-4">
+							<select id="WarehouseArea" name="itemMaster.WarehouseArea" class="form-control" required>
 								<option value="" disabled selected>--Select warehouse area--</option>
 							</select>
 						</div>
 					</div>
-					<div class="row mb-3 text-end">
-						<label class="col-sm-4 col-form-label" style="margin-left:-101px;">*Ware House Rack :</label>
-						<div class="col-sm-6">
-							<select id="WarehouseRackId" name="WarehouseRackId" class="form-control" required>
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label text-end">Warehouse Rack :</label>
+						<div class="col-sm-4">
+							<select id="WarehouseRack" name="itemMaster.WarehouseRack" class="form-control" required>
 								<option value="" disabled selected>--Select warehouse rack--</option>
 							</select>
 						</div>
-					</div>
-					<div class="row mb-3 text-end">
-						<label class="col-sm-4 col-form-label" style="margin-left:-101px;">*Ware House Shelf :</label>
-						<div class="col-sm-6">
-							<select id="WarehouseShelfId" name="WarehouseShelfId" class="form-control" required>
+						<label class="col-sm-2 col-form-label text-end">Warehouse Shelf:</label>
+						<div class="col-sm-4">
+							<select id="WarehouseShelf" name="itemMaster.WarehouseShelf" class="form-control" required>
 								<option value="" disabled selected>--Select warehouse Shelf--</option>
 							</select>
 						</div>
 					</div>
 					<div class="row mb-3">
-						<label class="col-sm-2 col-form-label text-end">Opening Stock :</label>
-						<div class="col-sm-2">
-							<input type="text" class="form-control" id="txtopeningstk" name="OpeningStock">
+						<label class="col-sm-2 col-form-label text-end">Part No :</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="txtpartno" name="itemMaster.PartNo">
 						</div>
-						<label class="col-sm-2 col-form-label text-end">Current Stock :</label>
-						<div class="col-sm-2">
-							<input type="text" class="form-control" id="txtcurrentstk" name="CurrentStock">
-						</div>
-						<label class="col-sm-2 col-form-label text-end">Buffer Stock :</label>
-						<div class="col-sm-2">
-							<input type="text" class="form-control" id="txtbufferstk" name="BufferStock">
+						<label class="col-sm-2 col-form-label text-end">Item Code :</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="txtitemcode" name="itemMaster.ItemCode">
 						</div>
 					</div>
 					<div class="row mb-3">
-						<label class="col-sm-2 col-form-label text-end">Rate :</label>
-						<diva class="col-sm-2">
-							<input type="text" class="form-control" id="txtRate" name="Rate">
-						</diva>
+						<label class="col-sm-2 col-form-label text-end">Opening Quantity :</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="txtopeningquantity" name="mastItemStk.OpeningQuantity">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Current Quantity:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="txtcurrentquantity" name="mastItemStk.CurrentQuantity">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label text-end"> Purchase Rate :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtPurchaseRate" name="mastItemStk.PurchaseRate">
+						</div>
 						<label class="col-sm-2 col-form-label text-end">GST % :</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="txtvat" name="Vat">
+							<input type="text" class="form-control" id="txtGST" name="mastItemStk.Gst">
 						</div>
-						<label class="col-sm-2 col-form-label text-end">Value Of Stock :</label>
+						<label class="col-sm-2 col-form-label text-end">Sales Rate :</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="txtvalueofstk" name="ValueOfStock">
+							<input type="text" class="form-control" id="txtsalesrate" name="mastItemStk.SalesRate">
 						</div>
 					</div>
-					<div class="row mb-3">
-						<label class="col-sm-2 col-form-label text-end">Part No :</label>
+					<div class=" row mb-3">
+						<label class="col-sm-2 col-form-label text-end">Opening Value:</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="txtpartno" name="PartNo">
+							<input type="text" class="form-control" id="txtopeningvalue" name="mastItemStk.OpeningValue">
 						</div>
-						<label class="col-sm-2 col-form-label text-end">Sales Price :</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" id="txtsalesprice" name="SalesPrice">
+						<label class="col-sm-2 col-form-label text-end">Buffer Stock:</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtbufferstock" name="mastItemStk.BufferStock">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Closing Quantity :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtclosingquantity" name="mastItemStk.ClosingQuantity">
 						</div>
 					</div>
 					<div class="card mt-3">
@@ -282,25 +321,24 @@
 							<h5>SUPPLIER INFORMATION FOR ABOVE PRODUCT</h5>
 						</div>
 						<div class="card-body">
-							<div class="row mb-3 text-end align-items-center">
-								<label class="col-sm-2 col-form-label">* Supplier Name :</label>
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label text-end">Supplier Name :</label>
 								<div class="col-sm-2">
-									<select class="form-control" id="ddlsuppliername" name="SupplierName">
-										<option>--Select Supplier Name--</option>
+									<select id="ddlSupplierName" class="form-control" name="supplierRate.SupplierName" required>
+										<option value="" disabled selected>--Select Supplier Name--</option>
+										@foreach (var supplier in ViewBag.SupplierMasters)
+										{
+											<option value="@supplier.Value">@supplier.Text</option>
+										}
 									</select>
 								</div>
-								<label class="col-sm-2 col-form-label" style="margin-left:-48px">* Company Name :</label>
+								<label class="col-sm-2 col-form-label text-end">Supplier Company Name:</label>
 								<div class="col-sm-2">
-									<select class="form-control" id="ddlcompanyname" name="companyname">
-										<option value="">--select company name--</option>
-										<option value="company1">FSP Technologies</option>
-										<option value="company2">Lenskart</option>
-										<option value="company3">Myntra</option>
-									</select>
+									<input type="text" class="form-control" placeholder="Enter SupplierCompanyName" id="txtsuppliercompany" name="supplierRate.SupplierCompanyName">
 								</div>
-								<label class="col-sm-2 col-form-label" style="margin-left:-109px">Rate :</label>
+								<label class="col-sm-2 col-form-label text-end">Supplier Rate :</label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control" placeholder="Enter Supplier Rate" id="txtrate" name="SupplierRate">
+									<input type="text" class="form-control" placeholder="Enter Supplier Rate" id="txtrate" name="supplierRate.SupplierRate">
 								</div>
 								<div class="col-sm-1 text-start">
 									<button type="button" class="btn btn-warning" style="margin-left: 84px;">OK</button>
@@ -314,7 +352,6 @@
 											<th>Company Name</th>
 											<th>Rate</th>
 											<th>Action</th>
-
 										</tr>
 									</thead>
 									<tbody>
