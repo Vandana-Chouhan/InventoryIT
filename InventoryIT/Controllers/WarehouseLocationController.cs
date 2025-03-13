@@ -19,7 +19,7 @@ namespace InventoryIT.Controllers
         }
         public IActionResult AddWarehouselocation()
         {
-            return PartialView("AddWarehouselocation");
+            return View();
         }
         [HttpPost]
         public ActionResult AddWarehouselocation(WarehouseLocationMaster warehouseLocationMaster)
@@ -59,8 +59,11 @@ namespace InventoryIT.Controllers
             };
             // Save the Warehouselocation details to the database
             _warehouseLocationRepository.AddWarehouselocation(location);
+
+            TempData["SuccessMessage"] = "Warehouse Location details saved successfully.";
+
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddWarehouselocation", "WarehouseLocation");
         }
     }
 }

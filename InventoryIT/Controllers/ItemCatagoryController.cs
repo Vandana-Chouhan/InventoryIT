@@ -18,9 +18,23 @@ namespace InventoryIT.Controllers
             _mastCompRepository = mastCompRepository;
             _financialYearRepository = financialYearRepository;
         }
+        public IActionResult itemcategoryDataTable()
+        {
+            return View("ItemCatagoryDataTable");
+        }
+        public ActionResult GetAllData()
+         {
+             var catagory = _itemCatagoryRepository.GetAllItemCatagory();
+             var masterData = catagory.Select(c => new
+             {
+                 ItemCatId = c.ItemCatId,
+                 ItemCatagoryName = c.ItemCatagoryName
+             }).ToList();
+             return Json(new { data = masterData });
+         }
         public ActionResult AddItemCatagory()
         {
-            return PartialView("AddItemCatagory");
+            return View();
         }
         [HttpPost]
         public ActionResult AddItemCatagory(ItemCatagory itemCatagory)
@@ -60,8 +74,10 @@ namespace InventoryIT.Controllers
             };
             // Save the itemCatagory to the database
             _itemCatagoryRepository.AddItemCatagory(item);
+            TempData["SuccessMessage"] = "Item Catagory details saved successfully.";
+
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddItemCatagory", "ItemCatagory");
         }
     }
 }

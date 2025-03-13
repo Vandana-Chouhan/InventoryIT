@@ -19,7 +19,7 @@ namespace InventoryIT.Controllers
         public ActionResult AddUserMaster(UserMaster userMaster)
         {
             _userMasterRepository.AddUserMaster(userMaster);
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddUserMaster", "UserMaster");
         }
     }
 }

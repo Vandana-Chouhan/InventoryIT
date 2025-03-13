@@ -4,25 +4,39 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryIT.Controllers
 {
-    public class ItemUnit1Controller : Controller
+    public class ItemUnitController : Controller
     {
-        private readonly IItemUnit1Repository _itemUnit1Repository;
+        private readonly IItemUnitRepository _itemUnitRepository;
         private readonly IMastBranchRepository _mastBranchRepository;
         private readonly IMastCompRepository _mastCompRepository;
         private readonly IFinancialYearRepository _financialYearRepository;
-        public ItemUnit1Controller(IItemUnit1Repository itemUnit1Repository, IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository, IFinancialYearRepository financialYearRepository)
+        public ItemUnitController(IItemUnitRepository itemUnitRepository, IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository, IFinancialYearRepository financialYearRepository)
         {
-            _itemUnit1Repository = itemUnit1Repository;
+            _itemUnitRepository = itemUnitRepository;
             _mastBranchRepository = mastBranchRepository;
             _mastCompRepository = mastCompRepository;
             _financialYearRepository = financialYearRepository;
         }
-        public ActionResult AddItemUnit1()
+        public IActionResult itemUnitDataTable()
         {
-            return PartialView("AddItemUnit1");
+            return View("ItemUnitDataTable");
+        }
+        public ActionResult GetAllUnit()
+        {
+            var itemunit = _itemUnitRepository.GetAllItemUnit();
+            var masterData = itemunit.Select(c => new
+            {
+                ItemUnitId = c.ItemUnitId,
+                ItemUnitName = c.ItemUnitName
+            }).ToList();
+            return Json(new { data = masterData });
+        }
+        public ActionResult AddItemUnit()
+        {
+            return View();
         }
         [HttpPost]
-        public ActionResult AddItemUnit1(ItemUnit1 itemUnit)
+        public ActionResult AddItemUnit(ItemUnit itemUnit)
         {
             // Retrieve session values as strings
             string? compName = HttpContext.Session.GetString("CompanyName");
@@ -49,7 +63,7 @@ namespace InventoryIT.Controllers
 
             }
             // Create a new ItemUnit object using the data
-            var item = new ItemUnit1
+            var item = new ItemUnit
             {
                 ItemUnitName = itemUnit.ItemUnitName,
                 CompId = itemUnit.CompId,
@@ -58,9 +72,11 @@ namespace InventoryIT.Controllers
                 CreatedBy = itemUnit.CreatedBy
             };
             // Save the itemUnit to the database
-            _itemUnit1Repository.AddItemUnit1(item);
+            _itemUnitRepository.AddItemUnit(item);
+            TempData["SuccessMessage"] = "Item Unit details saved successfully.";
+
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddItemUnit", "ItemUnit");
         }
     }
 }

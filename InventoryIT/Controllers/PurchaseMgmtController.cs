@@ -6,31 +6,31 @@ namespace InventoryIT.Controllers
     {
         public IActionResult MaterialRequest()
         {
-            return PartialView("MaterialRequest");
+            return View();
         }
         public IActionResult PurchaseOrder()
         {
-            return PartialView("PurchaseOrder");
+            return View();
         }
         public IActionResult GRN()
         {
-            return PartialView("GRN");
+            return View();
         }
         public IActionResult ItemIssue()
         {
-            return PartialView("ItemIssue");
+            return View();
         }
         public IActionResult ItemReturn()
         {
-            return PartialView("ItemReturn");
+            return View();
         }
         public IActionResult ItemStockUpdate()
         {
-            return PartialView("ItemStockUpdate");
+            return View();
         }
         public IActionResult LoadTransactionCard()
         {
-            return PartialView("TransactionCards");
+            return View("TransactionCards");
         }
     }
 }

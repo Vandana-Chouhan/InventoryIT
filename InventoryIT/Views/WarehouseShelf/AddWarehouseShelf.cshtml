@@ -82,9 +82,15 @@
 			</div>
 			<div class="card-body">
 				<form asp-action="AddWarehouseShelf" method="post">
+					@if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
+					{
+						<div class="alert alert-success">
+							@TempData["SuccessMessage"]
+						</div>
+					}
 					<div class="form-group">
 						<label for="ddlWarehouseLocation">Warehouse Location Name:</label>
-						<select id="WarehouseLocId" class="form-control" name="WarehouseLocationName" required>
+						<select id="WarehouseLocId" class="form-control" name="WarehouseLocId" required>
 							<option value="" disabled selected>--Select warehouse location--</option>
 							@foreach (var location in ViewBag.WarehouseLocationMasters)
 							{
@@ -106,17 +112,18 @@
 					</div>
 					<div class="form-group">
 						@* <span class="required">*</span> *@<label for="warehouseShelfName">Warehouse Shelf Name:</label>
-						<input type="text" id="warehouseShelfName" class="form-control" name="warehouseShelfName" required><br />
+						<input type="text" id="WarehouseShelfName" class="form-control" name="WarehouseShelfName" required><br />
 					</div>
 					<div id="noRacksMessage" style="color: red; display:none;">
 						<p>No racks available for the selected area. Please select another area.</p>
 					</div>
 					<div class="text-center mt-3">
 						<button type="submit" class="btn btn-success">Save</button>
-						<button type="reset" class="btn btn-primary">Refresh</button>
+						<button type="reset" class="btn btn-primary" onclick="window.location.href = window.location.href + '?reset=true';">Refresh</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </body>
+

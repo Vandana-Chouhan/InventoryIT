@@ -67,6 +67,7 @@
     justify-content: space-between;
     margin-bottom: 10px;
     width: 100%;
+  
 }
 
     .form-group label, .row label {
@@ -121,5 +122,5 @@ h4 {
 
 
 .mt-3 {
-    margin-top: 11rem !important;
+    margin-top: 19rem !important;
 }

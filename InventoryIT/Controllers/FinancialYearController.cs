@@ -30,7 +30,7 @@ namespace InventoryIT.Controllers
             int result = _financialYearRepository.AddFinancialYear(financialYear);
             if (result > 0)
             {
-                return RedirectToAction("Inventory", "MasterSetup");
+                return RedirectToAction("AddFinancialYear", "FinancialYear");
             }
             else
             {

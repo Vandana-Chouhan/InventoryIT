@@ -18,13 +18,23 @@ namespace InventoryIT.Controllers
             _mastCompRepository = mastCompRepository;
             _financialYearRepository = financialYearRepository;
         }
+        public IActionResult itemtypeDataTable()
+        {
+            return View("ItemtypeDataTable");
+        }
+        public ActionResult GetAllData()
+        {
+            var itemType = _typeRepository.GetAllItemType();
+            var masterData = itemType.Select(c => new
+            {
+                ItemId = c.ItemId,
+                ItemName = c.ItemName
+            }).ToList();
+            return Json(new { data = masterData });
+        }
         public ActionResult AddItemType()
         {
-            return PartialView("AddItemType");
-        }
-        public ActionResult ItemMaster()
-        {
-            return PartialView("ItemMaster");
+            return View();
         }
         [HttpPost]
         public ActionResult AddItemType(ItemType itemType)
@@ -64,8 +74,10 @@ namespace InventoryIT.Controllers
             };
             // Save the itemType to the database
             _typeRepository.AddItemType(item);
+            TempData["SuccessMessage"] = "Item Type details saved successfully.";
+
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddItemType", "ItemType");
         }
     }
 }

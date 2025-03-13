@@ -17,9 +17,23 @@ namespace InventoryIT.Controllers
             _mastCompRepository = mastCompRepository;
             _financialYearRepository = financialYearRepository;
         }
+        public ActionResult itemCompanyDataTable()
+        {
+            return View("ItemCompanyDataTable");
+        }
+        public ActionResult GetAllData()
+        {
+            var company = _itemCompanytRepository.GetAllItemCompany();
+            var masterData = company.Select(c => new
+            {
+                ItemComId = c.ItemComId,
+                ItemCompanyName = c.ItemCompanyName
+            }).ToList();
+            return Json(new { data = masterData });
+        }
         public ActionResult AddItemCompany()
         {
-            return PartialView("AddItemCompany");
+            return View();
         }
         [HttpPost]
         public ActionResult AddItemCompany(ItemCompany itemCompany)
@@ -59,8 +73,10 @@ namespace InventoryIT.Controllers
             };
             // Save the itemCompany to the database
             _itemCompanytRepository.AddItemCompany(item);
+            TempData["SuccessMessage"] = "ItemCompany details saved successfully.";
+
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddItemCompany", "ItemCompany");
         }
     }
 }

@@ -10,6 +10,12 @@
 </head>
 <body>
 	<div class="wrapper">
+		@if (!string.IsNullOrEmpty(ViewData["ErrorMessage"]?.ToString()))
+		{
+			<div class="alert alert-danger">
+				<p>@ViewData["ErrorMessage"]</p>
+			</div>
+		}
 		<form action="@Url.Action("Login", "MasterSetup")" method="post">
 			<h5>Login to your Account</h5>
 			<div class="input-field">

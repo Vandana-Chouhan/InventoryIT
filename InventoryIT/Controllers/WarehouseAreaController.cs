@@ -70,8 +70,11 @@ namespace InventoryIT.Controllers
             };
             // Save the warehousearea details to the database
             _warehouseAreaRepository.AddWarehouseArea(area);
+
+            TempData["SuccessMessage"] = "Warehouse Area details saved successfully.";
+
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddWarehouseArea", "WarehouseArea");
         }
         public IActionResult ShowWarehousecards()
         {

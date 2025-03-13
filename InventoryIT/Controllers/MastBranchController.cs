@@ -30,7 +30,7 @@ namespace InventoryIT.Controllers
             int result = _mastBranchRepository.AddFBranchMaster(mastBranch);
             if (result > 0)
             {
-                return RedirectToAction("Inventory", "MasterSetup");
+                return RedirectToAction("AddFBranchMaster", "MastBranch");
             }
             else
             {

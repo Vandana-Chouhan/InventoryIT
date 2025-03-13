@@ -25,7 +25,7 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<ItemType> ItemTypes { get; set; }
 
-    public virtual DbSet<ItemUnit1> ItemUnits { get; set; }
+    public virtual DbSet<ItemUnit> ItemUnits { get; set; }
 
     public virtual DbSet<MastBranch> MastBranches { get; set; }
 
@@ -179,11 +179,11 @@ public partial class InventoryContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<ItemUnit1>(entity =>
+        modelBuilder.Entity<ItemUnit>(entity =>
         {
-            entity.HasKey(e => e.ItemUnitId1);
+            entity.HasKey(e => e.ItemUnitId);
 
-            entity.ToTable("ItemUnit1");
+            entity.ToTable("ItemUnit");
 
             entity.Property(e => e.CreatedBy).HasColumnName("Created By");
             entity.Property(e => e.CreationDateTime)

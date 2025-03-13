@@ -197,7 +197,7 @@
                 font-weight: bold;margin-top:-5px;">
 					PRODUCT DETAILS
 				</h4>
-				<a href="/SpareItem/Index" style="background-color:#f8f9fa;color:black;     background-color: black;
+				<a href="/ItemMaster/ShowItemMasterDataTable" style="background-color:#f8f9fa;color:black;     background-color: black;
                color: #f6f9ff;
                font-size: 14px;
                font-weight: bold;
@@ -207,7 +207,13 @@
 				</a>
 			</div>
 			<div class="card-body bg-light">
-				<form action="/ItemMaster/AddItemMaster" method="post" onsubmit="return showSuccessAlert()">
+				<form action="/ItemMaster/AddItemMaster" method="post">
+					@if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
+					{
+						<div class="alert alert-success">
+							@TempData["SuccessMessage"]
+						</div>
+					}
 					<div class="row mb-3 text-end">
 						<label class="col-sm-2 col-form-label">Item Name :</label>
 						<div class="col-sm-10">
@@ -239,7 +245,7 @@
 						</div>
 						<label class="col-sm-2 col-form-label text-end">Item Unit1:</label>
 						<div class="col-sm-2">
-							<select id="ItemUnit1" class="form-control" name="itemMaster.ItemUnit1" required>
+							<select id="ItemUnit" class="form-control" name="itemMaster.ItemUnit" required>
 								<option value="" disabled selected>--Select ItemUnit--</option>
 								@foreach (var itemunit in ViewBag.ItemUnits)
 								{
@@ -249,7 +255,13 @@
 						</div>
 						<label class="col-sm-2 col-form-label text-end">Item Unit2:</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="txtitemUnit2" name="itemMaster.ItemUnit2">
+							<select id="ItemUnit2" class="form-control" name="itemMaster.ItemUnit" required>
+								<option value="" disabled selected>--Select ItemUnit--</option>
+								@foreach (var itemunit in ViewBag.ItemUnits)
+								{
+									<option value="@itemunit.Value">@itemunit.Text</option>
+								}
+							</select>
 						</div>
 					</div>
 					<div class="row mb-3">
@@ -276,7 +288,7 @@
 							</div>
 							<label class="col-sm-2 col-form-label text-end">Item Code :</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="txtitemcode" name="itemMaster.ItemCode">
+								<input type="text" class="form-control" id="txtitemcode" name="itemMaster.ItemCode" disabled required>
 							</div>
 						</div>
 					</div>
@@ -385,7 +397,7 @@
 										}
 									</select>
 								</div>
-								<label class="col-sm-2 col-form-label"style="margin-left:-28px;">Supplier Company Name:</label>
+								<label class="col-sm-2 col-form-label"style="margin-left:-28px;">Supplier Company:</label>
 								<div class="col-sm-2">
 									<input type="text" class="form-control" placeholder="Enter SupplierCompanyName" id="txtsuppliercompany" name="supplierRate.SupplierCompanyName">
 								</div>
@@ -418,7 +430,7 @@
 					</div>
 					<div class="text-center mt-3">
 						<button type="submit" class="btn btn-success">Save</button>
-						<button type="reset" class="btn btn-primary">Refresh</button>
+						<button type="reset" class="btn btn-primary" onclick="window.location.href = window.location.href + '?reset=true';">Refresh</button>
 					</div>
 				</form>
 			</div>
@@ -426,9 +438,3 @@
 	</div>
 </body>
 </html>
-<script type="text/javascript">
-	function showSuccessAlert() {
-	 alert("Form submitted successfully!");
-		return true;
-	}
-</script>

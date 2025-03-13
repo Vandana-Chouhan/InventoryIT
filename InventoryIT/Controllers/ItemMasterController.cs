@@ -3,8 +3,7 @@ using InventoryIT.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using InventoryIT.ViewModels;
-
-
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace InventoryIT.Controllers
 {
     public class ItemMasterController : Controller
@@ -20,7 +19,7 @@ namespace InventoryIT.Controllers
         private readonly IWarehouseRackRepository _warehouseRackRepository;
         private readonly IWarehouseShelfRepository _warehouseShelfRepository;
         private readonly IItemTypeRepository _itemTypeRepository;
-        private readonly IItemUnit1Repository _itemUnit1Repository;
+        private readonly IItemUnitRepository _itemUnitRepository;
         private readonly IItemCompanytRepository _itemCompanytRepository;
         private readonly IItemCatagoryRepository _itemCatagoryRepository;
         private readonly IItemSubCatagoryRepository _itemSubCatagoryRepository;
@@ -29,7 +28,7 @@ namespace InventoryIT.Controllers
                    IMastItemSupplierRateRepository mastItemSupplierRateRepository,
                    IMastItemStkRepository mastItemStkRepository,
                    IItemTypeRepository itemTypeRepository,
-                   IItemUnit1Repository itemUnit1Repository,
+                   IItemUnitRepository itemUnitRepository,
                    IItemCompanytRepository itemCompanytRepository,
                    IItemCatagoryRepository itemCatagoryRepository,
                    IItemSubCatagoryRepository itemSubCatagoryRepository,
@@ -51,7 +50,7 @@ namespace InventoryIT.Controllers
             _warehouseLocationRepository = warehouseLocationRepository;
             _warehouseAreaRepository = warehouseAreaRepository;
             _itemTypeRepository = itemTypeRepository;
-            _itemUnit1Repository = itemUnit1Repository;
+            _itemUnitRepository = itemUnitRepository;
             _itemCompanytRepository = itemCompanytRepository;
             _itemCatagoryRepository = itemCatagoryRepository;
             _itemSubCatagoryRepository = itemSubCatagoryRepository;
@@ -61,7 +60,7 @@ namespace InventoryIT.Controllers
         {
             var locations = _warehouseLocationRepository.GetAllWarehouseLocation();
             var itemTypes = _itemTypeRepository.GetAllItemType();
-            var itemUnit1 = _itemUnit1Repository.GetAllItemUnit1();
+            var itemUnit = _itemUnitRepository.GetAllItemUnit();
             var itemCompanies = _itemCompanytRepository.GetAllItemCompany();
             var itemCategories = _itemCatagoryRepository.GetAllItemCatagory();
             var suppliers = _supplierMasterRepository.GetAllSupplier();
@@ -83,9 +82,9 @@ namespace InventoryIT.Controllers
                 Value = c.ItemId.ToString(),
                 Text = c.ItemName
             });
-            ViewBag.ItemUnits = itemUnit1.Select(c => new SelectListItem
+            ViewBag.ItemUnits = itemUnit.Select(c => new SelectListItem
             {
-                Value = c.ItemUnitId1.ToString(),
+                Value = c.ItemUnitId.ToString(),
                 Text = c.ItemUnitName
             });
             ViewBag.ItemCompanies = itemCompanies.Select(c => new SelectListItem
@@ -178,12 +177,17 @@ namespace InventoryIT.Controllers
                 itemMasterViewModel.itemMaster.FinanYearId = financialYear.FinanYearId;
                 itemMasterViewModel.itemMaster.CreatedBy = userId.Value;
             }
+            var itemCode = $"{itemMasterViewModel.itemMaster.WarehouseLocation}/" +
+                           $"{itemMasterViewModel.itemMaster.WarehouseArea}/" +
+                           $"{itemMasterViewModel.itemMaster.WarehouseRack}/" +
+                           $"{itemMasterViewModel.itemMaster.WarehouseShelf}/" +
+                           $"{itemMasterViewModel.itemMaster.ItemName}";
             // Create a new item master object using the data
             var itemmast = new ItemMaster
             {
                 ItemName = itemMasterViewModel.itemMaster.ItemName,
                 ItemType = itemMasterViewModel.itemMaster.ItemType,
-                ItemCode = itemMasterViewModel.itemMaster.ItemCode,
+                ItemCode = itemCode,
                 ItemCompany = itemMasterViewModel.itemMaster.ItemCompany,
                 ItemCatagory = itemMasterViewModel.itemMaster.ItemCatagory,
                 ItemSubCatagory = itemMasterViewModel.itemMaster.ItemSubCatagory,
@@ -241,8 +245,34 @@ namespace InventoryIT.Controllers
             };
             _mastItemStkRepository.AddItemStk(itemStk);
             _mastItemStkRepository.Save();
+            TempData["SuccessMessage"] = "Product Master details saved successfully.";
+
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddItemMaster", "ItemMaster");
+        }
+        public IActionResult ShowItemMasterDataTable()
+        {
+            return View("itemMasterDataTable");
+        }
+        public IActionResult GetAllItemMaster()
+        {
+            var items = _itemMasterRepository.GetAllItemMaster();
+            var masterData = items.Select(c => new
+            {
+                ItemCode = c.ItemCode,
+                ItemCompany = c.ItemCompany,
+                ItemName = c.ItemName,
+                ItemType = c.ItemType,
+                ItemUnit1 = c.ItemUnit1,
+                ItemUnit2 = c.ItemUnit2
+            }).ToList();
+            return Json(new { data = masterData });
+        }
+        public IActionResult Update(int itemid)
+        {
+            var items = _itemMasterRepository.GetAllItemMaster();
+            var itemData = items.FirstOrDefault(x => x.ItemId == itemid);
+            return View(itemData);
         }
     }
 }

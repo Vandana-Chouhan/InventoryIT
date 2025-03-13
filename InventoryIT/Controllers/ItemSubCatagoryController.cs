@@ -22,6 +22,21 @@ namespace InventoryIT.Controllers
             _financialYearRepository = financialYearRepository;
             _itemCatagoryRepository = itemCatagoryRepository;
         }
+        public IActionResult itemSubCataDataTable()
+        {
+            return View("ItemSubCataDataTable");
+        }
+        public ActionResult GetAllData()
+        {
+            var subCatagories= _itemSubCatagoryRepository.GetAllItemSubCat();
+            var masterData = subCatagories.Select(c => new
+            {
+                ItemSubCatId = c.ItemSubCatId,
+                ItemMainCatId= c.ItemMainCatId,
+                SubCatagoryName = c.SubCatagoryName
+            }).ToList();
+            return Json(new { data = masterData });
+        }
         public ActionResult AddItemSubCat()
         {
             var catagories = _itemCatagoryRepository.GetAllItemCatagory();
@@ -30,7 +45,7 @@ namespace InventoryIT.Controllers
                 Value = c.ItemCatId.ToString(),
                 Text = c.ItemCatagoryName
             });
-            return PartialView("AddItemSubCat");
+            return View();
         }
         [HttpPost]
         public ActionResult AddItemSubCat(ItemSubCatagory itemSubCatagory)
@@ -71,8 +86,9 @@ namespace InventoryIT.Controllers
             };
             // Save the itemSubCatagory to the database
             _itemSubCatagoryRepository.AddItemSubCat(item);
+            TempData["SuccessMessage"] = "ItemSubCatagory details saved successfully.";
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddItemSubCat", "ItemSubCatagory");
         }
     }
 }

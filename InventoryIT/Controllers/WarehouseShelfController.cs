@@ -35,7 +35,7 @@ namespace InventoryIT.Controllers
                 Value = c.WarehouseLocId.ToString(),
                 Text = c.WarehouseName
             });
-            return PartialView("AddWarehouseShelf");
+            return View();
         }
         // Action to fetch areas by selected location
         [HttpGet]
@@ -104,8 +104,10 @@ namespace InventoryIT.Controllers
             };
             // Save warehouse shelf details to the database
             _warehouseShelfRepository.AddWarehouseShelf(shelf);
+            TempData["SuccessMessage"] = "Warehouse Shelf details saved successfully.";
+
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddWarehouseShelf", "WarehouseShelf");
         }
     }
 }

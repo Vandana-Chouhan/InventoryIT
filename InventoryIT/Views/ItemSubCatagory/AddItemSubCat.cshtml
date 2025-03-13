@@ -54,6 +54,7 @@
 		justify-content: space-between;
 		align-items: center;
 		border-radius: 2px;
+		height:47px;
 	}
 
 	.form-container {
@@ -106,21 +107,34 @@
 	.column {
 		flex: 1; /* Each column takes equal space */
 	}
+
+	h4 {
+		margin-top: 6px;
+		font-size: 16px;
+		font-weight: bold;
+		margin-left: 5px;
+	}
 </style>
 
 <div class="container mt-4">
 	<div class="card">
 		<div class="header">
 			<h4>ITEM SUB CATEGORY DETAILS</h4>
-			<a asp-action="Index" class="btn btn-dark">RETURN TO VIEW</a>
+			<a href="/ItemSubCatagory/ItemSubCataDataTable" class="btn btn-dark">RETURN TO VIEW</a>
 		</div>
 		<div class="form-container">
 			<form asp-action="AddItemSubCat" method="post" asp-controller="ItemSubCatagory">
+				@if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
+				{
+					<div class="alert alert-success">
+						@TempData["SuccessMessage"]
+					</div>
+				}
 				<div class="row">
 					<div class="column">
 						<div class="form-group">
-							<span class="required">*</span><label for="ItemCatagoryName">Item Catagory Name:</label>
-							<select name="ItemMainCatId" class="input-small" required>
+							<label for="ItemCatagoryName">Item Catagory Name:</label>
+							<select name="ItemMainCatId" class="form-control" required>
 								<option value="" disabled selected>Select item Catagory</option>
 								@foreach (var catagory in ViewBag.ItemCatagories)
 								{
@@ -138,7 +152,7 @@
 				</div>
 				<div class="buttons">
 					<button type="submit" class="btn btn-success">Save</button>
-					<button type="reset" class="btn btn-primary">Refresh</button>
+					<button type="reset" class="btn btn-primary" onclick="window.location.href = window.location.href + '?reset=true';">Refresh</button>
 				</div>
 			</form>
 		</div>

@@ -61,6 +61,13 @@
 		justify-content: space-between;
 		align-items: center;
 	}
+
+	h4 {
+		margin-top: 6px;
+		font-size: 16px;
+		font-weight: bold;
+		margin-left: 5px;
+	}
 </style>
 
 @* <head>
@@ -71,20 +78,26 @@
 	<div class="card">
 		<div class="heade">
 			<h4>ITEM UNIT DETAILS</h4>
-			<a asp-action="Index" class="btn btn-dark">RETURN TO VIEW</a>
+			<a href="/ItemUnit/ItemUnitDataTable" class="btn btn-dark">RETURN TO VIEW</a>
 		</div>
 		<div class="card-body">
-			<form asp-action="AddItemUnit1" method="post" asp-controller="ItemUnit">
+			<form asp-action="AddItemUnit" method="post" asp-controller="ItemUnit">
+				@if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
+				{
+					<div class="alert alert-success">
+						@TempData["SuccessMessage"]
+					</div>
+				}
 				<div class="row">
 					<div class="form-group">
-						<label for="ItemUnitName">Item Unit1 Name:</label>
+						<label for="ItemUnitName">Item Unit Name:</label>
 						<input class="form-control" name="ItemUnitName" required>
 						<span class="text-danger"></span>
 					</div>
 				</div>
 				<div class="text-center mt-3">
 					<button type="submit" class="btn btn-success">Save</button>
-					<button type="reset" class="btn btn-primary">Refresh</button>
+					<button type="reset" class="btn btn-primary" onclick="window.location.href = window.location.href + '?reset=true';">Refresh</button>
 				</div>
 			</form>
 		</div>

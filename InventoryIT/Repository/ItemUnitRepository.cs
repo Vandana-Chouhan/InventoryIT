@@ -5,22 +5,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryIT.Repository
 {
-    public class ItemUnit1Repository : IItemUnit1Repository
+    public class ItemUnitRepository : IItemUnitRepository
     {
         private readonly InventoryContext _inventoryContext;
-        public ItemUnit1Repository(InventoryContext inventoryContext)
+        public ItemUnitRepository(InventoryContext inventoryContext)
         {
             _inventoryContext = inventoryContext;
         }
-        public IEnumerable<ItemUnit1> GetAllItemUnit1()
+        public IEnumerable<ItemUnit> GetAllItemUnit()
         {
             return _inventoryContext.ItemUnits.ToList();
         }
-        public ItemUnit1? GetbyId(int itemUnitId)
+        public ItemUnit? GetbyId(int itemUnitId)
         {
             return _inventoryContext.ItemUnits.Find(itemUnitId);
         }
-        public int AddItemUnit1(ItemUnit1 itemUnit)
+        public int AddItemUnit(ItemUnit itemUnit)
         {
             int result = 0;
             if (itemUnit != null)
@@ -29,7 +29,7 @@ namespace InventoryIT.Repository
                 {
                     _inventoryContext.ItemUnits.Add(itemUnit);
                     _inventoryContext.SaveChanges();
-                    result = itemUnit.ItemUnitId1;  // Assuming ItemUnitId is the primary key
+                    result = itemUnit.ItemUnitId;  // Assuming ItemUnitId is the primary key
                 }
                 catch (Exception ex)
                 {
@@ -42,7 +42,7 @@ namespace InventoryIT.Repository
             }
             return result;
         }
-        public int Update(ItemUnit1 itemUnit)
+        public int Update(ItemUnit itemUnit)
         {
             int result = -1;
             if (itemUnit != null)
@@ -51,7 +51,7 @@ namespace InventoryIT.Repository
                 {
                     _inventoryContext.Entry(itemUnit).State = EntityState.Modified;
                     _inventoryContext.SaveChanges();
-                    result = itemUnit.ItemUnitId1;
+                    result = itemUnit.ItemUnitId;
                 }
                 catch (Exception ex)
                 {

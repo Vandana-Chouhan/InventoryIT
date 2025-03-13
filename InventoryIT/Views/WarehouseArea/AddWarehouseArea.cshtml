@@ -10,6 +10,12 @@
         </div>
         <div class="card-body">
             <form action="AddWarehouseArea" method="post">
+                @if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
+                {
+                    <div class="alert alert-success">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
                 <div class="row mb-2 align-items-center">
                     <label class="col-form-label" for="ddlWarehouseLocation">Warehouse Location Name:</label>
                     <div>
@@ -30,7 +36,7 @@
                 </div>
                 <div class="text-center mt-3">
                     <button type="submit" class="btn btn-success">Save</button>
-                    <button type="reset" class="btn btn-primary">Refresh</button>
+                    <button type="reset" class="btn btn-primary" onclick="window.location.href = window.location.href + '?reset=true';">Refresh</button>
                 </div>
             </form>
         </div>

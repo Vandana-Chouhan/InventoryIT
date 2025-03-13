@@ -24,6 +24,23 @@ namespace InventoryIT.Controllers
             _mastBranchRepository = mastBranchRepository;
             _mastCompRepository = mastCompRepository;
         }
+        public IActionResult supplierMasterDataTable()
+        {
+            return View("SupplierMasterDataTable");
+        }
+        public ActionResult GetAllSupplier()
+        {
+            var supplier = _supplierMasterRepository.GetAllSupplier();
+            var masterData = supplier.Select(c => new
+            {
+                SuppId = c.SuppId,
+                SupplierName = c.SupplierName,
+                MobileNo = c.MobileNo,
+                CityId = c.CityId,
+                Address = c.Address
+            }).ToList();
+            return Json(new { data = masterData });
+        }
         public ActionResult AddSupplierMaster()
         {
             var state = _mastStateRepository.GetAllState();
@@ -84,8 +101,10 @@ namespace InventoryIT.Controllers
             };
             // Save the supplier master details to the database
             _supplierMasterRepository.AddSupplierMaster(supplier);
+
+            TempData["SuccessMessage"] = "Supplier details saved successfully.";
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddSupplierMaster", "SupplierMaster");
         }
     }
 }

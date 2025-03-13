@@ -19,7 +19,7 @@ builder.Services.AddScoped<IMastCountryRepository, MastCountryRepository>();
 builder.Services.AddScoped<IItemCatagoryRepository, ItemCatagoryRepository>();
 builder.Services.AddScoped<IItemTypeRepository, ItemTypeRepository>();
 builder.Services.AddScoped<IItemCompanytRepository, ItemCompanyRepository>();
-builder.Services.AddScoped<IItemUnit1Repository, ItemUnit1Repository>();
+builder.Services.AddScoped<IItemUnitRepository, ItemUnitRepository>();
 builder.Services.AddScoped<IItemSubCatagoryRepository, ItemSubCatagoryRepository>();
 builder.Services.AddScoped<ISupplierMasterRepository, SupplierMasterRepository>();
 builder.Services.AddScoped<IMastItemSupplierRateRepository, MastItemSupplierRateRepository>();

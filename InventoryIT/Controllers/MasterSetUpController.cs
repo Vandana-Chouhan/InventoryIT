@@ -34,7 +34,7 @@ namespace InventoryIT.Controllers
 
                 return RedirectToAction("Session", "MasterSetup");
             }
-            ModelState.AddModelError("", "Invalid username or password.");
+            ViewData["ErrorMessage"] = "Invalid username or password.";
             return View("Login");
         }
         public ActionResult Inventory()
