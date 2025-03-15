@@ -28,7 +28,7 @@ namespace InventoryIT.Controllers
         {
             return View("SupplierMasterDataTable");
         }
-        public ActionResult GetAllSupplier()
+        public ActionResult GetSupplier()
         {
             var supplier = _supplierMasterRepository.GetAllSupplier();
             var masterData = supplier.Select(c => new

@@ -27,6 +27,20 @@ namespace InventoryIT.Controllers
             _warehouseLocationRepository = warehouseLocationRepository;
             _warehouseAreaRepository = warehouseAreaRepository;
         }
+        public ActionResult warehouseShelfDataTab()
+        {
+            return View("WarehouseShelfDataTab");
+        }
+        public ActionResult GetShelf()
+        {
+            var shelf = _warehouseShelfRepository.GetAllWarehouseShelf();
+            var shelves = shelf.Select(s => new
+            {
+                WarehouseShelfId =  s.WarehouseShelfId,
+                WarehouseShelfName = s.WarehouseShelfName
+            }).ToList();
+            return Json(new { data = shelves });
+        }
         public ActionResult AddWarehouseShelf()
         {
             var locations = _warehouseLocationRepository.GetAllWarehouseLocation();

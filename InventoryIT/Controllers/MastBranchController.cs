@@ -14,7 +14,7 @@ namespace InventoryIT.Controllers
             _mastBranchRepository = mastBranchRepository;
             _mastCompRepository = mastCompRepository;
         }
-        public IActionResult AddFBranchMaster()
+        public ActionResult AddFBranchMaster()
         {
             var companies = _mastCompRepository.GetAllMastcomp();
             ViewBag.MastComps = companies.Select(c => new SelectListItem
@@ -25,7 +25,7 @@ namespace InventoryIT.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddFBranchMaster(MastBranch mastBranch)
+        public ActionResult AddFBranchMaster(MastBranch mastBranch)
         {
             int result = _mastBranchRepository.AddFBranchMaster(mastBranch);
             if (result > 0)

@@ -21,6 +21,21 @@ namespace InventoryIT.Controllers
             _financialYearRepository = financialYearRepository;
             _warehouseLocationRepository = warehouseLocationRepository;
         }
+        public ActionResult warehouseAreaDataTab()
+        {
+            return View("WarehouseAreaDataTab");
+        }
+        public ActionResult GetArea()
+        {
+            var area = _warehouseAreaRepository.GetAllWarehouseArea();
+            var areas = area.Select(c => new
+            {
+                WarehouseAreaId = c.WarehouseAreaId,
+                WarehouseLocId = c.WarehouseLocId,
+                WarehouseAreaName= c.WarehouseAreaName
+            }).ToList();
+            return Json(new { data = areas });
+        }
         public ActionResult AddWarehouseArea()
         {
             var locations = _warehouseLocationRepository.GetAllWarehouseLocation();

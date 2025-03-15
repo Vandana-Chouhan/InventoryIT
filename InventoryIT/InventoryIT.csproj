@@ -11,6 +11,17 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
+	  <Compile Remove="Views\FinancialYear\**" />
+	  <Content Remove="Views\FinancialYear\**" />
+	  <EmbeddedResource Remove="Views\FinancialYear\**" />
+	  <None Remove="Views\FinancialYear\**" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <None Include="Views\FinancialYear\AddFinancialYear.cshtml" />
+	</ItemGroup>
+	
+	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -312,11 +312,11 @@
 		padding: 15px;
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 		border-style: solid;
-		border-color: #f8a31f;
+		border-color: #4585e5;
 	}
 
 	.uniq {
-		background-color: #f8a31f !important;
+		background-color: #4585e5 !important;
 		border-radius: 9px;
 		padding: 3px;
 		color: white;
@@ -406,7 +406,11 @@
 	}
 
 	.mt-4 {
-		margin-left: -277px !important;
+		margin-left: -15px !important;
+	}
+
+	.mt-4 {
+		margin-top: 7.5rem !important;
 	}
 
 	.table > :not(caption) > * > * {
@@ -477,6 +481,11 @@
 			max-width: 1300px;
 		}
 	}
+
+	table, th, td {
+		border: 1px solid #ddd;
+		border-collapse: collapse;
+	}
 </style>
 
 
@@ -530,17 +539,11 @@
 
 	<script>
 		$(document).ready(function () {
-			var table = $('#myTable');
-
-			if (table.length === 0) {
-					   console.error("Table element not found!");
-					   return;
-				   }
-			table.DataTable({
+			var table = $('#myTable').DataTable({
 				"processing": true,
 				"serverSide": false, // Set to false if using client-side processing
 				"ajax": {
-					"url": "/SupplierMaster/GetAllSupplier",
+					"url": "/SupplierMaster/GetSupplier",
 					"type": "GET",
 					"datatype": "json",
 					"dataSrc": function (json) {

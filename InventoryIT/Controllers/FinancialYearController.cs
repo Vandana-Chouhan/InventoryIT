@@ -14,7 +14,7 @@ namespace InventoryIT.Controllers
             _financialYearRepository = financialYearRepository;
             _mastCompRepository = mastCompRepository;
         }
-        public IActionResult AddFinancialYear()
+        public ActionResult AddFinancialYear()
         {
             var companies = _mastCompRepository.GetAllMastcomp();
             ViewBag.MastComps = companies.Select(c => new SelectListItem
@@ -25,7 +25,7 @@ namespace InventoryIT.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddFinancialYear(FinancialYear financialYear)
+        public ActionResult AddFinancialYear(FinancialYear financialYear)
         {
             int result = _financialYearRepository.AddFinancialYear(financialYear);
             if (result > 0)

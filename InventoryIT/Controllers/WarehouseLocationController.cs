@@ -17,6 +17,21 @@ namespace InventoryIT.Controllers
             _mastCompRepository = mastCompRepository;
             _financialYearRepository = financialYearRepository;
         }
+        public ActionResult warehouseLocaDataTab()
+        {
+            return View("WarehouseLocaDataTab");
+        }
+        public ActionResult GetLocation()
+        {
+            var location = _warehouseLocationRepository.GetAllWarehouseLocation();
+            var locs = location.Select(c => new
+            {
+                WarehouseLocId = c.WarehouseLocId,
+                WarehouseName = c.WarehouseName
+            }).ToList();
+            return Json(new { data = locs });
+        }
+
         public IActionResult AddWarehouselocation()
         {
             return View();

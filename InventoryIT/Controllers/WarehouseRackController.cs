@@ -24,6 +24,22 @@ namespace InventoryIT.Controllers
             _warehouseLocationRepository = warehouseLocationRepository;
             _warehouseAreaRepository = warehouseAreaRepository;
         }
+        public ActionResult warehouseRackDataTab()
+        {
+            return View("WarehouseRackDataTab");
+        }
+        public ActionResult GetRacks()
+        {
+            var rack = _warehouseRackRepository.GetAllWarehouseRack();
+            var racks = rack.Select(r => new
+            {
+                WarehouseRackId= r.WarehouseRackId,
+                WarehouseAreaId= r.WarehouseAreaId,
+                WarehouseLocId= r.WarehouseLocId,
+                WarehouseRackName= r.WarehouseRackName
+            }).ToList();
+            return Json(new { data = racks });
+        }
         public ActionResult AddWarehouseRack()
         {
             var locations = _warehouseLocationRepository.GetAllWarehouseLocation();

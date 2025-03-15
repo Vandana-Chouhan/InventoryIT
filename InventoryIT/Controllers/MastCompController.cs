@@ -14,7 +14,7 @@ namespace InventoryIT.Controllers
         }
         public IActionResult AddFCompanyMaster()
         {
-            return View("AddF");
+            return View();
         }
         [HttpPost]
         public IActionResult AddFCompanyMaster(MastComp mastComp)

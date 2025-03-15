@@ -4,9 +4,9 @@ namespace InventoryIT.Controllers
 {
     public class MasterDataController : Controller
     {
-        public IActionResult Index()
+        public IActionResult MasterDataCard()
         {
-            return View("_MasterDataCardsPartial");
+            return View("MasterDataCardsPartial");
         }
         public IActionResult LoadFormPartial()
         {
