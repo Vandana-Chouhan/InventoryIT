@@ -1,60 +1,38 @@
-﻿@* <html>
-<head>
-	<link href="~/css/mastersetup.css" rel="stylesheet" />
-</head>
-<body>
-	<form asp-action="ItemSubCatagory" method="post">
-		<div class="panel">
-			<div class="header">
-				<h5>Item Catagory Details</h5>
-				<input type="button" id="return-to-view" value="Return to View" />
-			</div>
-			<div class="form-group">
-				<span class="required">*</span><label for="ItemCatagoryName">Item Catagory Name:</label>
-				<input type="text" id="ItemCatagoryName" class="input-small" name="ItemCatagoryName" required><br />
-			</div>
-			<div class="form-group">
-				<span class="required">*</span><label for="ItemSubCatagory">Item  Sub Catagory Name:</label>
-				<input type="text" id="ItemSubCatagory" class="input-small" name="ItemSubCatagory" required><br />
-			</div>
-
-			<div class="form-group form-group-flex">
-				<input type="button" id="Save" value="Save" />
-				<input type="button" id="Refresh" value="Refresh" />
-			</div>
-		</div>
-	</form>
-</body>
-</html> *@
-
-<!--ITEM SUBCATEGORY DESIGN-->
+﻿<!--ITEM SUBCATEGORY DESIGN-->
 <style>
+
 	body {
-		background-color: whitesmoke;
+		background-color: white;
 	}
 
 	.container {
-		background-color: whitesmoke;
+		background-color: white;
 		padding: 20px;
 		border-radius: 10px;
+		width: 100%;
 	}
 
 	.card {
-		background-color: whitesmoke;
+		background-color: white;
 		border-radius: 3px;
 		padding: 0px;
 		margin: 0 auto;
+		margin-left: -283px;
+		width: 1240px;
+		height: 443px;
+		box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 	}
 
-	.header {
-		background-color: #4268a1;
+	.heade {
+		background: linear-gradient(to right, #093f82, #2b71c7);
 		color: white;
 		padding: 8px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		border-radius: 2px;
-		height:47px;
+		border-radius: 5px;
+		height: 42px;
+		width: 1240px;
 	}
 
 	.form-container {
@@ -65,60 +43,109 @@
 		display: flex;
 		align-items: center;
 		margin-bottom: 15px;
-		gap: 15px; /* Space between items */
+		gap: 15px;
+		width: 938px;
+		margin-top: 10px;
 	}
 
 		.form-group label {
 			font-weight: 600;
-			min-width: 200px; /* Set label width */
+			min-width: 320px;
 			text-align: right;
 		}
 
 		.form-group input {
-			flex-grow: 1; /* Input takes remaining space */
+			flex-grow: 1;
 			padding: 5px;
 			border: 1px solid #ccc;
 			border-radius: 4px;
 		}
 
 	.btn-dark {
-		background-color: black;
-		color: white;
-		padding: 5px 10px;
 		text-decoration: none;
 		border-radius: 3px;
+		background-color: #f8f9fa;
+		color: black;
+		background-color: black;
+		color: #f6f9ff;
+		font-size: 14px;
+		font-weight: bold;
+		padding: 5px;
+		text-decoration: none;
 	}
 
 	.buttons {
 		text-align: center;
-		margin-top: 20px;
+		margin-top: 245px;
 	}
 
 	.btn-success, .btn-primary {
 		padding: 5px 15px;
 	}
 
-	.row {
-		display: flex;
-		justify-content: space-between;
-		gap: 20px; /* Space between columns */
+	h4 {
+		font-size: 20px;
+		font-weight: bold;
+		margin-top: 7px;
 	}
 
-	.column {
-		flex: 1; /* Each column takes equal space */
+	.col-form-label {
+		font-size: 14px;
+		font-weight: bold;
+		color: black;
+	}
+
+	.form-control {
+		font-size: 14px;
+		color: black;
+	}
+
+	.mt-4 {
+		margin-left: 192px;
+		margin-top: -0.5rem !important;
+	}
+
+	@@media (min-width: 1700px) {
+		.container {
+			max-width: 1700px;
+		}
+	}
+
+	@@media (min-width: 1700px) {
+		.container {
+			max-width: 1700px;
+		}
+	}
+
+	@@media (min-width: 1700px) {
+		.container {
+			max-width: 1700px;
+		}
+	}
+
+	@@media (min-width: 1700px) {
+		.container {
+			max-width: 1700px;
+		}
 	}
 
 	h4 {
-		margin-top: 6px;
-		font-size: 16px;
+		font-size: 20px;
 		font-weight: bold;
-		margin-left: 5px;
 	}
+
+	.text-end {
+		font-size: 14px;
+		font-weight: bold;
+	}
+
 </style>
+
+
 
 <div class="container mt-4">
 	<div class="card">
-		<div class="header">
+		<div class="heade">
 			<h4>ITEM SUB CATEGORY DETAILS</h4>
 			<a href="/ItemSubCatagory/ItemSubCataDataTable" class="btn btn-dark">RETURN TO VIEW</a>
 		</div>
@@ -130,26 +157,26 @@
 						@TempData["SuccessMessage"]
 					</div>
 				}
-				<div class="row">
-					<div class="column">
-						<div class="form-group">
-							<label for="ItemCatagoryName">Item Catagory Name:</label>
-							<select name="ItemMainCatId" class="form-control" required>
-								<option value="" disabled selected>Select item Catagory</option>
-								@foreach (var catagory in ViewBag.ItemCatagories)
-								{
-									<option value="@catagory.Value">@catagory.Text</option>
-								}
-							</select>
-						</div>
-					</div>
-					<div class="column">
-						<div class="form-group">
-							<label for="ItemSubCatagory">Item Sub Category Name:</label>
-							<input class="form-control" name="SubCatagoryName" required>
-						</div>
+				@* <div class="row">
+					<div class="column"> *@
+				<div class="form-group">
+					<label for="ItemCatagoryName">Item Catagory Name:</label>
+					<select name="ItemMainCatId" class="form-control" required>
+						<option value="" disabled selected>Select item Catagory</option>
+						@foreach (var catagory in ViewBag.ItemCatagories)
+						{
+							<option value="@catagory.Value">@catagory.Text</option>
+						}
+					</select>
+				</div>
+				@* </div> *@
+				<div class="column">
+					<div class="form-group">
+						<label for="ItemSubCatagory">Item Sub Category Name:</label>
+						<input class="form-control" name="SubCatagoryName" required>
 					</div>
 				</div>
+				@* 	</div> *@
 				<div class="buttons">
 					<button type="submit" class="btn btn-success">Save</button>
 					<button type="reset" class="btn btn-primary" onclick="window.location.href = window.location.href + '?reset=true';">Refresh</button>

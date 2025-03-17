@@ -28,18 +28,36 @@ namespace InventoryIT.Controllers
         {
             return View("SupplierMasterDataTable");
         }
-        public ActionResult GetAllSupplier()
+        public ActionResult GetSupplier()
         {
-            var supplier = _supplierMasterRepository.GetAllSupplier();
-            var masterData = supplier.Select(c => new
+            // Retrieve session values
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName))
             {
-                SuppId = c.SuppId,
-                SupplierName = c.SupplierName,
-                MobileNo = c.MobileNo,
-                CityId = c.CityId,
-                Address = c.Address
-            }).ToList();
-            return Json(new { data = masterData });
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var supplier = _supplierMasterRepository.GetFilteredSupplier(company.CompId, branch.BranchId)
+                .Select(c => new
+                {
+                    SuppId = c.SuppId,
+                    SupplierName = c.SupplierName,
+                    MobileNo = c.MobileNo,
+                    CityId = c.CityId,
+                    Address = c.Address
+                }).ToList();
+            return Json(new { data = supplier });
         }
         public ActionResult AddSupplierMaster()
         {
@@ -49,13 +67,20 @@ namespace InventoryIT.Controllers
                 Value = c.StateId.ToString(),
                 Text = c.StateName
             });
-            var city = _mastCityRepository.GetAllMastCity();
-            ViewBag.MastCities = city.Select(c => new SelectListItem
-            {
-                Value = c.CityId.ToString(),
-                Text = c.CityName
-            });
             return View();
+        }
+        // Action to fetch city by selected state
+        [HttpGet]
+        public JsonResult GetCityByState(int stateid)
+        {
+            var city = _mastCityRepository.GetAllMastCity()
+                                            .Where(a => a.StateId == stateid)
+                                            .Select(c => new SelectListItem
+                                            {
+                                                Value = c.CityId.ToString(),
+                                                Text = c.CityName
+                                            }).ToList();
+            return Json(city); // Return city as JSON
         }
         [HttpPost]
         public ActionResult AddSupplierMaster(SupplierMaster supplierMaster)

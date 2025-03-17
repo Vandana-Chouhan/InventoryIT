@@ -9,5 +9,6 @@ namespace InventoryIT.Repository
         public int AddWarehouselocation(WarehouseLocationMaster warehouseLocationMaster);
         public int Update(WarehouseLocationMaster warehouseLocationMaster);
         public void Delete(int warehouseLocId);
+        public IEnumerable<WarehouseLocationMaster> GetFilteredWarehouseLocations(int companyId, int branchId, int financialYearId);
     }
 }

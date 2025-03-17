@@ -2,76 +2,181 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title>@ViewBag.Title InventoryIT</title>
-	<!-- Favicons -->
-	<link href="~/assets/img/favicon.png" rel="icon">
-	<link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-	<!-- Google Fonts -->
-	<link href="https://fonts.gstatic.com" rel="preconnect">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-	<!-- Vendor CSS Files -->
-	<link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-	<!-- Template Main CSS File -->
-	<link href="~/assets/css/style.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/InventoryIT.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/layout.css" />
 	<style>
-		html, body {
-			height: 100%;
-			margin: 0;
-			padding: 0;
+		.fixed-top {
+			background-color: white;
 		}
 
-		.wrapper {
-			display: flex;
-			flex-direction: column;
-			min-height: 100vh;
+		footer {
+			background-color: white;
 		}
 
-		.main {
-			flex: 1;
+		.d-none {
+			color: #fff;
 		}
 
-		.footer {
-			text-align: center;
+		.nav {
+			background-color: #004864;
 			padding: 10px;
+			height: 50px;
+		}
+
+		a[b-5vlargifs5] {
+			color: white;
 		}
 	</style>
-
 </head>
 <body>
-
-	<div class="main-wrapper">
-		@await Html.PartialAsync("_Header")
-	@* 	@await Html.PartialAsync("_Sidebar") *@
-		<main id="main" class="main">
-			<div id="partialContent">
-
-			@RenderBody()
+	<header>
+		@*  <nav class="abc">  *@
+		<nav class="navbar navbar-expand-lg navbar-dark  px-3" style="background-color:#004864;">
+			<!-- Left Side: Company Logo + Name -->
+			<div class="d-flex align-items-center me-auto">
+				<img src="~/assets/img/logo.png" alt="Logo" width="40" height="40" class="rounded-circle me-2">
+				<span class="fw-bold text-white">@Context.Session.GetString("CompanyName")</span>
 			</div>
-			<div id="partialContentForm" style="width: 110%;margin-left: -93px;"></div>
+			<ul class="nav">
+				<li class="nav-item">
+					<a href="@Url.Action("Inventory", "MasterSetup")" class="nav-link">Dashboard</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">Master Setup</a>
+					<ul>
+						<li><a href="@Url.Action("ShowMastCompDataTable", "MastComp")" class="dropdown-item">Company Setup</a></li>
+						<li><a href="@Url.Action("AddFBranchMaster", "MastBranch")" class="dropdown-item">Branch Setup</a></li>
+						<li><a href="@Url.Action("AddFinancialYear", "FinancialYear")" class="dropdown-item">Financial Year</a></li>
+						<li class="has-child">
+							<a class="dropdown-item">Country Setup</a>
+							<ul class="child-menu">
+								<li><a href="@Url.Action("AddCountry", "MastCountry")" class="dropdown-item">Country Setup</a></li>
+								<li><a href="@Url.Action("AddState", "MastState")" class="dropdown-item">State Setup</a></li>
+								<li><a href="@Url.Action("AddMastCity", "MastCity")" class="dropdown-item">City Setup</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link" id="purchaseMgmtLink">Purchase Mgmt</a>
+					<ul>
+						<li class="has-child">
+							<a href="/MasterData/MasterDataCard">Master Data</a>
+
+						</li>
+						<li class="has-child">
+							<a class="dropdown-item">Transactions</a>
+							<ul class="child-menu">
+								<li><a href="@Url.Action("ItemType", "ItemSetup")" class="dropdown-item">Material Request</a></li>
+								<li><a href="@Url.Action("ItemUnit", "ItemSetup")" class="dropdown-item">Purchase Order</a></li>
+								<li><a href="@Url.Action("ItemCompany", "ItemSetup")" class="dropdown-item">Goods Reciept</a></li>
+								<li><a href="@Url.Action("ItemCatagory", "ItemSetup")" class="dropdown-item">Stock In</a></li>
+								<li><a href="@Url.Action("ItemSubCatagory", "ItemSetup")" class="dropdown-item">Warehouse Allocation</a></li>
+								<li>
+									<a href="@Url.Action("ItemCatagory", "ItemSetup")" class="dropdown-item">
+										Item Issue Entry
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="has-child">
+							<a class="dropdown-item">Reports</a>
+							<ul class="child-menu">
+								<li><a href="@Url.Action("ItemType", "ItemSetup")" class="dropdown-item">Material Reqeust Register</a></li>
+								<li><a href="@Url.Action("ItemUnit", "ItemSetup")" class="dropdown-item">Purchase Order Register</a></li>
+								<li><a href="@Url.Action("ItemCompany", "ItemSetup")" class="dropdown-item">Goods Reciept Register</a></li>
+								<li><a href="@Url.Action("ItemCatagory", "ItemSetup")" class="dropdown-item">Item Stock Register</a></li>
+								<li><a href="@Url.Action("ItemSubCatagory", "ItemSetup")" class="dropdown-item">Item Reorder Report</a></li>
+								<li><a href="@Url.Action("ItemSubCatagory", "ItemSetup")" class="dropdown-item">Item Wise Issue </a></li>
+								<li><a href="@Url.Action("ItemSubCatagory", "ItemSetup")" class="dropdown-item">Supplier Wise Item Register</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">Client Mgmt</a>
+					<ul>
+						<li class="has-child">
+							<a class="dropdown-item">Master Data</a>
+							<ul class="child-menu">
+								<li><a href="@Url.Action("ItemType", "ItemSetup")" class="dropdown-item">Client Master</a></li>
+							</ul>
+						</li>
+						<li class="has-child">
+							<a class="dropdown-item">Transactions</a>
+							<ul class="child-menu">
+								<li><a href="@Url.Action("ItemType", "ItemSetup")" class="dropdown-item">Client Order Entry</a></li>
+								<li><a href="@Url.Action("ItemType", "ItemSetup")" class="dropdown-item">Client Materials Request</a></li>
+							</ul>
+						</li>
+						<li class="has-child">
+							<a class="dropdown-item">Reports</a>
+							<ul class="child-menu">
+								<li><a href="@Url.Action("ItemType", "ItemSetup")" class="dropdown-item">Client Order Register</a></li>
+								<li><a href="@Url.Action("ItemType", "ItemSetup")" class="dropdown-item">Client Wise Wrder Material Supplied</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item">
+					<a href=" @Url.Action("Inventory", "MasterSetup")" class="nav-link">Stores</a>
+				</li>
+				<li class="nav-item">
+					<a href="/WarehouseArea/ShowWarehousecards" class="nav-link" id="purchaseMgmtLink">Warehouse</a>
+				</li>
+
+
+				<!-- Profile Dropdown Aligned to Right -->
+				<ul class="navbar-nav ms-auto" style="margin-top: -10px;">
+					<li class="nav-item dropdown pe-3">
+						<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+							<img src="~/assets/img/messages-3.jpg" alt="Profile" class="rounded-circle" width="30">
+							<span class="d-none d-md-block dropdown-toggle ps-2">InventryIT</span>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<i class="bi bi-person"></i>
+									<span>My Profile</span>
+								</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item d-flex align-items-center" href="/MasterSetup/Login">
+									<i class="bi bi-box-arrow-right"></i>
+									<span>Sign Out</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</ul>
+		</nav>
+		<h4 style="background-color:white;text-align:center; color:black;font-size:18px; font-family:Arial;">
+			You are currently working in:
+			@Context.Session.GetString("CompanyName")/
+			@Context.Session.GetString("BranchName")/
+			@Context.Session.GetString("FinancialYear")
+		</h4>
+	</header>
+
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
 		</main>
-
-		<!-- Footer -->
-		<footer id="footer" class="footer mt-auto" style="margin-left: 22px;">
-			<div class="copyright">
-				&copy; Copyright <strong><span>Aanshisolutions</span></strong>. All Rights Reserved
-			</div> 
-		</footer>
 	</div>
-	<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
-		<i class="bi bi-arrow-up-short"></i>
-	</a>
-	<script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="~/assets/js/main.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-@* 	<script src="~/assets/js/mstAndwareHouse.js"></script> *@
-	@RenderSection("Scripts", required: false)
+	<footer class="border-top footer text-Black">
 
+		Design & Developed By |<b>Aanshi Solutions</b>
+
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-
-
-
-

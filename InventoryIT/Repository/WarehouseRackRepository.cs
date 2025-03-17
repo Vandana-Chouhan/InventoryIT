@@ -14,6 +14,12 @@ namespace InventoryIT.Repository
         {
             return _inventoryContext.WarehouseRackMasters.ToList();
         }
+        public IEnumerable<WarehouseRackMaster> GetFilteredWarehouseRack(int companyId, int branchId, int financialYearId)
+        {
+            return _inventoryContext.WarehouseRackMasters
+           .Where(loc => loc.CompId == companyId && loc.BranchId == branchId && loc.FinanYearId == financialYearId)
+           .ToList();
+        }
         public WarehouseRackMaster? GetbyId(int warehouseRackId)
         {
             return _inventoryContext.WarehouseRackMasters.Find(warehouseRackId);

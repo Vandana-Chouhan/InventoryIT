@@ -23,15 +23,35 @@ namespace InventoryIT.Controllers
             return View("ItemCatagoryDataTable");
         }
         public ActionResult GetAllData()
-         {
-             var catagory = _itemCatagoryRepository.GetAllItemCatagory();
-             var masterData = catagory.Select(c => new
-             {
-                 ItemCatId = c.ItemCatId,
-                 ItemCatagoryName = c.ItemCatagoryName
-             }).ToList();
-             return Json(new { data = masterData });
-         }
+        {
+            // Retrieve session values
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null || financialYear == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var catagory = _itemCatagoryRepository.GetFilteredItemCatagory(company.CompId, branch.BranchId, financialYear.FinanYearId)
+                .Select(c => new
+                {
+                    ItemCatId = c.ItemCatId,
+                    ItemCatagoryName = c.ItemCatagoryName
+                }).ToList();
+            return Json(new { data = catagory });
+        }
         public ActionResult AddItemCatagory()
         {
             return View();

@@ -1,6 +1,8 @@
 ﻿@{
 	ViewData["Title"] = "SpareGRN Details";
 }
+
+
 <!-- DataTables CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -11,7 +13,10 @@
 		/*  color: #fff;  */
 		background-color: white;
 	}
-.panel {
+
+
+
+	.panel {
 		/* background: linear-gradient(to right, #2980b9, #2c3e50); */
 		border-radius: 10px;
 		padding: 15px;
@@ -206,12 +211,12 @@
 	<div class="panel">
 		<div class="row uniq">
 			<div class="col-md-6">
-				<h4 class="title">SUPPLIER MASTER</h4>
+				<h4 class="title">COMPANY DETAILS</h4>
 			</div>
 
 			<div class="col-md-6 text-end">
-				<a href="/SupplierMaster/AddSupplierMaster" class="btn btn-add">
-					ADD NEW SUPPLIER MASTER
+				<a href="/MastComp/AddFCompanyMaster" class="btn btn-add">
+					ADD NEW COMPANY
 				</a>
 			</div>
 		</div>
@@ -220,22 +225,22 @@
 			<table class="table" id="myTable">
 				<thead>
 					<tr>
-						<th>SR.No</th>
-						<th>Supplier Name</th>
-						<th>Mobile No</th>
-						<th>CityId</th>
+						<th>SR.NO</th>
+						<th>Company Name</th>
 						<th>Address</th>
+						<th>City</th>
+						<th>Mobile Number</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<thead class="search-row">
 					<tr>
-						<th><input type="text" placeholder="search sr.no"></th>
-						<th><input type="text" placeholder="search supplier name"></th>
-						<th><input type="text" placeholder="search mobile no"></th>
-						<th><input type="text" placeholder="search cityid"></th>
-						<th><input type="text" placeholder="search Address"></th>
-						<th><input type="hidden" placeholder="search Address"></th>
+						<th><input type="text" placeholder="search sr.no" class="t"></th>
+						<th><input type="text" placeholder="search company name"></th>
+						<th><input type="text" placeholder="search address"></th>
+						<th><input type="text" placeholder="search city"></th>
+						<th><input type="text" placeholder="search mobile nimber"></th>
+						<th><input type="hidden" placeholder="Search OwnerName"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -250,42 +255,43 @@
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 	<script>
-		  $(document).ready(function () {
-			  var table = $('#myTable').DataTable({
-				  "processing": true,
-				  "serverSide": false, // Set to false if using client-side processing
-				  "ajax": {
-					  "url": "/SupplierMaster/GetSupplier",
-					  "type": "GET",
-					  "datatype": "json",
-					  "dataSrc": function (json) {
-						  console.log(json); // Debugging: check JSON response
-						  return json.data;
-					  }
-				  },
-				  "columns": [
-					  { "data": "suppId" },
-					  { "data": "supplierName" },
-					  { "data": "mobileNo" },
-					  { "data": "cityId" },
-					  { "data": "address" },
-					  {
-						  "data": "suppId",
-						  "orderable": false, // Prevent sorting on action column
-						  "searchable": false, // Disable search on action column
-						  "render": function (data, type, row) {
-							  return `<a href='/ItemSetup/Edit/${data}' class='action-icons'><i class='fa fa-edit'></i></a>
-													  <a href='/ItemSetup/Delete/${data}' class='action-icons'><i class='fa fa-trash'></i></a>`;
-						  }
-					  }
-				  ]
-			  });
-		// Apply the search functionality for each column
-			  $('.search-row input').on('keyup change', function () {
-				  var columnIndex = $(this).parent().index(); // Get the column index
-				  table.column(columnIndex).search(this.value).draw(); // Apply search
-			  });
-		  });
+		$(document).ready(function () {
+			var table = $('#myTable').DataTable({
+				"processing": true,
+				"serverSide": false, // Set to false if using client-side processing
+				"ajax": {
+					"url": "/MastComp/GetAllCompany",
+					"type": "GET",
+					"datatype": "json",
+					"dataSrc": function (json) {
+						console.log(json); // Debugging: check JSON response
+						return json.data;
+					}
+				},
+				"columns": [
+					{ "data": "compId" },
+					{ "data": "companyName" },
+					{"data": "address" },
+					{"data": "city" },
+					{"data": "mobileNo" },
+
+					{
+						"data": "compId",
+						"orderable": false, // Prevent sorting on action column
+						"searchable": false, // Disable search on action column
+						"render": function (data, type, row) {
+							return `<a href='/ItemSetup/Edit/${data}' class='action-icons'><i class='fa fa-edit'></i></a>
+																		   <a href='/ItemSetup/Delete/${data}' class='action-icons'><i class='fa fa-trash'></i></a>`;
+						}
+					}
+				]
+			});
+			// Apply the search functionality for each column
+			$('.search-row input').on('keyup change', function () {
+				var columnIndex = $(this).parent().index(); // Get the column index
+				table.column(columnIndex).search(this.value).draw(); // Apply search
+			});
+		});
 	</script>
 }
 

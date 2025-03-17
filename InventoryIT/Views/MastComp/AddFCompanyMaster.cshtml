@@ -1,18 +1,18 @@
 ﻿<head>
 	<link rel="stylesheet" href="~/Company/style.css" asp-append-version="true" />
 </head>
-
 @{
-	ViewData["Title"] = "Branch Details";
+	ViewData["Title"] = "Company Details";
 }
+
 <div class="container mt-4">
 	<div class="car">
 		<div class="card-heade text-white d-flex justify-content-between" style="border-radius:5px;height:42px;">
 			<h4 style="font-size: 20px;
                 font-weight: bold;">
-				BRANCH DETAILS
+				COMPANY DETAILS
 			</h4>
-			<a href="/CompanyMaster/Index" style="background-color:#f8f9fa;color:black; background-color: black;
+			<a href="/MastComp/ShowMastCompDataTable" style="background-color:#f8f9fa;color:black; background-color: black;
                color: #f6f9ff;
                font-size: 14px;
                font-weight: bold;
@@ -21,25 +21,18 @@
 			</a>
 		</div>
 		<div class="card-body">
-			<form action="/MastBranch/AddFBranchMaster" method="post">
-				<div class="row mb-2">
+			<form asp-action="AddFCompanyMaster"asp-controller="MastComp" method="post" style="background-color: white;">
+		 <div class="row mb-2">
 					<label class="col-sm-2 col-form-label text-end">Company Name:</label>
-					<div class="col-sm-10">
-						<select class="form-control" name="CompId" id="ddlcompanyname" required>
-							<option value="" disabled selected>Select Company</option>
-							@foreach (var company in ViewBag.MastComps)
-							{
-								<option value="@company.Value">@company.Text</option>
-							}
-						</select>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="txtCompany name" name="CompanyName">
+					</div>
+					<label class="col-sm-2 col-form-label text-end">ShortCompany Name:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="txtShortCompanyName" name="CompShortName">
 					</div>
 				</div>
-				<div class="row mb-2">
-					<label class="col-sm-2 col-form-label text-end">Branch Name:</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="BranchName" id="txtbranchname" required>
-					</div>
-				</div>
+
 				<div class="row mb-2">
 					<label class="col-sm-2 col-form-label text-end">Address:</label>
 					<div class="col-sm-10">

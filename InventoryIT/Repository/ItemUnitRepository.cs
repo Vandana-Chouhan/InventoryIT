@@ -16,6 +16,12 @@ namespace InventoryIT.Repository
         {
             return _inventoryContext.ItemUnits.ToList();
         }
+        public IEnumerable<ItemUnit> GetFilteredItemUnit(int companyId, int branchId, int financialYearId)
+        {
+            return _inventoryContext.ItemUnits
+           .Where(loc => loc.CompId == companyId && loc.BranchId == branchId && loc.FinanYearId == financialYearId)
+           .ToList();
+        }
         public ItemUnit? GetbyId(int itemUnitId)
         {
             return _inventoryContext.ItemUnits.Find(itemUnitId);

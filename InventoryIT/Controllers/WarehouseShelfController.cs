@@ -27,9 +27,64 @@ namespace InventoryIT.Controllers
             _warehouseLocationRepository = warehouseLocationRepository;
             _warehouseAreaRepository = warehouseAreaRepository;
         }
+        public ActionResult warehouseShelfDataTab()
+        {
+            return View("WarehouseShelfDataTab");
+        }
+        public ActionResult GetShelf()
+        {
+            // Retrieve session values
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null || financialYear == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered shelves directly
+            var shelves = _warehouseShelfRepository.GetFilteredWarehouseShelf(company.CompId, branch.BranchId, financialYear.FinanYearId)
+                .Select(s => new
+                {
+                    WarehouseShelfId = s.WarehouseShelfId,
+                    WarehouseShelfName = s.WarehouseShelfName
+                }).ToList();
+            return Json(new { data = shelves });
+        }
         public ActionResult AddWarehouseShelf()
         {
-            var locations = _warehouseLocationRepository.GetAllWarehouseLocation();
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null || financialYear == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var locations = _warehouseLocationRepository.GetAllWarehouseLocation()
+                            .Where(c => c.CompId == company.CompId && c.BranchId == branch.BranchId && c.FinanYearId == financialYear.FinanYearId)
+                            .ToList();
             ViewBag.WarehouseLocationMasters = locations.Select(c => new SelectListItem
             {
                 Value = c.WarehouseLocId.ToString(),

@@ -3,7 +3,7 @@ using InventoryIT.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using InventoryIT.ViewModels;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+//using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace InventoryIT.Controllers
 {
     public class ItemMasterController : Controller
@@ -58,35 +58,76 @@ namespace InventoryIT.Controllers
         }
         public ActionResult AddItemMaster()
         {
-            var locations = _warehouseLocationRepository.GetAllWarehouseLocation();
-            var itemTypes = _itemTypeRepository.GetAllItemType();
-            var itemUnit = _itemUnitRepository.GetAllItemUnit();
-            var itemCompanies = _itemCompanytRepository.GetAllItemCompany();
-            var itemCategories = _itemCatagoryRepository.GetAllItemCatagory();
-            var suppliers = _supplierMasterRepository.GetAllSupplier();
+            // Retrieve session values
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
 
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
+            {
+                return RedirectToAction("ErrorPage"); // Or handle it as needed
+            }
+
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+
+            if (company == null || branch == null || financialYear == null)
+            {
+                return RedirectToAction("ErrorPage"); // Or handle it as needed
+            }
+
+            // Filter dropdown data based on session values
+            var locations = _warehouseLocationRepository.GetAllWarehouseLocation()
+                .Where(c => c.CompId == company.CompId && c.BranchId == branch.BranchId && c.FinanYearId == financialYear.FinanYearId)
+                .ToList();
+
+            var itemTypes = _itemTypeRepository.GetAllItemType()
+                .Where(c => c.CompId == company.CompId && c.BranchId == branch.BranchId && c.FinancialYearId == financialYear.FinanYearId)
+                .ToList();
+
+            var itemUnit = _itemUnitRepository.GetAllItemUnit()
+                .Where(c => c.CompId == company.CompId && c.BranchId == branch.BranchId && c.FinanYearId == financialYear.FinanYearId)
+                .ToList();
+
+            var itemCompanies = _itemCompanytRepository.GetAllItemCompany()
+                .Where(c => c.CompId == company.CompId && c.BranchId == branch.BranchId && c.FinanYearId == financialYear.FinanYearId)
+                .ToList();
+
+            var itemCategories = _itemCatagoryRepository.GetAllItemCatagory()
+                .Where(c => c.CompId == company.CompId && c.BranchId == branch.BranchId && c.FinanYearId == financialYear.FinanYearId)
+                .ToList();
+
+            var suppliers = _supplierMasterRepository.GetAllSupplier()
+                .Where(c => c.CompId == company.CompId && c.BranchId == branch.BranchId)
+                .ToList();
+
+            // Pass filtered data to ViewBag for rendering in the view
             ViewBag.SupplierMasters = suppliers.Select(c => new SelectListItem
             {
                 Value = c.SuppId.ToString(),
                 Text = c.SupplierName
             });
-            // Pass data to ViewBag for rendering in the view
+
             ViewBag.WarehouseLocationMasters = locations.Select(c => new SelectListItem
             {
                 Value = c.WarehouseLocId.ToString(),
                 Text = c.WarehouseName
             });
-            // Pass other dropdown data for item types, units, categories, subcategories
+
             ViewBag.ItemTypes = itemTypes.Select(c => new SelectListItem
             {
                 Value = c.ItemId.ToString(),
                 Text = c.ItemName
             });
+
             ViewBag.ItemUnits = itemUnit.Select(c => new SelectListItem
             {
                 Value = c.ItemUnitId.ToString(),
                 Text = c.ItemUnitName
             });
+
             ViewBag.ItemCompanies = itemCompanies.Select(c => new SelectListItem
             {
                 Value = c.ItemComId.ToString(),
@@ -256,17 +297,37 @@ namespace InventoryIT.Controllers
         }
         public IActionResult GetAllItemMaster()
         {
-            var items = _itemMasterRepository.GetAllItemMaster();
-            var masterData = items.Select(c => new
+            // Retrieve session values
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
             {
-                ItemCode = c.ItemCode,
-                ItemCompany = c.ItemCompany,
-                ItemName = c.ItemName,
-                ItemType = c.ItemType,
-                ItemUnit1 = c.ItemUnit1,
-                ItemUnit2 = c.ItemUnit2
-            }).ToList();
-            return Json(new { data = masterData });
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null || financialYear == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var items = _itemMasterRepository.GetFilteredItemMaster(company.CompId, branch.BranchId, financialYear.FinanYearId)
+                .Select(c => new
+                {
+                    ItemCode = c.ItemCode,
+                    ItemCompany = c.ItemCompany,
+                    ItemName = c.ItemName,
+                    ItemType = c.ItemType,
+                    ItemUnit1 = c.ItemUnit1,
+                    ItemUnit2 = c.ItemUnit2
+                }).ToList();
+            return Json(new { data = items });
         }
         public IActionResult Update(int itemid)
         {

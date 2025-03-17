@@ -14,7 +14,7 @@ namespace InventoryIT.Controllers
         }
         public IActionResult AddFCompanyMaster()
         {
-            return View("AddF");
+            return View();
         }
         [HttpPost]
         public IActionResult AddFCompanyMaster(MastComp mastComp)
@@ -28,6 +28,39 @@ namespace InventoryIT.Controllers
             {
                 TempData["Failed"] = "Failed to add the company master.";
                 return RedirectToAction("AddFCompanyMaster");
+            }
+
+
+        }
+        public IActionResult ShowMastCompDataTable()
+        {
+            return View("mastCompDataTab");
+        }
+        [HttpGet]
+        public IActionResult GetAllCompany()
+        {
+            try
+            {
+                var company = _mastCompRepository.GetAllMastcomp();
+                if (company == null || !company.Any())
+                {
+                    return Json(new { data = new List<object>() }); // Return empty data if no suppliers
+                }
+
+                var companyData = company.Select(c => new
+                {
+                    compId = c.CompId,
+                    companyName = c.CompanyName,
+                    address = c.Address,
+                    city = c.City,
+                    mobileNo = c.MobileNo
+                }).ToList();
+
+                return Json(new { data = companyData });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Server Error", message = ex.Message });
             }
         }
     }

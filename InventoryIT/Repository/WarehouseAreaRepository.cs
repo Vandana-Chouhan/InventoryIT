@@ -14,6 +14,12 @@ namespace InventoryIT.Repository
         {
             return _inventoryContext.WarehouseAreaMasters.ToList();
         }
+        public IEnumerable<WarehouseAreaMaster> GetFilteredWarehouseArea(int companyId, int branchId, int financialYearId)
+        {
+            return _inventoryContext.WarehouseAreaMasters
+           .Where(loc => loc.CompId == companyId && loc.BranchId == branchId && loc.FinanYearId == financialYearId)
+           .ToList();
+        }
         public WarehouseAreaMaster? GetbyId(int warehouseAreaId)
         {
             return _inventoryContext.WarehouseAreaMasters.Find(warehouseAreaId);

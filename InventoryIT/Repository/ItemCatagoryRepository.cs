@@ -14,6 +14,12 @@ namespace InventoryIT.Repository
         {
             return _inventoryContext.ItemCatagories.ToList();
         }
+        public IEnumerable<ItemCatagory> GetFilteredItemCatagory(int companyId, int branchId, int financialYearId)
+        {
+            return _inventoryContext.ItemCatagories
+           .Where(loc => loc.CompId == companyId && loc.BranchId == branchId && loc.FinanYearId == financialYearId)
+           .ToList();
+        }
         public ItemCatagory? GetbyId(int itemCatId)
         {
             return _inventoryContext.ItemCatagories.Find(itemCatId);

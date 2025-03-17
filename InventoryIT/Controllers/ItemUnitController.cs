@@ -23,13 +23,33 @@ namespace InventoryIT.Controllers
         }
         public ActionResult GetAllUnit()
         {
-            var itemunit = _itemUnitRepository.GetAllItemUnit();
-            var masterData = itemunit.Select(c => new
+            // Retrieve session values
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
             {
-                ItemUnitId = c.ItemUnitId,
-                ItemUnitName = c.ItemUnitName
-            }).ToList();
-            return Json(new { data = masterData });
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null || financialYear == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var itemunit = _itemUnitRepository.GetFilteredItemUnit(company.CompId, branch.BranchId, financialYear.FinanYearId)
+                .Select(c => new
+                {
+                    ItemUnitId = c.ItemUnitId,
+                    ItemUnitName = c.ItemUnitName
+                }).ToList();
+            return Json(new { data = itemunit });
         }
         public ActionResult AddItemUnit()
         {

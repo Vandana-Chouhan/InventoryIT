@@ -5,6 +5,7 @@ namespace InventoryIT.Repository
     public interface IItemUnitRepository
     {
         public IEnumerable<ItemUnit> GetAllItemUnit();
+        public IEnumerable<ItemUnit> GetFilteredItemUnit(int companyId, int branchId, int financialYearId);
         public ItemUnit? GetbyId(int itemUnitId);
         public int AddItemUnit(ItemUnit itemUnit);
         public int Update(ItemUnit itemUnit);
