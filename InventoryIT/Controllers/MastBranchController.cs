@@ -20,7 +20,7 @@ namespace InventoryIT.Controllers
             _mastStateRepository = mastStateRepository;
             _mastCityRepository = mastCityRepository;
         }
-        public IActionResult AddFBranchMaster()
+        public ActionResult AddFBranchMaster()
         {
             var companies = _mastCompRepository.GetAllMastcomp();
             ViewBag.MastComps = companies.Select(c => new SelectListItem
@@ -49,7 +49,7 @@ namespace InventoryIT.Controllers
             return Json(city); // Return city as JSON
         }
         [HttpPost]
-        public IActionResult AddFBranchMaster(MastBranch mastBranch)
+        public ActionResult AddFBranchMaster(MastBranch mastBranch)
         {
             int result = _mastBranchRepository.AddFBranchMaster(mastBranch);
             if (result > 0)
