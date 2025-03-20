@@ -33,35 +33,57 @@
 		.card {
 			box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 		}
-	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- Load jQuery -->
-	<script type="text/javascript">
-		// Wait until the DOM is fully loaded before running the script
-		$(document).ready(function () {
-			// When the State dropdown changes, update the city dropdown.
-			$('#StateId').change(function () {
-				var stateid = $(this).val();
 
-				if (stateid) {
+		.btn-light {
+			color: white;
+			background-color: black;
+			border-color: #f8f9fa;
+			font-weight: bold;
+		}
+
+			.btn-light:hover {
+				background-color: black;
+				border-color: white;
+				color: white;
+			}
+
+		.equal-width-btn {
+			width: 95px;
+			padding: 4px;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			// When the State dropdown changes, update the City dropdown.
+			$('#StateId').change(function () {
+				var stateId = $(this).val();
+				console.log("Selected State ID: " + stateId); // Check the state ID
+
+				if (stateId) {
 					$.ajax({
-						url: '@Url.Action("GetCityByState", "SupplierMaster")',  // Controller action to fetch city
+						url: '@Url.Action("GetCityByState", "SupplierMaster")', // Ensure this URL is correct
 						type: 'GET',
-						data: { stateid: stateid },
+						data: { stateid: stateId },
 						success: function (data) {
+							console.log("City data received:", data); // Log the data received
+
 							var cityDropdown = $('#CityId');
-							cityDropdown.empty();  // Clear existing options
-							cityDropdown.append('<option value="">Select city</option>'); // Default option
+							cityDropdown.empty(); // Clear existing options
+							cityDropdown.append('<option value="">Select City</option>'); // Default option
 
 							// Populate the city dropdown with new options
 							$.each(data, function (index, item) {
 								cityDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
 							});
 						},
-						error: function () {
-							alert('Error fetching cities. Please try again.');
+						error: function (xhr, status, error) {
+							console.log('Error:', error); // Log the error if any
+							alert('Error fetching Cities. Please try again.');
 						}
 					});
 				} else {
+					// If no state is selected, reset the city dropdown
 					$('#CityId').empty();
 					$('#CityId').append('<option value="">Select City</option>');
 				}
@@ -74,7 +96,7 @@
 		<div class="card">
 			<div class="card-header bg-warning text-white d-flex justify-content-between">
 				<h4>SUPPLIER MASTER DETAILS</h4>
-				<a href="/SupplierMaster/SupplierMasterDataTable" class="btn btn-dark">RETURN TO VIEW</a>
+				<a href="/SupplierMaster/SupplierMasterDataTable" class="btn btn-light">RETURN TO VIEW</a>
 			</div>
 
 			<div class="card-body">
@@ -133,7 +155,7 @@
 						<label class="col-sm-2 col-form-label text-end">*City :</label>
 						<div class="col-sm-2 d-flex">
 							<select name="CityId" id="CityId" class="form-control">
-								<option value="">--Select City--</option>
+								<option value="">Select City</option>
 							</select>
 							<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cityModal">+</button>
 						</div>
@@ -159,8 +181,8 @@
 						</div>
 					</div>
 					<div class="text-center mt-3">
-						<button type="submit" class="btn btn-success"><i class="bi bi-house-add-fill"></i>Save</button>
-						<button type="reset" onclick="window.location.href = window.location.href + '?reset=true';" class="btn btn-primary"><i class="bi bi-arrow-clockwise"></i>Refresh</button>
+						<button type="submit" class="btn btn-success equal-width-btn"><i class="bi bi-house-add-fill"></i> Save</button>
+						<button type="reset" onclick="window.location.href = window.location.href + '?reset=true';" class="btn btn-primary equal-width-btn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
 					</div>
 				</form>
 			</div>
@@ -189,10 +211,10 @@
 						</div>
 						<div class="mb-3">
 							<label class="form-label">* City Name :</label>
-							<input type="text" name="CityId" class="form-control" id="txtcityname" placeholder="Enter City Name">
+							<input type="text" class="form-control" id="txtcityname" placeholder="Enter City Name">
 						</div>
 						<div class="text-center">
-							<button type="submit" id="saveCityBtn" class="btn btn-success">Save</button>
+							<button type="submit" class="btn btn-success">Save</button>
 							<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
 						</div>
 					</form>
@@ -202,37 +224,3 @@
 	</div>
 </body>
 </html>
-<script>
-	document.getElementById('saveCityBtn').addEventListener('click', function() {
-		var stateId = document.getElementById('StateId').value;
-		var cityName = document.getElementById('txtcityname').value;
-
-		// Check if fields are empty
-		if (stateId && cityName) {
-			// Create a data object
-			var cityData = {
-				StateId: stateId,
-				CityId: cityName
-			};
-
-			// Send an AJAX POST request to the controller to save the city
-			$.ajax({
-				url: '@Url.Action("SaveCity", "SupplierMaster")',
-				type: 'POST',
-				data: cityData,
-
-				success: function(response) {
-					// If city is saved successfully, close modal and reload the page or redirect
-					$('#cityModal').modal('hide');
-					window.location.href = '@Url.Action("AddSupplierMaster", "SupplierMaster")'; // Redirect to your existing form
-				},
-				error: function() {
-					alert("An error occurred while saving the city.");
-				}
-			});
-		} else {
-			alert("Please fill in all the fields.");
-		}
-	});
-</script>
-

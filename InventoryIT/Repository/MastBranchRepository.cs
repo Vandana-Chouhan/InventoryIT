@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using InventoryIT.Controllers;
 using InventoryIT.Models;
 using Microsoft.EntityFrameworkCore;
 

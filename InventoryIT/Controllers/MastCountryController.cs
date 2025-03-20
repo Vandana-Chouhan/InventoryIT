@@ -11,6 +11,20 @@ namespace InventoryIT.Controllers
         {
             _mastCountryRepository = mastCountryRepository;
         }
+        public ActionResult CountryDataTab()
+        {
+            return View("countryDataTab");
+        }
+        public ActionResult GetCountry()
+        {
+            var country = _mastCountryRepository.GetAllCountry().Select(c => new
+            {
+                countryId = c.CountryId,
+                countryName = c.CountryName,
+                countryShortName = c.CountryShortName
+            }).ToList();
+            return Json(new { data = country });
+        }
         public IActionResult AddCountry()
         {
             return View();

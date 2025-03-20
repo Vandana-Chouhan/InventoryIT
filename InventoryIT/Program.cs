@@ -1,4 +1,5 @@
 using InventoryIT.Models;
+using InventoryIT.AutoMapper;
 using InventoryIT.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,7 +44,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 
 });
-
+//builder.Services.AddAutoMapper(typeof(MappingProfile));  // Register the profile class
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

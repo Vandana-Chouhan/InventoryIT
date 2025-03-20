@@ -1,0 +1,43 @@
+﻿.card-header {
+    background: linear-gradient(to right, #093f82, #2b71c7);
+    border-radius: 5px;
+    height: 42px;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.p-3 {
+    padding: 0rem !important;
+}
+
+.col-sm-4 {
+    font-size: 14px;
+    font-weight: bold;
+}
+.mt-4 {
+    margin-top: 2.5rem !important;
+}
+.container {
+    max-width: 1200px; 
+    min-height: 600px; 
+    margin: 0 auto; 
+}
+
+.card {
+    padding: 20px;
+
+    min-height: 500px; 
+}
+form-control {
+    padding: 3px;
+    font-size:14px;
+
+}
+
+.equal-width-btn {
+    width: 95px;
+    padding: 4px;
+}

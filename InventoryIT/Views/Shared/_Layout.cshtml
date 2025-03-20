@@ -7,6 +7,9 @@
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/InventoryIT.styles.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/css/layout.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+
 	<style>
 		.fixed-top {
 			background-color: white;
@@ -29,59 +32,50 @@
 		a[b-5vlargifs5] {
 			color: white;
 		}
+
+		.items {
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+		.nav-item ul li a {
+			text-decoration: none;
+			color: black;
+			display: block;
+			padding: 10px;
+			font-size: 16px;
+		}
 	</style>
 </head>
 <body>
 	<header>
 		@*  <nav class="abc">  *@
-		<nav class="navbar navbar-expand-lg navbar-dark  px-3" style="background-color:#004864;">
+		<nav class="navbar navbar-expand-lg navbar-dark px-3" style="background-color:#004864;">
 			<!-- Left Side: Company Logo + Name -->
 			<div class="d-flex align-items-center me-auto">
 				<img src="~/assets/img/logo.png" alt="Logo" width="40" height="40" class="rounded-circle me-2">
-				<span class="fw-bold text-white">@Context.Session.GetString("CompanyName")</span>
+				<span class="fw-bold text-white">FSP TECHNOLOGY</span>
 			</div>
 			<ul class="nav">
-				<li class="nav-item">
+				<li class="nav-item items">
 					<a href="@Url.Action("Inventory", "MasterSetup")" class="nav-link">Dashboard</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item items">
 					<a href="#" class="nav-link">Master Setup</a>
 					<ul>
 						<li><a href="@Url.Action("ShowMastCompDataTable", "MastComp")" class="dropdown-item">Company Setup</a></li>
-						<li><a href="@Url.Action("AddFBranchMaster", "MastBranch")" class="dropdown-item">Branch Setup</a></li>
-						<li><a href="@Url.Action("AddFinancialYear", "FinancialYear")" class="dropdown-item">Financial Year</a></li>
-						<li class="has-child">
-							<a class="dropdown-item">Country Setup</a>
-							<ul class="child-menu">
-								<li><a href="@Url.Action("AddCountry", "MastCountry")" class="dropdown-item">Country Setup</a></li>
-								<li><a href="@Url.Action("AddState", "MastState")" class="dropdown-item">State Setup</a></li>
-								<li><a href="@Url.Action("AddMastCity", "MastCity")" class="dropdown-item">City Setup</a></li>
-							</ul>
-						</li>
+						<li><a href="@Url.Action("ShowMastBranchDataTable", "MastBranch")" class="dropdown-item">Branch Setup</a></li>
+						<li><a href="@Url.Action("ShowFinanYearDataTable", "FinancialYear")" class="dropdown-item">Financial Year</a></li>
+						<li><a href="@Url.Action("CountryDataTab", "MastCountry")" class="dropdown-item">Country Setup</a></li>
+						<li><a href="@Url.Action("StateDataTab", "MastState")" class="dropdown-item">State Setup</a></li>
+						<li><a href="@Url.Action("CityDataTab", "MastCity")" class="dropdown-item">City Setup</a></li>
 					</ul>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item items">
 					<a href="#" class="nav-link" id="purchaseMgmtLink">Purchase Mgmt</a>
 					<ul>
-						<li class="has-child">
-							<a href="/MasterData/MasterDataCard">Master Data</a>
-
-						</li>
-						<li class="has-child">
-							<a class="dropdown-item">Transactions</a>
-							<ul class="child-menu">
-								<li><a href="@Url.Action("ItemType", "ItemSetup")" class="dropdown-item">Material Request</a></li>
-								<li><a href="@Url.Action("ItemUnit", "ItemSetup")" class="dropdown-item">Purchase Order</a></li>
-								<li><a href="@Url.Action("ItemCompany", "ItemSetup")" class="dropdown-item">Goods Reciept</a></li>
-								<li><a href="@Url.Action("ItemCatagory", "ItemSetup")" class="dropdown-item">Stock In</a></li>
-								<li><a href="@Url.Action("ItemSubCatagory", "ItemSetup")" class="dropdown-item">Warehouse Allocation</a></li>
-								<li>
-									<a href="@Url.Action("ItemCatagory", "ItemSetup")" class="dropdown-item">
-										Item Issue Entry
-									</a>
-								</li>
-							</ul>
-						</li>
+						<li><a href="@Url.Action("MasterDataCard", "MasterData")" class="dropdown-item">Master Data</a></li>
+						<li><a href="@Url.Action("ShowTranctionCards", "WarehouseArea")" class="dropdown-item">Transactions</a></li>
 						<li class="has-child">
 							<a class="dropdown-item">Reports</a>
 							<ul class="child-menu">
@@ -96,7 +90,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item items">
 					<a href="#" class="nav-link">Client Mgmt</a>
 					<ul>
 						<li class="has-child">
@@ -121,10 +115,10 @@
 						</li>
 					</ul>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item items">
 					<a href=" @Url.Action("Inventory", "MasterSetup")" class="nav-link">Stores</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item items">
 					<a href="/WarehouseArea/ShowWarehousecards" class="nav-link" id="purchaseMgmtLink">Warehouse</a>
 				</li>
 
@@ -146,7 +140,7 @@
 							</li>
 							<li><hr class="dropdown-divider"></li>
 							<li>
-								<a class="dropdown-item d-flex align-items-center" href="/MasterSetup/Login">
+								<a class="dropdown-item d-flex align-items-center" href="#">
 									<i class="bi bi-box-arrow-right"></i>
 									<span>Sign Out</span>
 								</a>
@@ -154,9 +148,10 @@
 						</ul>
 					</li>
 				</ul>
+
 			</ul>
 		</nav>
-		<h4 style="background-color:white;text-align:center; color:black;font-size:18px; font-family:Arial;">
+		<h4 style="background-color:white;text-align:center; color:black;font-size:15px; font-family:Arial;">
 			You are currently working in:
 			@Context.Session.GetString("CompanyName")/
 			@Context.Session.GetString("BranchName")/

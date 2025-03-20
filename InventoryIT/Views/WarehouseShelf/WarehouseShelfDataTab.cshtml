@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
+
 <style>
 	body {
 		font-family: 'Noto Sans', sans-serif;
@@ -32,7 +33,7 @@
 	}
 
 	.title {
-		font-size: 22px;
+		font-size: 20px;
 		font-weight: bold;
 	}
 
@@ -115,7 +116,7 @@
 	}
 
 	.mt-4 {
-		margin-top: 7.5rem !important;
+		margin-top: 2.5rem !important;
 	}
 
 	.table > :not(caption) > * > * {
@@ -135,6 +136,7 @@
 	table.dataTable tbody td {
 		padding: 8px 10px;
 		/*  color: white; */
+		font-size: 14px;
 	}
 
 	table.dataTable > thead > tr > th {
@@ -195,15 +197,39 @@
 	.table > :not(:last-child) > :last-child > * {
 		border-bottom-color: currentColor;
 		color: black;
+		font-size: 14px;
+		background-color: lightgray;
 	}
 
 	.table tbody tr {
 		/*  color: #fff; */
 	}
+
+	.dataTables_wrapper .dataTables_length {
+		font-size: 13px;
+		font-weight: bold;
+	}
+
+	.btn-light {
+		color: white;
+		background-color: black;
+		border-color: #f8f9fa !important;
+	}
+
+		.btn-light:hover {
+			background-color: black;
+			border-color: white !important;
+			color: white;
+		}
+
+	.srno {
+		width: 45px;
+	}
+
+	#myTable tbody tr td:first-child {
+		text-align: center; /* Data center */
+	}
 </style>
-
-
-
 
 
 <div class="container mt-4">
@@ -214,7 +240,7 @@
 			</div>
 
 			<div class="col-md-6 text-end">
-				<a href="/WarehouseShelf/AddWarehouseShelf" class="btn btn-add">
+				<a href="/WarehouseShelf/AddWarehouseShelf" class="btn btn-add btn-light">
 					ADD NEW WAREHOUSE SHELF
 				</a>
 			</div>
@@ -224,14 +250,14 @@
 			<table class="table" id="myTable">
 				<thead>
 					<tr>
-						<th>SR.NO</th>
+						<th class="srno">SR.NO</th>
 						<th>Warehouse Shelf Name</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<thead class="search-row">
 					<tr>
-						<th><input type="text" placeholder="search sr.no" class="t"></th>
+						<th><input type="hidden" placeholder="search sr.no" class="t"></th>
 						<th><input type="text" placeholder="search warehouse shelf name"></th>
 						<th><input type="hidden" placeholder="Search OwnerName"></th>
 					</tr>

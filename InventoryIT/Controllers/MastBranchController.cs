@@ -9,10 +9,16 @@ namespace InventoryIT.Controllers
     {
         private readonly IMastBranchRepository _mastBranchRepository;
         private readonly IMastCompRepository _mastCompRepository;
-        public MastBranchController(IMastBranchRepository mastBranchRepository, IMastCompRepository mastCompRepository)
+        private readonly IMastStateRepository _mastStateRepository;
+        private readonly IMastCityRepository _mastCityRepository;
+        public MastBranchController(IMastBranchRepository mastBranchRepository,
+            IMastCompRepository mastCompRepository, IMastStateRepository mastStateRepository,
+            IMastCityRepository mastCityRepository)
         {
             _mastBranchRepository = mastBranchRepository;
             _mastCompRepository = mastCompRepository;
+            _mastStateRepository = mastStateRepository;
+            _mastCityRepository = mastCityRepository;
         }
         public IActionResult AddFBranchMaster()
         {
@@ -22,7 +28,25 @@ namespace InventoryIT.Controllers
                 Value = c.CompId.ToString(),
                 Text = c.CompanyName
             });
+            ViewBag.MastStates = _mastStateRepository.GetAllState().Select(c => new SelectListItem
+            {
+                Value = c.StateId.ToString(),
+                Text = c.StateName
+            });
             return View();
+        }
+        // Action to fetch city by selected state
+        [HttpGet]
+        public JsonResult GetCityByState(int stateid)
+        {
+            var city = _mastCityRepository.GetAllMastCity()
+                                            .Where(a => a.StateId == stateid)
+                                            .Select(c => new SelectListItem
+                                            {
+                                                Value = c.CityId.ToString(),
+                                                Text = c.CityName
+                                            }).ToList();
+            return Json(city); // Return city as JSON
         }
         [HttpPost]
         public IActionResult AddFBranchMaster(MastBranch mastBranch)
@@ -35,7 +59,35 @@ namespace InventoryIT.Controllers
             else
             {
                 TempData["Failed"] = "Failed to add the Branch master.";
-                return RedirectToAction("AddFBranchMaster");
+                return RedirectToAction("AddFBranchMaster", "MastBranch");
+            }
+        }
+        public IActionResult ShowMastBranchDataTable()
+        {
+            return View("mastBranchDataTab");
+        }
+        [HttpGet]
+        public IActionResult GetAllBranch()
+        {
+            try
+            {
+                var branch = _mastBranchRepository.GetAllMastBranch();
+                var cities = _mastCityRepository.GetAllMastCity().ToList();
+                var company = _mastCompRepository.GetAllMastcomp().ToList();
+                var branchData = branch.Select(c => new
+                {
+                    BranchId = c.BranchId,
+                    BranchName = c.BranchName,
+                    CompanyName = company.FirstOrDefault(comp => comp.CompId == c.CompId)?.CompanyName,
+                    Address = c.Address,
+                    City = cities.FirstOrDefault(city => city.CityId == c.City)?.CityName,
+                    MobileNo = c.MobileNo
+                }).ToList();
+                return Json(new { data = branchData });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Server Error", message = ex.Message });
             }
         }
     }

@@ -33,7 +33,7 @@
 	}
 
 	.title {
-		font-size: 22px;
+		font-size: 20px;
 		font-weight: bold;
 	}
 
@@ -116,7 +116,7 @@
 	}
 
 	.mt-4 {
-		margin-top: 7.5rem !important;
+		margin-top: 2.5rem !important;
 	}
 
 	.table > :not(caption) > * > * {
@@ -136,6 +136,7 @@
 	table.dataTable tbody td {
 		padding: 8px 10px;
 		/*  color: white; */
+		font-size:14px;
 	}
 
 	table.dataTable > thead > tr > th {
@@ -196,10 +197,37 @@
 	.table > :not(:last-child) > :last-child > * {
 		border-bottom-color: currentColor;
 		color: black;
+		font-size:14px;
+		background-color: lightgray;
 	}
 
 	.table tbody tr {
 		/*  color: #fff; */
+	}
+
+	.dataTables_wrapper .dataTables_length{
+		font-size:13px;
+		font-weight:bold;
+	}
+
+	.btn-light{
+		color: white;
+		background-color:black;
+		border-color: #f8f9fa!important;
+	}
+
+	.btn-light:hover{
+		background-color:black;
+		border-color:white!important;
+		color:white;
+	}
+
+	.srno{
+		width:45px;
+	}
+
+	#myTable tbody tr td:first-child {
+		text-align: center; /* Data center */
 	}
 </style>
 
@@ -215,7 +243,7 @@
 			</div>
 
 			<div class="col-md-6 text-end">
-				<a href="/MastComp/AddFCompanyMaster" class="btn btn-add">
+				<a href="/MastComp/AddFCompanyMaster" class="btn btn-add btn-light">
 					ADD NEW COMPANY
 				</a>
 			</div>
@@ -225,7 +253,7 @@
 			<table class="table" id="myTable">
 				<thead>
 					<tr>
-						<th>SR.NO</th>
+						<th class="srno">SR.NO</th>
 						<th>Company Name</th>
 						<th>Address</th>
 						<th>City</th>
@@ -235,7 +263,7 @@
 				</thead>
 				<thead class="search-row">
 					<tr>
-						<th><input type="text" placeholder="search sr.no" class="t"></th>
+						<th><input type="hidden" placeholder="search sr.no" class="t"></th>
 						<th><input type="text" placeholder="search company name"></th>
 						<th><input type="text" placeholder="search address"></th>
 						<th><input type="text" placeholder="search city"></th>

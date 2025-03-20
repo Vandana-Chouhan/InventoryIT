@@ -45,10 +45,6 @@ namespace InventoryIT.Controllers
         {
             return View();
         }
-        public ActionResult ReturnToView()
-        {
-            return View();
-        }
         public ActionResult Session(int? selectedCompId = null)
         {
             // Get all companies

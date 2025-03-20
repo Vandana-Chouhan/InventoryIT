@@ -38,5 +38,31 @@ namespace InventoryIT.Controllers
                 return RedirectToAction("AddFinancialYear");
             }
         }
+        public IActionResult ShowFinanYearDataTable()
+        {
+            return View("mastFinancialYearDataTab");
+        }
+        [HttpGet]
+        public IActionResult GetAllYear()
+        {
+            try
+            {
+                var year = _financialYearRepository.GetAllFinancialYear();
+                var company = _mastCompRepository.GetAllMastcomp().ToList();
+                var yearData = year.Select(c => new
+                {
+                    finanYearId = c.FinanYearId,
+                    financialYearFrom = c.FinancialYearFrom,
+                    financialYearTo = c.FinancialYearTo,
+                    financialYear = c.FinancialYearName,
+                    CompanyName = company.FirstOrDefault(comp => comp.CompId == c.CompId)?.CompanyName,
+                }).ToList();
+                return Json(new { data = yearData });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Server Error", message = ex.Message });
+            }
+        }
     }
 }

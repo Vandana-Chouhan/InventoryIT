@@ -124,3 +124,21 @@ h4 {
 .mt-3 {
     margin-top: 19rem !important;
 }
+
+.btn-light {
+    color: white;
+    background-color: black;
+    border-color: #f8f9fa;
+    font-weight: bold;
+}
+
+    .btn-light:hover {
+        background-color: black;
+        border-color: white;
+        color: white;
+    }
+
+.equal-width-btn {
+    width: 95px;
+    padding: 4px;
+}
