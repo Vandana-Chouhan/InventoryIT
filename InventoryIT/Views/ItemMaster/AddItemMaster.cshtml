@@ -10,7 +10,6 @@
 		}
 
 		.bg-warning {
-			/*   background-color: #4268a1 !important; */
 			border-radius: 5px;
 			height: 42px;
 		}
@@ -45,7 +44,6 @@
 		}
 
 		.bg-light {
-			bs-bg-opacity: 1;
 			background-color: rgb(245 245 245 / 0%) !important;
 		}
 
@@ -66,7 +64,6 @@
 			width: 95px;
 			padding: 4px;
 		}
-
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- Load jQuery -->
 	<script type="text/javascript">
@@ -207,8 +204,6 @@
 					});
 		});
 	</script>
-
-
 </head>
 <body>
 	<div class="container mt-4">
@@ -218,7 +213,7 @@
                 font-weight: bold;margin-top:-5px;">
 					PRODUCT DETAILS
 				</h4>
-				<a href="/ItemMaster/ShowItemMasterDataTable"class="btn btn-light" style="background-color:#f8f9fa;color:black;     background-color: black;
+				<a href="/ItemMaster/ShowItemMasterDataTable" class="btn btn-light" style="background-color:#f8f9fa;color:black;     background-color: black;
                color: #f6f9ff;
                font-size: 14px;
                font-weight: bold;
@@ -411,7 +406,7 @@
 
 								<label class="col-sm-2 col-form-label ">Supplier Name :</label>
 								<div class="col-sm-2">
-									<select  id="ddlSupplierName"  class="form-control"  name="supplierRate.SupplierName" >
+									<select id="ddlSupplierName" class="form-control" name="supplierRate.SupplierName">
 										<option value="" disabled selected>--Select Supplier Name--</option>
 										@foreach (var supplier in ViewBag.SupplierMasters)
 										{
@@ -419,20 +414,20 @@
 										}
 									</select>
 								</div>
-								<label class="col-sm-2 col-form-label"style="margin-left:-28px;">Supplier Company:</label>
+								<label class="col-sm-2 col-form-label" style="margin-left:-28px;">Supplier Company:</label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control" placeholder="Enter SupplierCompanyName" id="txtsuppliercompanyname" name="supplierRate.SupplierCompanyName" >
+									<input type="text" class="form-control" placeholder="Enter SupplierCompanyName" id="txtsuppliercompanyname" name="supplierRate.SupplierCompanyName">
 								</div>
-								<label class="col-sm-2 col-form-label"style="margin-left:-69px">Supplier Rate :</label>
+								<label class="col-sm-2 col-form-label" style="margin-left:-69px">Supplier Rate :</label>
 								<div class="col-sm-2">
-									<input type="number" class="form-control" placeholder="Enter Supplier Rate"  id="txtrate" name="supplierRate.SupplierRate" >
+									<input type="text" class="form-control" placeholder="Enter Supplier Rate" id="txtrate" name="supplierRate.SupplierRate">
 								</div>
 								<div class="col-sm-1 text-start">
 									<button type="button" id="btnAddSupplier" class="btn btn-warning" style="margin-left: 17px;">OK</button>
 								</div>
 							</div>
 							<div class="table-responsive">
-								<table class="table table-bordered" id="supplierTable">
+								<table class="table table-bordered" id="myTable">
 									<thead>
 										<tr>
 											<th>Supplier Name</th>
@@ -441,11 +436,7 @@
 											<th>Action</th>
 										</tr>
 									</thead>
-								
 									<tbody>
-										<tr id="noDataRow">
-											<td colspan="4" class="text-center">No data available</td>
-										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -460,45 +451,74 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>
+<script>
+	$(document).ready(function () {
+		// Handle OK button click to add supplier rate data to the table
+		$('#btnAddSupplier').on('click', function () {
+			var supplierName = $('#ddlSupplierName option:selected').text();
+			var supplierCompanyName = $('#txtsuppliercompanyname').val();
+			var supplierRate = $('#txtrate').val();
 
+			// Perform client-side validation
+			if (!supplierName || !supplierCompanyName || !supplierRate) {
+				alert("Please fill in all fields.");
+				return;
+			}
 
- <script>
-	document.getElementById("ddlSupplierName").addEventListener("change", function () {
-		var selectedSupplier = this.options[this.selectedIndex];
-		document.getElementById("txtsuppliercompanyname").value = selectedSupplier.getAttribute("data-company");
+			// Add the supplier rate details to the table
+			var tableBody = $('#myTable tbody');
+			var newRow = `
+	<tr>
+		<td>${supplierName}</td>
+		<td>${supplierCompanyName}</td>
+		<td>${supplierRate}</td>
+		<td>
+			<button type="button" class="btn btn-danger btn-sm removeRow">Remove</button>
+		</td>
+	</tr>`;
+
+			tableBody.append(newRow);
+
+			// Clear input fields after adding
+			$('#ddlSupplierName').val('');
+			$('#txtsuppliercompanyname').val('');
+			$('#txtrate').val('');
+		});
+
+		// Handle removing a row from the table
+		$(document).on('click', '.removeRow', function () {
+			$(this).closest('tr').remove();
+		});
+
+		// On form submit, collect all table rows and set them into the hidden input
+		$('#btnSave').on('click', function () {
+	    // Collect all supplier rate data
+		var supplierRates = [];
+		$('#myTable tbody tr').each(function () {
+			var supplierName = $(this).find('td').eq(0).text().trim();
+			var supplierCompanyName = $(this).find('td').eq(1).text().trim();
+			var supplierRate = $(this).find('td').eq(2).text().trim();
+
+			if (supplierName && supplierCompanyName && supplierRate) {
+				supplierRates.push({
+					SupplierName: supplierName,
+					SupplierCompanyName: supplierCompanyName,
+					SupplierRate: supplierRate
+				});
+			}
+		});
+
+		// Log the data before submitting
+		console.log(supplierRates);  // Log to check the collected data
+
+		// Set the data into hidden input as a JSON string
+		$('#SupplierRates').val(JSON.stringify(supplierRates));
+
+		// You can now submit the form
+		$('form').submit();  // Optionally use AJAX instead of traditional form submission
+
+		});
 	});
-
-	document.getElementById("btnAddSupplier").addEventListener("click", function () {
-		var supplierName = document.getElementById("ddlSupplierName").value;
-		var supplierCompanyName = document.getElementById("txtsuppliercompanyname").value;
-		var rate = document.getElementById("txtrate").value;
-
-		if (!supplierName || !rate) {
-			alert("Please fill all fields");
-			return;
-		}
-
-		var tableBody = document.querySelector("#supplierTable tbody");
-		var noDataRow = document.getElementById("noDataRow");
-
-		if (noDataRow) {
-			noDataRow.remove();
-		}
-
-		var newRow = `<tr>
-				<td>${supplierName}</td>
-				<td>${supplierCompanyName}</td>
-				<td>${rate}</td>
-			</tr>`;
-
-		tableBody.innerHTML += newRow;
-
-		// Clear input fields
-		document.getElementById("ddlSupplierName").selectedIndex = 0;
-		document.getElementById("txtsuppliercompanyname").value = "";
-		document.getElementById("txtrate").value = "";
-	});
-</script> 
+</script>

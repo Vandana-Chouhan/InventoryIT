@@ -195,29 +195,29 @@ namespace InventoryIT.Controllers
         [HttpPost]
         public ActionResult AddItemMaster(ItemMasterViewModel itemMasterViewModel)
         {
-            // Retrieve session values as strings
-            string? compName = HttpContext.Session.GetString("CompanyName");
-            string? branchName = HttpContext.Session.GetString("BranchName");
-            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+            //// Retrieve session values as strings
+            //string? compName = HttpContext.Session.GetString("CompanyName");
+            //string? branchName = HttpContext.Session.GetString("BranchName");
+            //string? finanYearName = HttpContext.Session.GetString("FinancialYear");
 
-            int? userId = HttpContext.Session.GetInt32("UserId");
+            //int? userId = HttpContext.Session.GetInt32("UserId");
 
-            // Check if session data exists, otherwise redirect to error page
-            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName) || userId == null)
-            {
-                return RedirectToAction("ErrorPage");
-            }
-            // Example: Fetch corresponding IDs based on names from database or repository
-            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
-            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
-            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
-            if (company != null && branch != null && financialYear != null)
-            {
-                itemMasterViewModel.itemMaster.CompId = company.CompId;
-                itemMasterViewModel.itemMaster.BranchId = branch.BranchId;
-                itemMasterViewModel.itemMaster.FinanYearId = financialYear.FinanYearId;
-                itemMasterViewModel.itemMaster.CreatedBy = userId.Value;
-            }
+            //// Check if session data exists, otherwise redirect to error page
+            //if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName) || userId == null)
+            //{
+            //    return RedirectToAction("ErrorPage");
+            //}
+            //// Example: Fetch corresponding IDs based on names from database or repository
+            //var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            //var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            //var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+            //if (company != null && branch != null && financialYear != null)
+            //{
+            //    itemMasterViewModel.itemMaster.CompId = company.CompId;
+            //    itemMasterViewModel.itemMaster.BranchId = branch.BranchId;
+            //    itemMasterViewModel.itemMaster.FinanYearId = financialYear.FinanYearId;
+            //    itemMasterViewModel.itemMaster.CreatedBy = userId.Value;
+            //}
             var itemCode = $"{itemMasterViewModel.itemMaster.WarehouseLocation}/" +
                            $"{itemMasterViewModel.itemMaster.WarehouseArea}/" +
                            $"{itemMasterViewModel.itemMaster.WarehouseRack}/" +
@@ -252,21 +252,25 @@ namespace InventoryIT.Controllers
 
             int itemId = itemmast.ItemId;
 
-            // Insert data into MastItemSupplierRate table using the ItemId
-            var supplierRate = new MastItemSupplierRate
+            if (itemMasterViewModel.supplierRate != null)
             {
-                ItemId = itemId,
-                SupplierRate = itemMasterViewModel.supplierRate.SupplierRate,
-                SupplierName = itemMasterViewModel.supplierRate.SupplierName,
-                SupplierCompanyName = itemMasterViewModel.supplierRate.SupplierCompanyName,
-                CompId = itemMasterViewModel.supplierRate.CompId,
-                BranchId = itemMasterViewModel.supplierRate.BranchId,
-                FinanYearId = itemMasterViewModel.supplierRate.FinanYearId,
-                CreatedBy = userId.Value
-            };
-            _mastItemSupplierRateRepository.AddItemSupplierRate(supplierRate);
-            _mastItemSupplierRateRepository.Save();
-
+                foreach (var supplierRate in itemMasterViewModel.supplierRate)
+                {
+                    var mastItemSupplierRate = new MastItemSupplierRate
+                    {
+                        ItemId = itemId,
+                        SupplierRate = supplierRate.SupplierRate,
+                        SupplierName = supplierRate.SupplierName,
+                        SupplierCompanyName = supplierRate.SupplierCompanyName,
+                        CompId = supplierRate.CompId,
+                        BranchId = supplierRate.BranchId,
+                        FinanYearId = supplierRate.FinanYearId
+                        // CreatedBy = userId.Value
+                    };
+                    _mastItemSupplierRateRepository.AddItemSupplierRate(mastItemSupplierRate);
+                }
+                _mastItemSupplierRateRepository.Save();
+            }
             // Insert data into MastItemStk table using the ItemId
             var itemStk = new MastItemStk
             {
@@ -282,7 +286,7 @@ namespace InventoryIT.Controllers
                 CompId = itemMasterViewModel.itemMaster.CompId,
                 BranchId = itemMasterViewModel.itemMaster.BranchId,
                 FinanYearId = itemMasterViewModel.itemMaster.FinanYearId,
-                CreatedBy = userId.Value
+                //CreatedBy = userId.Value
             };
             _mastItemStkRepository.AddItemStk(itemStk);
             _mastItemStkRepository.Save();
@@ -354,13 +358,13 @@ namespace InventoryIT.Controllers
             //var items = _mastItemSupplierRateRepository.GetFilteredSupplerRate(company.CompId, branch.BranchId, financialYear.FinanYearId)
 
             var items = _mastItemSupplierRateRepository.GetAllItemSupplierRate();
-               var suppitems = items.Select(c => new
-                {
-                    suppId = c.SuppId,
-                    supplierName = c.SupplierName,
-                    supplierCompanyName = c.SupplierCompanyName,
-                    supplierRate = c.SupplierRate,
-                }).ToList();
+            var suppitems = items.Select(c => new
+            {
+                suppId = c.SuppId,
+                supplierName = c.SupplierName,
+                supplierCompanyName = c.SupplierCompanyName,
+                supplierRate = c.SupplierRate,
+            }).ToList();
             return Json(new { data = suppitems });
         }
         public IActionResult Update(int itemid)

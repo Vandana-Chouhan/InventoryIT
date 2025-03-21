@@ -55,6 +55,7 @@ namespace InventoryIT.Controllers
             };
             // Save the State details to the database
             _mastStateRepository.AddState(state);
+            TempData["SuccessMessage"] = "State details saved successfully.";
             // Redirect to another page or show a success message
             return RedirectToAction("AddState", "MastState");
         }

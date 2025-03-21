@@ -23,7 +23,7 @@ namespace InventoryIT.Controllers
             var city = _mastCityRepository.GetAllMastCity().Select(c => new
             {
                 cityId = c.CityId,
-                cityName =  c.CityName,
+                cityName = c.CityName,
                 cityShortName = c.CityShortName
             }).ToList();
             return Json(new { data = city });
@@ -56,8 +56,9 @@ namespace InventoryIT.Controllers
             };
             // Save the city details to the database
             _mastCityRepository.AddMastCity(city);
+            TempData["SuccessMessage"] = "City details saved successfully.";
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddMastCity", "MastCity");
         }
     }
 }

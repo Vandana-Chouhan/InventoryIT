@@ -18,7 +18,7 @@
     }
 </script>
 <div class="container mt-4" style="margin-top: -4.5rem !important;">
-  
+
     <form asp-action="AddFinancialYear" method="post" id="openFinancialAddForm" style="margin-left: -388px; width: 102%;">
         <div class="panel" style="margin-left: 198px;
     width: 104%;">
@@ -89,7 +89,7 @@
 		<div class="card-heade text-white d-flex justify-content-between" style="border-radius:5px;height:42px;">
 			<h4 style="font-size: 20px;
                 font-weight: bold;">
-				FINANCIALYEAR DETAILS
+				FINANCIAL YEAR DETAILS
 			</h4>
 			<a href="/FinancialYear/ShowFinanYearDataTable" class="btn btn-light" style="background-color:#f8f9fa;color:black; background-color: black;
                color: #f6f9ff;
@@ -114,12 +114,6 @@
 					</div>
 				</div>
 				<div class="row mb-2">
-					<label class="col-sm-2 col-form-label text-end">Financial Year Name:</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="txtFinancialYearTo" name="FinancialYearName" required>
-					</div>
-				</div>
-				<div class="row mb-2">
 					<label for="txtFinancialYearFrom" class="col-sm-2 col-form-label text-end">Start From 1/April/20::</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" name="FinancialYearFrom" id="txtFinancialYEarFrom" required oninput="updateFinancialYearFields()">
@@ -129,6 +123,12 @@
 					<label for="txtFinancialYearTo" class="col-sm-2 col-form-label text-end">End on 31/March/20:</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="txtFinancialYearTo" name="FinancialYearTo" required>
+					</div>
+				</div>
+				<div class="row mb-2">
+					<label class="col-sm-2 col-form-label text-end">Financial Year Name:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="txtFinancialYearTo" name="FinancialYearName" required>
 					</div>
 				</div>
 				<div class="text-center mt-3">

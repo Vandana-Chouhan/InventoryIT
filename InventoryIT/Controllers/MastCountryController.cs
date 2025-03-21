@@ -46,7 +46,7 @@ namespace InventoryIT.Controllers
             // Save the country details to the database
             _mastCountryRepository.AddCountry(countryname);
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddCountry", "MastCountry");
         }
     }
 }

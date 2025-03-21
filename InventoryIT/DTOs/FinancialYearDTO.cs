@@ -8,7 +8,7 @@ public  class FinancialYearDTO
     public int FinanYearId { get; set; }
 
     public string FinancialYearName { get; set; } = null!;
-
+    
     public string FinancialYearFrom { get; set; } = null!;
 
     public string FinancialYearTo { get; set; } = null!;

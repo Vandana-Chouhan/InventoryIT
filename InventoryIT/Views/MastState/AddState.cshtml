@@ -15,7 +15,12 @@
             </div>
             <div class="card-body">
                 <form asp-action="AddState" method="post" class="d-flex flex-column align-items-center">
-
+                    @if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
+                    {
+                        <div class="alert alert-success">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
                     <div class="col-md-8">
                         <div class="row mb-2">
                             <label class="col-sm-4 col-form-label text-end">Country Name:</label>

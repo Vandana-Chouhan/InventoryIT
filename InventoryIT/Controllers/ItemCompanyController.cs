@@ -62,9 +62,7 @@ namespace InventoryIT.Controllers
             string? compName = HttpContext.Session.GetString("CompanyName");
             string? branchName = HttpContext.Session.GetString("BranchName");
             string? finanYearName = HttpContext.Session.GetString("FinancialYear");
-
             int? userId = HttpContext.Session.GetInt32("UserId");
-
             // Check if session data exists, otherwise redirect to error page
             if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName) || userId == null)
             {
@@ -94,7 +92,6 @@ namespace InventoryIT.Controllers
             // Save the itemCompany to the database
             _itemCompanytRepository.AddItemCompany(item);
             TempData["SuccessMessage"] = "ItemCompany details saved successfully.";
-
             // Redirect to another page or show a success message
             return RedirectToAction("AddItemCompany", "ItemCompany");
         }
