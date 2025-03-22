@@ -261,7 +261,7 @@
 						</div>
 						<label class="col-sm-2 col-form-label text-end">Item Unit1:</label>
 						<div class="col-sm-2">
-							<select id="ItemUnit" class="form-control" name="itemMaster.ItemUnit" required>
+							<select id="ItemUnit" class="form-control" name="itemMaster.ItemUnit1" required>
 								<option value="" disabled selected>--Select ItemUnit--</option>
 								@foreach (var itemunit in ViewBag.ItemUnits)
 								{
@@ -271,7 +271,7 @@
 						</div>
 						<label class="col-sm-2 col-form-label text-end">Item Unit2:</label>
 						<div class="col-sm-2">
-							<select id="ItemUnit2" class="form-control" name="itemMaster.ItemUnit" required>
+							<select id="ItemUnit2" class="form-control" name="itemMaster.ItemUnit2" required>
 								<option value="" disabled selected>--Select ItemUnit--</option>
 								@foreach (var itemunit in ViewBag.ItemUnits)
 								{
@@ -406,7 +406,7 @@
 
 								<label class="col-sm-2 col-form-label ">Supplier Name :</label>
 								<div class="col-sm-2">
-									<select id="ddlSupplierName" class="form-control" name="supplierRate.SupplierName">
+									<select id="ddlSupplierName" class="form-control" name="supplierRate[].SupplierName">
 										<option value="" disabled selected>--Select Supplier Name--</option>
 										@foreach (var supplier in ViewBag.SupplierMasters)
 										{
@@ -416,11 +416,11 @@
 								</div>
 								<label class="col-sm-2 col-form-label" style="margin-left:-28px;">Supplier Company:</label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control" placeholder="Enter SupplierCompanyName" id="txtsuppliercompanyname" name="supplierRate.SupplierCompanyName">
+									<input type="text" class="form-control" placeholder="Enter SupplierCompanyName" id="txtsuppliercompanyname" name="supplierRate[].SupplierCompanyName">
 								</div>
 								<label class="col-sm-2 col-form-label" style="margin-left:-69px">Supplier Rate :</label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control" placeholder="Enter Supplier Rate" id="txtrate" name="supplierRate.SupplierRate">
+									<input type="text" class="form-control" placeholder="Enter Supplier Rate" id="txtrate" name="supplierRate[].SupplierRate">
 								</div>
 								<div class="col-sm-1 text-start">
 									<button type="button" id="btnAddSupplier" class="btn btn-warning" style="margin-left: 17px;">OK</button>
@@ -453,72 +453,70 @@
 	</div>
 </body>
 </html>
-<script>
-	$(document).ready(function () {
-		// Handle OK button click to add supplier rate data to the table
-		$('#btnAddSupplier').on('click', function () {
-			var supplierName = $('#ddlSupplierName option:selected').text();
-			var supplierCompanyName = $('#txtsuppliercompanyname').val();
-			var supplierRate = $('#txtrate').val();
+ <script>
+	  $(document).ready(function () {
+		  // Handle OK button click to add supplier rate data to the table
+		  $('#btnAddSupplier').on('click', function () {
 
-			// Perform client-side validation
-			if (!supplierName || !supplierCompanyName || !supplierRate) {
-				alert("Please fill in all fields.");
-				return;
-			}
+			  var supplierName = $('#ddlSupplierName option:selected').text();
+			  var supplierCompanyName = $('#txtsuppliercompanyname').val();
+			  var supplierRate = $('#txtrate').val();
+			  // Perform client-side validation
+			  if (!supplierName || !supplierCompanyName || !supplierRate) {
+				  alert("Please fill in all fields.");
+				  return;
+			  }
+			 // Find the next index for supplierRate
+			  var index = $('#myTable tbody tr').length; // This gives the current count of rows
 
-			// Add the supplier rate details to the table
-			var tableBody = $('#myTable tbody');
-			var newRow = `
-	<tr>
-		<td>${supplierName}</td>
-		<td>${supplierCompanyName}</td>
-		<td>${supplierRate}</td>
-		<td>
-			<button type="button" class="btn btn-danger btn-sm removeRow">Remove</button>
-		</td>
-	</tr>`;
+			  // Create a new row with hidden inputs for each supplierRate
+			  var newRow = `
+	  <tr>
+		  <td>${supplierName}</td>
+		  <td>${supplierCompanyName}</td>
+		  <td>${supplierRate}</td>
+		  <td>
+			  <button type="button" class="btn btn-danger btn-sm removeRow">Remove</button>
+			  <input type="hidden" name="supplierRate[${index}].SupplierName" value="${supplierName}">
+			  <input type="hidden" name="supplierRate[${index}].SupplierCompanyName" value="${supplierCompanyName}">
+			  <input type="hidden" name="supplierRate[${index}].SupplierRate" value="${supplierRate}">
+		  </td>
+	  </tr>
+			  `;
+		// Append the new row to the table
+			  $('#myTable tbody').append(newRow);
+			  // Clear input fields after adding
+			  $('#ddlSupplierName').val('');
+			  $('#txtsuppliercompanyname').val('');
+			  $('#txtrate').val('');
+		  });
+		  // Handle removing a row from the table
+		  $(document).on('click', '.removeRow', function () {
+			var row = $(this).closest('tr');
+			  row.remove();
+		  });
 
-			tableBody.append(newRow);
-
-			// Clear input fields after adding
-			$('#ddlSupplierName').val('');
-			$('#txtsuppliercompanyname').val('');
-			$('#txtrate').val('');
-		});
-
-		// Handle removing a row from the table
-		$(document).on('click', '.removeRow', function () {
-			$(this).closest('tr').remove();
-		});
-
-		// On form submit, collect all table rows and set them into the hidden input
-		$('#btnSave').on('click', function () {
-	    // Collect all supplier rate data
-		var supplierRates = [];
-		$('#myTable tbody tr').each(function () {
-			var supplierName = $(this).find('td').eq(0).text().trim();
-			var supplierCompanyName = $(this).find('td').eq(1).text().trim();
-			var supplierRate = $(this).find('td').eq(2).text().trim();
-
-			if (supplierName && supplierCompanyName && supplierRate) {
-				supplierRates.push({
-					SupplierName: supplierName,
-					SupplierCompanyName: supplierCompanyName,
-					SupplierRate: supplierRate
-				});
-			}
-		});
-
-		// Log the data before submitting
-		console.log(supplierRates);  // Log to check the collected data
-
-		// Set the data into hidden input as a JSON string
-		$('#SupplierRates').val(JSON.stringify(supplierRates));
-
-		// You can now submit the form
-		$('form').submit();  // Optionally use AJAX instead of traditional form submission
-
-		});
-	});
-</script>
+		  // On form submit, collect all table rows and set them into the hidden input
+		  $('#btnSave').on('click', function () {
+			  // Collect all supplier rate data from hidden inputs
+			  var supplierRates = [];
+			  $('#myTable tbody tr').each(function () {
+				  var supplierName = $(this).find('td').eq(0).text().trim();
+				  var supplierCompanyName = $(this).find('td').eq(1).text().trim();
+				  var supplierRate = $(this).find('td').eq(2).text().trim();
+				  // Add only non-empty values
+				  if (supplierName && supplierCompanyName && supplierRate) {
+					  supplierRates.push({
+						  SupplierName: supplierName,
+						  SupplierCompanyName: supplierCompanyName,
+						  SupplierRate: supplierRate
+					  });
+				  }
+			  });
+			  // Set the data into hidden input as a JSON string
+	  $('#SupplierRates').val(JSON.stringify(supplierRates));
+	// You can now submit the form
+			  $('form').submit();  // Optionally use AJAX instead of traditional form submission
+		  });
+	  });
+</script> 

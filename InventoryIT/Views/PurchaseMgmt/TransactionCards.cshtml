@@ -1,12 +1,12 @@
-﻿<style>
+﻿@* <style>
     .image-back {
-        background-image: url('/assets/img/card.jpg');
+      /*   background-image: url('/assets/img/card.jpg'); */
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         width: 100%;
         height: 100vh;
-        margin-left: -160px;
+        margin-left: 9px;
         margin-top: 19px;
     }
     .container-items {
@@ -52,14 +52,19 @@
         width: 18%;
         margin-top: 60px;
     }
+
+    a {
+        color: #e9ebef;
+        text-decoration: underline;
+    }
 </style>
 
 <div class="image-back">
     <div class="container-items">
         <div class="row" style="margin-left: 61px;">
             <div class="col-md-2 mb-2">
-                <div class="item-container" id="loadMaterialRequest">
-                    <a href="/PurchageMgmt/LoadProductRqst">
+                <div class="item-container">
+                    <a href="/PurchaseMgmt/MaterialRequestView">
                     <div class="item-content">
                         <div class="item-icon"></div>
                         <p class="item-title">Material Request</p>
@@ -70,7 +75,7 @@
             </div>
             <div class="col-md-2 mb-2">
                 <div class="item-container" id="loadProductOrder">
-                    <a href="/PurchageMgmt/LoadProductOrder">
+                    <a href="/PurchaseMgmt/PurchaseOrder">
                     <div class="item-content">
                         <div class="item-icon"></div>
                         <p class="item-title">Purchage Order</p>
@@ -81,7 +86,7 @@
 
             <div class="col-md-2 mb-2">
                 <div class="item-container" id="loadGRN">
-                    <a href="/PurchageMgmt/LoadGrn">
+                    <a href="/PurchaseMgmt/GRN">
                     <div class="item-content">
                         <div class="item-icon"></div>
                         <p class="item-title">GRN</p>
@@ -91,7 +96,7 @@
             </div>
             <div class="col-md-2 mb-2">
                 <div class="item-container" id="loadProduct">
-                    <a href="/PurchageMgmt/LoadProduIssue">
+                    <a href="/PurchaseMgmt/ItemIssue">
                     <div class="item-content">
                         <div class="item-icon"></div>
                         <p class="item-title">Item Issue</p>
@@ -102,7 +107,7 @@
 
             <div class="col-md-2 mb-2">
                 <div class="item-container" id="loadProductReturn">
-                    <a href="/PurchageMgmt/ItemReturn">
+                    <a href="/PurchaseMgmt/ItemReturn">
                     <div class="item-content">
                         <div class="item-icon"></div>
                         <p class="item-title">Item Return</p>
@@ -124,87 +129,147 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $("#loadStockDetails").click(function (e) {
-            e.preventDefault();
-            $.get("@Url.Action("LoadStockDetails", "PurchageMgmt")", function (data) {
-                $("#partialContent").html(data);
-            });
-        });
-    });
 
-</script>
-<script>
-    $(document).ready(function () {
-        $("#loadMaterialRequest").click(function (e) {
-            e.preventDefault();
-            $.get("@Url.Action("LoadProductRqst", "PurchageMgmt")", function (data) {
-                $("#partialContent").html(data);
-            });
-        });
-    });
-</script>
+ *@
+<style>
+	.image-back {
+		background-image: url('/assets/img/wareousemenu2.png');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		width: 89%;
+		height: 100vh;
+		margin-left: -37px;
+		margin-top: 19px;
+	}
 
-<script>
-    $(document).ready(function () {
-        $("#loadProductOrder").click(function (e) {
-            e.preventDefault();
-            $.get("@Url.Action("LoadProductOrder", "PurchageMgmt")", function (data) {
-                $("#partialContent").html(data);
-            });
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $("#loadGRN").click(function (e) {
-            e.preventDefault();
-            $.get("@Url.Action("LoadGrn", "PurchageMgmt")", function (data) {
-                $("#partialContent").html(data);
-            });
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $("#loadProduct").click(function (e) {
-            e.preventDefault();
-            $.get("@Url.Action("ProduIssue", "PurchageMgmt")", function (data) {
-                $("#partialContent").html(data);
-            });
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $("#loadProductReturn").click(function (e) {
-            e.preventDefault();
-            $.get("@Url.Action("ItemReturn", "PurchageMgmt")", function (data) {
-                $("#partialContent").html(data);
-            });
-        });
-    });
-</script>
-<div id="partialViewContainer"></div>
+	body {
+		background-color: white;
+	}
 
-<script>
-    $(document).ready(function () {
-        $(".loadPartialView").click(function (event) {
-            event.preventDefault(); // Page reload hone se roke
+	.container-items {
+		margin-top: -95px;
+	}
 
-            var url = $(this).attr("href"); // URL from anchor tag
+	.item-container {
+		height: 118px;
+		width: 152px;
+		border-radius: 0px;
+		background: white;
+		box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+		overflow: hidden;
+		position: relative;
+	}
 
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function (data) {
-                    $("#partialViewContainer").html(data);
-                },
-                error: function () {
-                    alert("Failed to load data.");
-                }
-            });
-        });
-    });
-</script>
+	.item-content {
+		width: 100%;
+		height: 100%;
+	}
+
+		.item-content img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			border-radius: 24px;
+			display: block;
+		}
+
+	.row {
+		margin-left: 109px !important;
+	}
+
+	.col-md-2 {
+		flex: 0 0 auto;
+		width: 18%;
+		margin-top: 23%;
+		margin-left: 30px !important;
+	}
+
+	.pms {
+		background: linear-gradient(90deg, hsla(225, 78%, 59%, 1) 0%, hsla(197, 85%, 51%, 1) 100%);
+		color: white;
+		height: 51px;
+	}
+
+	h4 {
+		text-align: center;
+	}
+</style>
+
+<div class="image-back">
+	<div class="item-container" style="width: 1000px; height: 513px;margin-left: 87px;">
+
+		<div class="pms">
+			<h4>PURCHASE TRANSACTIONS</h4>
+		</div>
+
+		<div class="container-items">
+			<div class="row" style="margin-left: 61px;">
+
+
+
+				<div class="col-md-2 mb-2">
+					<div class="item-container">
+						<a href="/PurchaseMgmt/MaterialRequestView">
+							<div class="item-content">
+
+								<img src="/assets/img/itemtypenew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-2 mb-2">
+					<div class="item-container">
+						<a href="/PurchaseMgmt/PurchaseOrder">
+							<div class="item-content">
+
+								<img src="/assets/img/itemunitnew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-2 mb-2">
+					<div class="item-container">
+						<a href="/PurchaseMgmt/GRN">
+							<div class="item-content">
+
+								<img src="/assets/img/itemcompanynew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-2 mb-2">
+					<div class="item-container">
+						<a href="/PurchaseMgmt/ItemIssue">
+							<div class="item-content">
+
+								<img src="/assets/img/itemcategorynew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-2 mb-2" style="margin-top:2px;">
+					<div class="item-container">
+						<a href="/PurchaseMgmt/ItemReturn">
+							<div class="item-content">
+
+								<img src="/assets/img/itemsubcaterogynew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-2 mb-2" style="margin-top:2px;">
+					<div class="item-container">
+						<a href="/PurchageMgmt/LoadStockDetails">
+							<div class="item-content">
+
+								<img src="/assets/img/itemsuppliernew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>

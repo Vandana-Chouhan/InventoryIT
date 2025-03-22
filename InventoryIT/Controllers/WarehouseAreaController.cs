@@ -137,9 +137,5 @@ namespace InventoryIT.Controllers
         {
             return View("WarehouseCards");
         }
-        public IActionResult ShowTranctionCards()
-        {
-            return View("TransactionCards");
-        }
     }
 }
