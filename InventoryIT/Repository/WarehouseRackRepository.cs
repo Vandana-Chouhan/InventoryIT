@@ -10,6 +10,14 @@ namespace InventoryIT.Repository
         {
             _inventoryContext = inventoryContext;
         }
+        public string GetWarehouseRackName(int rackId)
+        {
+            return _inventoryContext.WarehouseRackMasters
+                   .Where(r => r.WarehouseRackId == rackId)
+                   .Select(r => r.WarehouseRackName)
+                   .FirstOrDefault() ?? "Unknown";
+        }
+
         public IEnumerable<WarehouseRackMaster> GetAllWarehouseRack()
         {
             return _inventoryContext.WarehouseRackMasters.ToList();

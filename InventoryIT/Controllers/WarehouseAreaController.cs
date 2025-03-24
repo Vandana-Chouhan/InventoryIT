@@ -40,6 +40,7 @@ namespace InventoryIT.Controllers
             var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
             var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
             var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+            var location = _warehouseLocationRepository.GetAllWarehouseLocation().ToList();
 
             // If the company, branch, or financial year is not found, return empty data
             if (company == null || branch == null || financialYear == null)
@@ -50,9 +51,9 @@ namespace InventoryIT.Controllers
             var areas = _warehouseAreaRepository.GetFilteredWarehouseArea(company.CompId, branch.BranchId, financialYear.FinanYearId)
                 .Select(c => new
                 {
-                    WarehouseAreaId = c.WarehouseAreaId,
-                    WarehouseLocId = c.WarehouseLocId,
-                    WarehouseAreaName = c.WarehouseAreaName
+                    warehouseLocId = location.FirstOrDefault(loc => loc.WarehouseLocId == c.WarehouseLocId)?.WarehouseName,
+                    warehouseAreaId = c.WarehouseAreaId,
+                    warehouseAreaName = c.WarehouseAreaName
                 })
                 .ToList();
             return Json(new { data = areas });

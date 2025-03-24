@@ -294,11 +294,10 @@
 					}
 				]
 			});
-		 // Apply the search functionality for each column
-			$('.search-row input').on('keyup change', function () {
-				var columnIndex = $(this).parent().index();
-				table.DataTable().column(columnIndex).search(this.value).draw();
-			});
+				 $('.search-row input[type="text"]').on('keyup change', function () {
+			var columnIndex = $(this).closest('th').index();
+			table.column(columnIndex).search(this.value).draw();
+		});
 		});
 	</script>
 }

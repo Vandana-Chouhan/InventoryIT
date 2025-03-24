@@ -4,6 +4,8 @@ namespace InventoryIT.Repository
 {
     public interface IWarehouseRackRepository
     {
+        public string GetWarehouseRackName(int rackId);
+
         public IEnumerable<WarehouseRackMaster> GetAllWarehouseRack();
         public IEnumerable<WarehouseRackMaster> GetFilteredWarehouseRack(int companyId, int branchId, int financialYearId);
         public WarehouseRackMaster? GetbyId(int warehouseRackId);

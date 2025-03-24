@@ -46,8 +46,8 @@ namespace InventoryIT.Controllers
             var locations = _warehouseLocationRepository.GetFilteredWarehouseLocations(company.CompId, branch.BranchId, financialYear.FinanYearId)
                 .Select(c => new
                 {
-                    WarehouseLocId = c.WarehouseLocId,
-                    WarehouseName = c.WarehouseName
+                    warehouseLocId = c.WarehouseLocId,
+                    warehouseName = c.WarehouseName
                 })
                 .ToList();
 

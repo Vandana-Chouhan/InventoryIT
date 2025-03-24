@@ -1,5 +1,14 @@
 ﻿<html>
 <head>
+	<style>
+		div:where(.swal2-container).swal2-center > .swal2-popup {
+			grid-column: 2;
+			grid-row: 2;
+			place-self: center center;
+			width: 35%;
+		}
+	</style>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<link rel="stylesheet" href="~/Warehouse/style.css" asp-append-version="true" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- Load jQuery -->
 	<script type="text/javascript">
@@ -44,13 +53,7 @@
 				<a href="/WarehouseRack/warehouseRackDataTab" class="btn btn-light">RETURN TO VIEW</a>
 			</div>
 			<div class="card-body">
-				<form action="AddWarehouseRack" method="post">
-					@if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
-					{
-						<div class="alert alert-success">
-							@TempData["SuccessMessage"]
-						</div>
-					}
+				<form action="AddWarehouseRack" method="post" id="addWarehouseRackAlert">
 					<div class="form-group">
 						<label for="ddlWarehouseLocation">Warehouse Location:</label>
 						<select class="form-control" name="WarehouseLocId" id="WarehouseLocId" required>
@@ -73,7 +76,7 @@
 					</div>
 					<div class="text-center mt-3">
 						<button type="submit" class="btn btn-success equal-width-btn"><i class="bi bi-house-add-fill"></i> Save</button>
-						<button type="reset" onclick="window.location.href = window.location.href + '?reset=true';" class="btn btn-primary equal-width-btn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+						<button type="reset" class="btn btn-primary equal-width-btn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
 					</div>
 				</form>
 			</div>
@@ -81,3 +84,33 @@
 	</div>
 </body>
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+	const form = document.getElementById("addWarehouseRackAlert");
+		form.addEventListener("submit", function (event) {
+			event.preventDefault();
+		Swal.fire({
+				title: "Are you sure?",
+				text: "Create this WarehouseRack!",
+				imageUrl: '/assets/img/alert.png',
+				imageHeight: "100px",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, Create it!"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire({
+						title: "Created!",
+						text: "WarehouseRack has been created successfully.",
+						icon: "success",
+						timer: 2000,
+						showConfirmButton: false
+					}).then(() => {
+						form.submit();
+					});
+				}
+			});
+		});
+</script>

@@ -10,6 +10,13 @@ namespace InventoryIT.Repository
         {
             _inventoryContext = inventoryContext;
         }
+        public string GetWarehouseAreaName(int areaId)
+        {
+            return _inventoryContext.WarehouseAreaMasters
+                   .Where(a => a.WarehouseAreaId == areaId)
+                   .Select(a => a.WarehouseAreaName)
+                   .FirstOrDefault() ?? "Unknown";
+        }
         public IEnumerable<WarehouseAreaMaster> GetAllWarehouseArea()
         {
             return _inventoryContext.WarehouseAreaMasters.ToList();

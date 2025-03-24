@@ -218,10 +218,18 @@ namespace InventoryIT.Controllers
                 itemMasterViewModel.itemMaster.FinanYearId = financialYear.FinanYearId;
                 itemMasterViewModel.itemMaster.CreatedBy = userId.Value;
             }
-            var itemCode = $"{itemMasterViewModel.itemMaster.WarehouseLocation}/" +
-                           $"{itemMasterViewModel.itemMaster.WarehouseArea}/" +
-                           $"{itemMasterViewModel.itemMaster.WarehouseRack}/" +
-                           $"{itemMasterViewModel.itemMaster.WarehouseShelf}/" +
+
+            // Fetch names from the respective repositories
+            var warehouseLocationName = _warehouseLocationRepository.GetWarehouseLocationName(itemMasterViewModel.itemMaster.WarehouseLocation);
+            var warehouseAreaName = _warehouseAreaRepository.GetWarehouseAreaName(itemMasterViewModel.itemMaster.WarehouseArea);
+            var warehouseRackName = _warehouseRackRepository.GetWarehouseRackName(itemMasterViewModel.itemMaster.WarehouseRack);
+            var warehouseShelfName = _warehouseShelfRepository.GetWarehouseShelfName(itemMasterViewModel.itemMaster.WarehouseShelf);
+
+            // Generate Item Code using names instead of IDs
+            var itemCode = $"{warehouseLocationName}/" +
+                           $"{warehouseAreaName}/" +
+                           $"{warehouseRackName}/" +
+                           $"{warehouseShelfName}/" +
                            $"{itemMasterViewModel.itemMaster.ItemName}";
             // Create a new item master object using the data
             var itemmast = new ItemMaster
@@ -291,7 +299,7 @@ namespace InventoryIT.Controllers
             };
             _mastItemStkRepository.AddItemStk(itemStk);
             _mastItemStkRepository.Save();
-            TempData["SuccessMessage"] = "Product Master details saved successfully.";
+            //TempData["SuccessMessage"] = "Product Master details saved successfully.";
 
             // Redirect to another page or show a success message
             return RedirectToAction("AddItemMaster", "ItemMaster");
@@ -315,7 +323,9 @@ namespace InventoryIT.Controllers
             var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
             var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
             var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
-
+            var type = _itemTypeRepository.GetAllItemType().ToList();
+            var unit = _itemUnitRepository.GetAllItemUnit().ToList();
+            var itemcompany = _itemCompanytRepository.GetAllItemCompany().ToList();
             // If the company, branch, or financial year is not found, return empty data
             if (company == null || branch == null || financialYear == null)
             {
@@ -325,12 +335,12 @@ namespace InventoryIT.Controllers
             var items = _itemMasterRepository.GetFilteredItemMaster(company.CompId, branch.BranchId, financialYear.FinanYearId)
                 .Select(c => new
                 {
-                    ItemCode = c.ItemCode,
-                    ItemCompany = c.ItemCompany,
-                    ItemName = c.ItemName,
-                    ItemType = c.ItemType,
-                    ItemUnit1 = c.ItemUnit1,
-                    ItemUnit2 = c.ItemUnit2
+                    itemCode = c.ItemCode,
+                    itemName = c.ItemName,
+                    itemType = type.FirstOrDefault(t => t.ItemId == c.ItemType)?.ItemName,
+                    itemUnit1 = unit.FirstOrDefault(u =>u.ItemUnitId == c.ItemUnit1)?.ItemUnitName,
+                    itemUnit2 = unit.FirstOrDefault(u => u.ItemUnitId == c.ItemUnit2)?.ItemUnitName,
+                    itemCompany = itemcompany.FirstOrDefault(itemcomp => itemcomp.ItemComId == c.ItemCompany)?.ItemCompanyName
                 }).ToList();
             return Json(new { data = items });
         }

@@ -254,38 +254,41 @@
 @section Scripts {
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 	<script>
-						$(document).ready(function () {
-							var table = $('#myTable').DataTable({
-								"processing": true,
-								"serverSide": false, // Set to false if using client-side processing
-								"ajax": {
-									"url": "/ItemCompany/GetAllData",
-									"type": "GET",
-									"datatype": "json",
-									"dataSrc": function (json) {
-										console.log(json); // Debugging: check JSON response
-										return json.data;
-									}
-								},
-								"columns": [
-									{ "data": "itemComId" },
-									{ "data": "itemCompanyName" },
-		                            {
-										"data": "itemComId",
-										"orderable": false, // Prevent sorting on action column
-										"searchable": false, // Disable search on action column
-										"render": function (data, type, row) {
-											return `<a href='/ItemSetup/Edit/${data}' class='action-icons'><i class='fa fa-edit'></i></a>
-																			<a href='/ItemSetup/Delete/${data}' class='action-icons'><i class='fa fa-trash'></i></a>`;
-										}
-									}
-								]
-							});
-						// Apply the search functionality for each column
-							$('.search-row input').on('keyup change', function () {
-								var columnIndex = $(this).parent().index(); // Get the column index
-								table.column(columnIndex).search(this.value).draw(); // Apply search
-							});
-						});
+		$(document).ready(function () {
+			var table = $('#myTable').DataTable({
+				"processing": true,
+				"serverSide": false, // Set to false if using client-side processing
+				"ajax": {
+					"url": "/ItemCompany/GetAllData",
+					"type": "GET",
+					"datatype": "json",
+					"dataSrc": function (json) {
+						console.log(json); // Debugging: check JSON response
+						return json.data;
+					}
+				},
+				"columns": [
+					{"data": null,
+					 "render": function (data, type, row, meta) {
+					 return meta.row + 1; // Assign Serial Number
+					}},
+					{ "data": "itemCompanyName" },
+					{
+						"data": "itemComId",
+						"orderable": false, // Prevent sorting on action column
+						"searchable": false, // Disable search on action column
+						"render": function (data, type, row) {
+							return `<a href='/ItemSetup/Edit/${data}' class='action-icons'><i class='fa fa-edit'></i></a>
+															<a href='/ItemSetup/Delete/${data}' class='action-icons'><i class='fa fa-trash'></i></a>`;
+						}
+					}
+				]
+			});
+		// Apply the search functionality for each column
+			$('.search-row input').on('keyup change', function () {
+				var columnIndex = $(this).parent().index(); // Get the column index
+				table.column(columnIndex).search(this.value).draw(); // Apply search
+			});
+		});
 	</script>
 }

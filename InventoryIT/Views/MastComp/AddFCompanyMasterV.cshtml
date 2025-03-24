@@ -4,7 +4,6 @@
 @{
 	ViewData["Title"] = "Company Details";
 }
-
 <div class="container mt-4">
 	<div class="car">
 		<div class="card-heade text-white d-flex justify-content-between" style="border-radius:5px;height:42px;">
@@ -18,11 +17,11 @@
                font-weight: bold;
                padding: 5px;">
 				RETURN TO VIEW
-			</a>     
+			</a>
 		</div>
 		<div class="card-body">
-			<form asp-action="AddFCompanyMaster"asp-controller="MastComp" method="post" style="background-color: white;">
-		 <div class="row mb-2">
+			<form asp-action="AddFCompanyMaster" asp-controller="MastComp" method="post" style="background-color: white;">
+				<div class="row mb-2">
 					<label class="col-sm-2 col-form-label text-end">Company Name:</label>
 					<div class="col-sm-4">
 						<input type="text" class="form-control" id="txtCompany name" name="CompanyName">

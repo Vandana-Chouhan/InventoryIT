@@ -10,6 +10,13 @@ namespace InventoryIT.Repository
         {
             _inventoryContext = inventoryContext;
         }
+        public string GetWarehouseLocationName(int locationId)
+        {
+            return _inventoryContext.WarehouseLocationMasters
+                   .Where(l => l.WarehouseLocId == locationId)
+                   .Select(l => l.WarehouseName)
+                   .FirstOrDefault() ?? "Unknown";
+        }
         public IEnumerable<WarehouseLocationMaster> GetAllWarehouseLocation()
         {
             return _inventoryContext.WarehouseLocationMasters.ToList();

@@ -27,14 +27,30 @@ namespace InventoryIT.Controllers
         [HttpPost]
         public ActionResult AddFinancialYear(FinancialYear financialYear)
         {
-            int result = _financialYearRepository.AddFinancialYear(financialYear);
+            var existingYear = _financialYearRepository.GetAllFinancialYear()
+                       .FirstOrDefault(y => y.FinancialYearName == financialYear.FinancialYearName);
+            if (existingYear != null)
+            {
+                TempData["Failed"] = "Financial Year Name already exists. Please use a unique Year name.";
+                return RedirectToAction("AddFinancialYear");
+            }
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            financialYear.CreatedBy = userId.Value;
+            var year = new FinancialYear
+            {
+                FinancialYearFrom = financialYear.FinancialYearFrom,
+                FinancialYearTo = financialYear.FinancialYearTo,
+                FinancialYearName = financialYear.FinancialYearName,
+                CreatedBy = financialYear.CreatedBy,
+            };
+            int result = _financialYearRepository.AddFinancialYear(year);
             if (result > 0)
             {
                 return RedirectToAction("AddFinancialYear", "FinancialYear");
             }
             else
             {
-                TempData["Failed"] = "Failed to add the company master.";
+                TempData["Failed"] = "Failed to add the financial year master.";
                 return RedirectToAction("AddFinancialYear");
             }
         }

@@ -1,363 +1,139 @@
-﻿
-@* <style>
+﻿<style>
 	.image-back {
-		background-image: url(/assets/img/card.jpg);
+		background-image: url('/assets/img/wareousemenu2.png');
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
 		width: 89%;
-		height: 80vh;
-		margin-left: 80px;
-		margin-top: 101px;
-	}
-	.container-items {
-		margin-top: 18px;
-	}
-
-	.item-container {
-		height: 143px;
-		width: 152px;
-		border-radius: 24px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: #f8f9fa; /* Light background */
-		box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-	}
-
-	.item-content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
-	.item-icon {
-		width: 68px;
-		height: 68px;
-		background-color: #007bff;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #fff;
-		font-weight: bold;
-	}
-
-	.item-title {
-		margin-top: 12px;
-		font-size: 16px;
-		font-weight: bold;
-		color: #333;
-	}
-
-	.col-md-2 {
-		flex: 0 0 auto;
-		width: 18%;
-		margin-top: 175px;
-		margin-left: 11px;
-	}
-
-	a {
-		color: #e9ebef;
-		 text-decoration: underline; 
-	}
-</style> *@
-<style>
-	.image-back {
-		/* background-image: url('/assets/img/card.jpg'); */
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		width: 100%;
 		height: 100vh;
-		margin-left: 9px;
+		margin-left: -37px;
 		margin-top: 19px;
 	}
 
+	body {
+		background-color: white;
+	}
+
 	.container-items {
-		margin-top: 18px;
+		margin-top: -95px;
 	}
 
 	.item-container {
-		height: 143px;
+		height: 118px;
 		width: 152px;
-		border-radius: 24px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: #f8f9fa; /* Light background */
+		border-radius: 0px;
+		background: white;
 		box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+		overflow: hidden;
+		position: relative;
 	}
 
 	.item-content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
 		width: 100%;
 		height: 100%;
 	}
 
-	.item-icon {
-		width: 68px;
-		height: 68px;
-		background-color: #007bff;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #fff;
-		font-weight: bold;
-	}
+		.item-content img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			border-radius: 24px;
+			display: block;
+		}
 
-	.item-title {
-		margin-top: 12px;
-		font-size: 16px;
-		font-weight: bold;
-		color: #333;
+	.row {
+		margin-left: 109px !important;
 	}
 
 	.col-md-2 {
 		flex: 0 0 auto;
 		width: 18%;
-		margin-top: 60px;
+		margin-top: 23%;
+		margin-left: 30px !important;
 	}
 
-	a {
-		color: #e9ebef;
-		text-decoration: underline;
+	.pms {
+		background: linear-gradient(90deg, hsla(225, 78%, 59%, 1) 0%, hsla(197, 85%, 51%, 1) 100%);
+		color: white;
+		height: 51px;
+	}
+
+	h4 {
+		text-align: center;
 	}
 </style>
-@* 
+
 <div class="image-back">
-	<div class="container-items">
-		<div class="row" style="margin-left: 61px;">
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadItemType">
-					<a href="/ItemType/itemtypeDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Type</p>
-						</div>
-					</a>
+	<div class="item-container" style="width: 1000px; height: 513px;margin-left: 200px;">
+		<div class="pms">
+			<h4>PURCHASE MASTER SETUP</h4>
+		</div>
+		<div class="container-items">
+			<div class="row" style="margin-left: 61px;">
+				<div class="col-md-2 mb-2">
+					<div class="item-container">
+						<a href="/ItemType/itemtypeDataTable">
+							<div class="item-content">
+								<img src="/assets/img/itemtypenew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadItemUnit">
-					<a href="/ItemUnit/itemUnitDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Unit</p>
-						</div>
-					</a>
+				<div class="col-md-2 mb-2">
+					<div class="item-container">
+						<a href="/ItemUnit/itemUnitDataTable">
+							<div class="item-content">
+								<img src="/assets/img/itemunitnew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadItemCompany">
-					<a href="/ItemCompany/itemCompanyDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Company</p>
-						</div>
-					</a>
+				<div class="col-md-2 mb-2">
+					<div class="item-container">
+						<a href="/ItemCompany/itemCompanyDataTable">
+							<div class="item-content">
+								<img src="/assets/img/itemcompanynew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadItemCategory">
-					<a href="/ItemCatagory/itemcategoryDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Category</p>
-						</div>
-					</a>
+				<div class="col-md-2 mb-2">
+					<div class="item-container">
+						<a href="/ItemCatagory/itemcategoryDataTable">
+							<div class="item-content">
+								<img src="/assets/img/itemcategorynew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadItemSubCatagory">
-					<a href="/ItemSubCatagory/itemSubCataDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Subcategory</p>
-						</div>
-					</a>
+				<div class="col-md-2 mb-2" style="margin-top:2px;">
+					<div class="item-container">
+						<a href="/ItemSubCatagory/itemSubCataDataTable">
+							<div class="item-content">
+								<img src="/assets/img/itemsubcaterogynew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadSupplier" style="margin-top: -153px;">
-					<a href="/SupplierMaster/supplierMasterDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Supplier Master</p>
-						</div>
-					</a>
+				<div class="col-md-2 mb-2" style="margin-top:2px;">
+					<div class="item-container">
+						<a href="/SupplierMaster/supplierMasterDataTable">
+							<div class="item-content">
+								<img src="/assets/img/itemsuppliernew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadItemmaster" style="margin-top: -153px;">
-					<a href="/ItemMaster/ShowItemMasterDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Master</p>
-						</div>
-					</a>
+				<div class="col-md-2 mb-2" style="margin-top:2px;">
+					<div class="item-container">
+						<a href="/ItemMaster/ShowItemMasterDataTable">
+							<div class="item-content">
+								<img src="/assets/img/itemmasternew.png" alt="LOCATION">
+							</div>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
- *@
-
-
-<div class="image-back">
-	<div class="container-items">
-		<div class="row" style="margin-left: 61px;">
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadMaterialRequest">
-					<a href="/ItemType/itemtypeDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Type</p>
-						</div>
-					</a>
-				</div>
-
-			</div>
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadProductOrder">
-					<a href="/ItemUnit/itemUnitDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Unit</p>
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadGRN">
-					<a href="/ItemCompany/itemCompanyDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Company</p>
-						</div>
-					</a>
-				</div>
-			</div>
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadProduct">
-					<a href="/ItemCatagory/itemcategoryDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Category</p>
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadProductReturn">
-					<a href="/ItemSubCatagory/itemSubCataDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Subcategory</p>
-						</div>
-					</a>
-				</div>
-			</div>
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadStockDetails">
-					<a href="/SupplierMaster/supplierMasterDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Supplier Master</p>
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="col-md-2 mb-2">
-				<div class="item-container" id="loadStockDetails">
-					<a href="/ItemMaster/ShowItemMasterDataTable">
-						<div class="item-content">
-							<div class="item-icon"></div>
-							<p class="item-title">Item Master</p>
-						</div>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-@* <script>
-	$(document).ready(function () {
-		$("#loadItemType").click(function (e) {
-			e.preventDefault();
-			$.get("@Url.Action("AddItemType", "ItemType")", function (data) {
-				$("#partialContent").html(data);
-			});
-		});
-	});
-</script>
-<script>
-	$(document).ready(function () {
-		$("#loadItemUnit").click(function (e) {
-			e.preventDefault();
-			$.get("@Url.Action("AddItemUnit1", "ItemUnit1")", function (data) {
-				$("#partialContent").html(data);
-			});
-		});
-	});
-</script>
-<script>
-	$(document).ready(function () {
-		$("#loadItemCompany").click(function (e) {
-			e.preventDefault();
-			$.get("@Url.Action("AddItemCompany", "ItemCompany")", function (data) {
-				$("#partialContent").html(data);
-			});
-		});
-	});
-</script>
-<script>
-	$(document).ready(function () {
-		$("#loadItemCategory").click(function (e) {
-			e.preventDefault();
-			$.get("@Url.Action("AddItemCatagory", "ItemCatagory")", function (data) {
-				$("#partialContent").html(data);
-			});
-		});
-	});
-</script>
-<script>
-	$(document).ready(function () {
-		$("#loadItemSubCatagory").click(function (e) {
-			e.preventDefault();
-			$.get("@Url.Action("AddItemSubCat", "ItemSubCatagory")", function (data) {
-				$("#partialContent").html(data);
-			});
-		});
-	});
-</script>
-<script>
-	$(document).ready(function () {
-		$("#loadSupplier").click(function (e) {
-			e.preventDefault();
-			$.get("@Url.Action("AddSupplierMaster", "SupplierMaster")", function (data) {
-				$("#partialContent").html(data);
-			});
-		});
-	});
-</script>
-<script>
-	$(document).ready(function () {
-		$("#loadItemmaster").click(function (e) {
-			e.preventDefault();
-			$.get("@Url.Action("AddItemMaster", "ItemMaster")", function (data) {
-				$("#partialContent").html(data);
-			});
-		});
-	});
-</script> *@

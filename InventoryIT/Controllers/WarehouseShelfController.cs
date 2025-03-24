@@ -46,7 +46,9 @@ namespace InventoryIT.Controllers
             var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
             var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
             var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
-
+            var location = _warehouseLocationRepository.GetAllWarehouseLocation().ToList();
+            var area = _warehouseAreaRepository.GetAllWarehouseArea().ToList();
+            var rack = _warehouseRackRepository.GetAllWarehouseRack().ToList();
             // If the company, branch, or financial year is not found, return empty data
             if (company == null || branch == null || financialYear == null)
             {
@@ -56,8 +58,11 @@ namespace InventoryIT.Controllers
             var shelves = _warehouseShelfRepository.GetFilteredWarehouseShelf(company.CompId, branch.BranchId, financialYear.FinanYearId)
                 .Select(s => new
                 {
-                    WarehouseShelfId = s.WarehouseShelfId,
-                    WarehouseShelfName = s.WarehouseShelfName
+                    warehouseLocId = location.FirstOrDefault(loc => loc.WarehouseLocId == s.WarehouseLocId)?.WarehouseName,
+                    warehouseAreaId = area.FirstOrDefault(a => a.WarehouseAreaId == s.WarehouseAreaId)?.WarehouseAreaName,
+                    warehouseRackId = rack.FirstOrDefault(r => r.WarehouseRackId == s.WarehouseRackId)?.WarehouseRackName,
+                    warehouseShelfId = s.WarehouseShelfId,
+                    warehouseShelfName = s.WarehouseShelfName
                 }).ToList();
             return Json(new { data = shelves });
         }

@@ -4,6 +4,8 @@ namespace InventoryIT.Repository
 {
     public interface IWarehouseLocationRepository
     {
+        public string GetWarehouseLocationName(int locationId);
+
         public IEnumerable<WarehouseLocationMaster> GetAllWarehouseLocation();
         public WarehouseLocationMaster? GetbyId(int warehouseLocId);
         public int AddWarehouselocation(WarehouseLocationMaster warehouseLocationMaster);

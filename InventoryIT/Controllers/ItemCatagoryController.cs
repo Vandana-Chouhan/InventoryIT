@@ -81,7 +81,6 @@ namespace InventoryIT.Controllers
                 itemCatagory.BranchId = branch.BranchId;
                 itemCatagory.FinanYearId = financialYear.FinanYearId;
                 itemCatagory.CreatedBy = userId.Value;
-
             }
             // Create a new ItemCatagory object using the data
             var item = new ItemCatagory

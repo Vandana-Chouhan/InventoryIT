@@ -2,6 +2,14 @@
 <head>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<link href="~/css/countrystatecity.css" rel="stylesheet" />
+	<style>
+		div:where(.swal2-container).swal2-center > .swal2-popup {
+			grid-column: 2;
+			grid-row: 2;
+			place-self: center center;
+			width: 35%;
+		}
+	</style>
 </head>
 <body>
 	<div class="container mt-4">
@@ -15,7 +23,7 @@
                padding: 5px;">RETURN TO VIEW</a>
 			</div>
 			<div class="card-body">
-				<form asp-action="AddCountry" asp-controller="MastCountry" method="post" id="countryForm" class="d-flex flex-column align-items-center">
+				<form asp-action="AddCountry" asp-controller="MastCountry" method="post" id="addMastCountryforms" class="d-flex flex-column align-items-center">
 					<div class="col-md-8">
 						<div class="row mb-2">
 							<label class="col-sm-4 col-form-label text-end">Country Name:</label>
@@ -38,16 +46,19 @@
 			</div>
 		</div>
 	</div>
-	<!-- jQuery and Toastr JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-	<script>
-		document.getElementById("countryForm").addEventListener("submit", function (event) {
+	</body>
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+	const form = document.getElementById("addMastCountryforms");
+		form.addEventListener("submit", function (event) {
 			event.preventDefault();
-			Swal.fire({
+		Swal.fire({
 				title: "Are you sure?",
-				text: "Create this Country!",
-				icon: "warning",
+				text: "Create this CountryDetails!",
+				imageUrl: '/assets/img/alert.png',
+				imageHeight: "100px",
 				showCancelButton: true,
 				confirmButtonColor: "#3085d6",
 				cancelButtonColor: "#d33",
@@ -56,14 +67,14 @@
 				if (result.isConfirmed) {
 					Swal.fire({
 						title: "Created!",
-						text: "Your file has been Created.",
-						icon: "success"
+						text: "CountryDetails has been created successfully.",
+						icon: "success",
+						timer: 2000,
+						showConfirmButton: false
 					}).then(() => {
-						document.getElementById("countryForm").reset();
+						form.submit();
 					});
 				}
 			});
 		});
-	</script>
-</body>
-</html>
+</script>

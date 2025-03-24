@@ -43,7 +43,8 @@ namespace InventoryIT.Controllers
             var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
             var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
             var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
-
+            var location = _warehouseLocationRepository.GetAllWarehouseLocation().ToList();
+            var area = _warehouseAreaRepository.GetAllWarehouseArea().ToList();
             // If the company, branch, or financial year is not found, return empty data
             if (company == null || branch == null || financialYear == null)
             {
@@ -53,10 +54,10 @@ namespace InventoryIT.Controllers
             var racks = _warehouseRackRepository.GetFilteredWarehouseRack(company.CompId, branch.BranchId, financialYear.FinanYearId)
                 .Select(r => new
                 {
-                    WarehouseRackId = r.WarehouseRackId,
-                    WarehouseAreaId = r.WarehouseAreaId,
-                    WarehouseLocId = r.WarehouseLocId,
-                    WarehouseRackName = r.WarehouseRackName
+                    warehouseLocId = location.FirstOrDefault(loc => loc.WarehouseLocId == r.WarehouseLocId)?.WarehouseName,
+                    warehouseAreaId = area.FirstOrDefault(a => a.WarehouseAreaId == r.WarehouseAreaId)?.WarehouseAreaName,
+                    warehouseRackId = r.WarehouseRackId,
+                    warehouseRackName = r.WarehouseRackName
                 })
                 .ToList();
             return Json(new { data = racks });

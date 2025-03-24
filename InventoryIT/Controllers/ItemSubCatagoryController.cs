@@ -41,7 +41,7 @@ namespace InventoryIT.Controllers
             var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
             var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
             var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
-
+            var catagory = _itemCatagoryRepository.GetAllItemCatagory().ToList();
             // If the company, branch, or financial year is not found, return empty data
             if (company == null || branch == null || financialYear == null)
             {
@@ -51,9 +51,9 @@ namespace InventoryIT.Controllers
             var subCatagories = _itemSubCatagoryRepository.GetFilteredItemSubCat(company.CompId, branch.BranchId, financialYear.FinanYearId)
                 .Select(c => new
                 {
-                    ItemSubCatId = c.ItemSubCatId,
-                    ItemMainCatId = c.ItemMainCatId,
-                    SubCatagoryName = c.SubCatagoryName
+                    itemSubCatId = c.ItemSubCatId,
+                    itemMainCatId = catagory.FirstOrDefault(cat => cat.ItemCatId == c.ItemMainCatId)?.ItemCatagoryName,
+                    subCatagoryName = c.SubCatagoryName
                 }).ToList();
             return Json(new { data = subCatagories });
         }
