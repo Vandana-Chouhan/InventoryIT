@@ -71,28 +71,26 @@ namespace InventoryIT.Controllers
             {
                 return RedirectToAction("ErrorPage");
             }
+            if (!ModelState.IsValid)
+            {
+                return View(itemCatagory); // Return with validation messages
+            }
             // Example: Fetch corresponding IDs based on names from database or repository
             var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
             var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
             var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
-            if (company != null && branch != null && financialYear != null)
+            if (company == null && branch == null && financialYear == null)
             {
-                itemCatagory.CompId = company.CompId;
-                itemCatagory.BranchId = branch.BranchId;
-                itemCatagory.FinanYearId = financialYear.FinanYearId;
-                itemCatagory.CreatedBy = userId.Value;
+                ModelState.AddModelError("", "Invalid company, branch, or financial year.");
+                return View(itemCatagory); ;
             }
-            // Create a new ItemCatagory object using the data
-            var item = new ItemCatagory
-            {
-                ItemCatagoryName = itemCatagory.ItemCatagoryName,
-                CompId = itemCatagory.CompId,
-                BranchId = itemCatagory.BranchId,
-                FinanYearId = itemCatagory.FinanYearId,
-                CreatedBy = itemCatagory.CreatedBy
-            };
-            // Save the itemCatagory to the database
-            _itemCatagoryRepository.AddItemCatagory(item);
+            itemCatagory.CompId = company.CompId;
+            itemCatagory.BranchId = branch.BranchId;
+            itemCatagory.FinanYearId = financialYear.FinanYearId;
+            itemCatagory.CreatedBy = userId.Value;
+
+            // 🔹 Save to the database
+            _itemCatagoryRepository.AddItemCatagory(itemCatagory);
             TempData["SuccessMessage"] = "Item Catagory details saved successfully.";
 
             // Redirect to another page or show a success message

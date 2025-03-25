@@ -1,5 +1,5 @@
 ﻿@{
-	ViewData["Title"] = "SpareGRN Details";
+	ViewData["Title"] = "Country Details";
 }
 <!-- DataTables CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -150,7 +150,6 @@
 		width: 29% !important;
 	}
 
-
 	@@media (min-width: 1300px) {
 		.container {
 			max-width: 1300px;
@@ -188,6 +187,7 @@
 	}
 
 	.table tbody tr {
+		/*  color: #fff; */
 	}
 
 	.dataTables_wrapper .dataTables_length {
@@ -219,11 +219,11 @@
 	<div class="panel">
 		<div class="row uniq">
 			<div class="col-md-6">
-				<h4 class="title">BRANCH DETAILS</h4>
+				<h4 class="title">USER MASTER DETAILS</h4>
 			</div>
 			<div class="col-md-6 text-end">
-				<a href="/MastBranch/AddFBranchMaster" class=" btn btn-add btn-light">
-					ADD NEW BRANCH
+				<a href="/UserMaster/AddUserMaster" class="btn btn-add btn-light">
+					ADD NEW USER
 				</a>
 			</div>
 		</div>
@@ -232,23 +232,18 @@
 				<thead>
 					<tr>
 						<th class="srno">SR.NO</th>
-						<th>Branch Name</th>
-						<th>Company Name</th>
-						<th>Address</th>
-						<th>City</th>
-						<th>Mobile Number</th>
+						<th>User Name</th>
+						<th>User Type</th>
 						<th>Action</th>
+						@*<th>Company Employee Code</th>*@
 					</tr>
 				</thead>
 				<thead class="search-row">
 					<tr>
 						<th><input type="hidden" placeholder="search sr.no" class="t"></th>
-						<th><input type="text" placeholder="search branch name"></th>
-						<th><input type="text" placeholder="search company name"></th>
-						<th><input type="text" placeholder="search address"></th>
-						<th><input type="text" placeholder="search city"></th>
-						<th><input type="text" placeholder="search mobile nimber"></th>
-						<th><input type="hidden" placeholder="Search OwnerName"></th>
+						<th><input type="text" placeholder="search user name"></th>
+					    <th><input type="text" placeholder="search user type"></th>
+ 					    <th><input type="hidden" placeholder="Search OwnerName"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -261,45 +256,43 @@
 @section Scripts {
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 	<script>
-				$(document).ready(function () {
-					var table = $('#myTable').DataTable({
-						"processing": true,
-						"serverSide": false, // Set to false if using client-side processing
-						"ajax": {
-							"url": "/MastBranch/GetAllBranch",
-							"type": "GET",
-							"datatype": "json",
-							"dataSrc": function (json) {
-								console.log(json); // Debugging: check JSON response
-								return json.data;
-							}
-						},
-						"columns": [
-				        	 {"data": null,
-			                 "render": function (data, type, row, meta) {
-			                 return meta.row + 1; // Assign Serial Number
-			                 }},
-							{ "data": "branchName" },
-							{"data": "companyName"},
-							{ "data": "address" },
-							{ "data": "city" },
-							{ "data": "mobileNo" },
-		                    {
-								"data": "branchId",
-								"orderable": false, // Prevent sorting on action column
-								"searchable": false, // Disable search on action column
-								"render": function (data, type, row) {
-									return `<a href='/ItemSetup/Edit/${data}' class='action-icons'><i class='fa fa-edit'></i></a>
-																						   <a href='/ItemSetup/Delete/${data}' class='action-icons'><i class='fa fa-trash'></i></a>`;
-								}
-							}
-						]
-					});
-					// Apply the search functionality for each column
-					$('.search-row input').on('keyup change', function () {
-						var columnIndex = $(this).parent().index(); // Get the column index
-						table.column(columnIndex).search(this.value).draw(); // Apply search
-					});
-				});
+		$(document).ready(function () {
+			var table = $('#myTable').DataTable({
+				"processing": true,
+				"serverSide": false, // Change to true if using server-side processing
+				"ajax": {
+					"url": "/UserMaster/GetUser",
+					"type": "GET",
+					"datatype": "json",
+					"dataSrc": function (json) {
+						console.log(json); // Debug API response
+						return json.data || json; // Ensure correct data extraction
+					}
+				},
+				"columns": [
+					{"data": null,
+					 "render": function (data, type, row, meta) {
+					 return meta.row + 1; // Assign Serial Number
+					}},
+					{ "data": "userName" },
+					{ "data": "userType" },
+					// { "data": "employeeCode" },
+					{
+						"data": "userId",
+						"orderable": false,
+						"searchable": false,
+						"render": function (data, type, row) {
+							return `<a href='/ItemSetup/Edit/${data}' class='action-icons'><i class='fa fa-edit'></i></a>
+											<a href='/ItemSetup/Delete/${data}' class='action-icons'><i class='fa fa-trash'></i></a>`;
+						}
+					}
+				]
+			});
+		 // Apply the search functionality for each column
+					$('.search-row input[type="text"]').on('keyup change', function () {
+			var columnIndex = $(this).closest('th').index();
+			table.column(columnIndex).search(this.value).draw();
+		});
+		});
 	</script>
 }

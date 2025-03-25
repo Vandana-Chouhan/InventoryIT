@@ -42,9 +42,9 @@ namespace InventoryIT.Controllers
         [HttpPost]
         public IActionResult AddFCompanyMaster(MastComp mastComp)
         {
-            int result = _mastCompRepository.AddFCompanyMaster(mastComp);
-            if (result > 0)
+            if (ModelState.IsValid)
             {
+                int result = _mastCompRepository.AddFCompanyMaster(mastComp);
                 return RedirectToAction("AddFCompanyMaster", "MastComp");
             }
             else
@@ -73,7 +73,7 @@ namespace InventoryIT.Controllers
                     CompId = c.CompId,
                     CompanyName = c.CompanyName,
                     Address = c.Address,
-                    City = cities.FirstOrDefault(city => city.CityId == c.City)?.CityName, 
+                    City = cities.FirstOrDefault(city => city.CityId == c.City)?.CityName,
                     MobileNo = c.MobileNo
                 }).ToList();
 

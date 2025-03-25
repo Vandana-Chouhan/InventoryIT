@@ -1,23 +1,16 @@
 ﻿@{
 	ViewData["Title"] = "SpareGRN Details";
 }
-
-
 <!-- DataTables CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
 <style>
 	body {
 		font-family: 'Noto Sans', sans-serif;
-		/*  color: #fff;  */
 		background-color: white;
 	}
 
-
-
 	.panel {
-		/* background: linear-gradient(to right, #2980b9, #2c3e50); */
 		border-radius: 10px;
 		padding: 15px;
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -45,9 +38,7 @@
 		float: right;
 		background-color: black;
 		color: white;
-		/*   border-radius: 50%; */
 		border-radius: 0%;
-		/*  padding: 8px 12px; */
 		font-size: 14PX;
 		font-weight: bold;
 	}
@@ -88,7 +79,6 @@
 
 	.dataTables_paginate, .paginate_button {
 		border-radius: 27px !important;
-		/*  color: #fff !important; */
 	}
 
 	.uniq {
@@ -102,7 +92,6 @@
 	.panel .panel-heading .btn {
 		color: #F9FAFC;
 	}
-
 
 	.title {
 		width: calc(100% - -34px);
@@ -121,7 +110,6 @@
 
 	.table > :not(caption) > * > * {
 		padding: .5rem .5rem;
-		/*   background: linear-gradient(to right, #2980b9, #2c3e50); */
 		border-bottom-width: var(--bs-border-width);
 		box-shadow: inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
 	}
@@ -130,12 +118,10 @@
 		cursor: pointer;
 		position: relative;
 		padding-right: 26px;
-		/*  color: white; */
 	}
 
 	table.dataTable tbody td {
 		padding: 8px 10px;
-		/*  color: white; */
 		font-size: 14px;
 	}
 
@@ -227,29 +213,21 @@
 	}
 
 	#myTable tbody tr td:first-child {
-		text-align: center; /* Data center */
+		text-align: center;
 	}
 </style>
-
-
-
-
-
-
 <div class="container mt-4">
 	<div class="panel">
 		<div class="row uniq">
 			<div class="col-md-6">
-				<h4 class="title">COMPANY DETAILS</h4>
+				<h4 class="title">FINANCIAL YEAR DETAILS</h4>
 			</div>
-
 			<div class="col-md-6 text-end">
 				<a href="/FinancialYear/AddFinancialYear" class=" btn btn-add btn-light">
 					ADD NEW FINANCIALYEAR
 				</a>
 			</div>
 		</div>
-
 		<div class="table-container">
 			<table class="table" id="myTable">
 				<thead>
@@ -278,47 +256,48 @@
 		</div>
 	</div>
 </div>
-
 <!-- jQuery and DataTables JS -->
 @section Scripts {
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
 	<script>
-				$(document).ready(function () {
-					var table = $('#myTable').DataTable({
-						"processing": true,
-						"serverSide": false, // Set to false if using client-side processing
-						"ajax": {
-							"url": "/FinancialYear/GetAllYear",
-							"type": "GET",
-							"datatype": "json",
-							"dataSrc": function (json) {
-								console.log(json); // Debugging: check JSON response
-								return json.data;
-							}
-						},
-						"columns": [
-							{ "data": "finanYearId" },
-							{ "data": "financialYearFrom" },
-							{ "data": "financialYearTo" },
-							{ "data": "financialYear" },
-							{ "data": "companyName" },
-		                    {
-								"data": "finanYearId",
-								"orderable": false, // Prevent sorting on action column
-								"searchable": false, // Disable search on action column
-								"render": function (data, type, row) {
-									return `<a href='/ItemSetup/Edit/${data}' class='action-icons'><i class='fa fa-edit'></i></a>
-																				   <a href='/ItemSetup/Delete/${data}' class='action-icons'><i class='fa fa-trash'></i></a>`;
-								}
-							}
-						]
-					});
-					// Apply the search functionality for each column
-					$('.search-row input').on('keyup change', function () {
-						var columnIndex = $(this).parent().index(); // Get the column index
-						table.column(columnIndex).search(this.value).draw(); // Apply search
-					});
-				});
+		$(document).ready(function () {
+			var table = $('#myTable').DataTable({
+				"processing": true,
+				"serverSide": false, // Set to false if using client-side processing
+				"ajax": {
+					"url": "/FinancialYear/GetAllYear",
+					"type": "GET",
+					"datatype": "json",
+					"dataSrc": function (json) {
+						console.log(json); // Debugging: check JSON response
+						return json.data;
+					}
+				},
+				"columns": [
+					{"data": null,
+					 "render": function (data, type, row, meta) {
+					 return meta.row + 1; // Assign Serial Number
+					}},
+					{ "data": "financialYearFrom" },
+					{ "data": "financialYearTo" },
+					{ "data": "financialYear" },
+					{ "data": "companyName" },
+					{
+						"data": "finanYearId",
+						"orderable": false, // Prevent sorting on action column
+						"searchable": false, // Disable search on action column
+						"render": function (data, type, row) {
+							return `<a href='/ItemSetup/Edit/${data}' class='action-icons'><i class='fa fa-edit'></i></a>
+																		   <a href='/ItemSetup/Delete/${data}' class='action-icons'><i class='fa fa-trash'></i></a>`;
+						}
+					}
+				]
+			});
+			// Apply the search functionality for each column
+			$('.search-row input').on('keyup change', function () {
+				var columnIndex = $(this).parent().index(); // Get the column index
+				table.column(columnIndex).search(this.value).draw(); // Apply search
+			});
+		});
 	</script>
 }

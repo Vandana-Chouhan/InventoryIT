@@ -1,4 +1,5 @@
-﻿<head>
+﻿@model InventoryIT.Models.MastComp
+<head>
 	<link rel="stylesheet" href="~/Company/style.css" asp-append-version="true" />
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -62,11 +63,11 @@
 				<div class="row mb-2">
 					<label class="col-sm-2 col-form-label text-end">Company Name:</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="txtCompany name" name="CompanyName">
+						<input type="text" class="form-control" id="txtCompany name" name="CompanyName"required>
 					</div>
 					<label class="col-sm-2 col-form-label text-end">ShortCompany Name:</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="txtShortCompanyName" name="CompShortName">
+						<input type="text" class="form-control" id="txtShortCompanyName" name="CompShortName"required>
 					</div>
 				</div>
 				<div class="row mb-2">
@@ -94,7 +95,7 @@
 					</div>
 					<label class="col-sm-2 col-form-label text-end">City:</label>
 					<div class="col-sm-4">
-						<select name="City" id="CityId" class="form-control">
+						<select name="City" id="CityId" class="form-control" required>
 							<option value="">Select City</option>
 						</select>
 					</div>
@@ -112,11 +113,13 @@
 				<div class="row mb-2">
 					<label class="col-sm-2 col-form-label text-end">Mobile No:</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="txtmobileno" name="MobileNo">
+						<input type="text" class="form-control" id="txtmobileno" name="MobileNo" required>
+						<span asp-validation-for="MobileNo" class="text-danger"></span>
 					</div>
 					<label class="col-sm-2 col-form-label text-end">Phone No:</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="txtphoneno" name="PhoneNo">
+						<input type="text" class="form-control" id="txtphoneno" name="PhoneNo" required>
+						<span asp-validation-for="PhoneNo" class="text-danger"></span>
 					</div>
 				</div>
 				<div class="row mb-2">

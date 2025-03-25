@@ -7,12 +7,10 @@
 <style>
 	body {
 		font-family: 'Noto Sans', sans-serif;
-		/*  color: #fff;  */
 		background-color: white;
 	}
 
 	.panel {
-		/* background: linear-gradient(to right, #2980b9, #2c3e50); */
 		border-radius: 10px;
 		padding: 15px;
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -40,9 +38,7 @@
 		float: right;
 		background-color: black;
 		color: white;
-		/*   border-radius: 50%; */
 		border-radius: 0%;
-		/*  padding: 8px 12px; */
 		font-size: 14PX;
 		font-weight: bold;
 	}
@@ -83,7 +79,6 @@
 
 	.dataTables_paginate, .paginate_button {
 		border-radius: 27px !important;
-		/*  color: #fff !important; */
 	}
 
 	.uniq {
@@ -97,7 +92,6 @@
 	.panel .panel-heading .btn {
 		color: #F9FAFC;
 	}
-
 
 	.title {
 		width: calc(100% - -34px);
@@ -116,7 +110,6 @@
 
 	.table > :not(caption) > * > * {
 		padding: .5rem .5rem;
-		/*   background: linear-gradient(to right, #2980b9, #2c3e50); */
 		border-bottom-width: var(--bs-border-width);
 		box-shadow: inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
 	}
@@ -125,12 +118,10 @@
 		cursor: pointer;
 		position: relative;
 		padding-right: 26px;
-		/*  color: white; */
 	}
 
 	table.dataTable tbody td {
 		padding: 8px 10px;
-		/*  color: white; */
 		font-size: 14px;
 	}
 
@@ -158,7 +149,6 @@
 	.t {
 		width: 29% !important;
 	}
-
 
 	@@media (min-width: 1300px) {
 		.container {
@@ -222,7 +212,7 @@
 	}
 
 	#myTable tbody tr td:first-child {
-		text-align: center; /* Data center */
+		text-align: center;
 	}
 </style>
 <div class="container mt-4">
@@ -231,7 +221,6 @@
 			<div class="col-md-6">
 				<h4 class="title">ITEM COUNTRY DETAILS</h4>
 			</div>
-
 			<div class="col-md-6 text-end">
 				<a href="/MastCountry/AddCountry" class="btn btn-add btn-light">
 					ADD NEW COUNTRY
@@ -262,11 +251,9 @@
 		</div>
 	</div>
 </div>
-
 <!-- jQuery and DataTables JS -->
 @section Scripts {
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
 	<script>
 		$(document).ready(function () {
 			var table = $('#myTable').DataTable({
@@ -282,7 +269,10 @@
 					}
 				},
 				"columns": [
-					{ "data": "countryId" },
+					{"data": null,
+					 "render": function (data, type, row, meta) {
+					 return meta.row + 1; // Assign Serial Number
+					}},
 					{ "data": "countryName" },
 					{ "data": "countryShortName" },
 					{
@@ -296,8 +286,7 @@
 					}
 				]
 			});
-
-			// Apply the search functionality for each column
+		 // Apply the search functionality for each column
 					$('.search-row input[type="text"]').on('keyup change', function () {
 			var columnIndex = $(this).closest('th').index();
 			table.column(columnIndex).search(this.value).draw();

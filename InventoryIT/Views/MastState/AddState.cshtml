@@ -27,7 +27,7 @@
 							<label class="col-sm-4 col-form-label text-end">Country Name:</label>
 							<div class="col-sm-8">
 								<select name="CountryId" class="form-control" required>
-									<option value="" disabled selected>Select Country Name</option>
+									<option value="">Select Country Name</option>
 									@foreach (var country in ViewBag.MastCountries)
 									{
 										<option value="@country.Value">@country.Text</option>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace InventoryIT.Models;
 
@@ -20,10 +21,14 @@ public partial class MastComp
     public int? State { get; set; }
 
     public string? Email { get; set; }
+    [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid Mobile Number. It must contain exactly 10 digits.")]
+    [Required(ErrorMessage = "Mobile Number is required.")]
 
-    public decimal? MobileNo { get; set; }
+    public string? MobileNo { get; set; }
+    [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid Phone Number. It must contain exactly 10 digits.")]
+    [Required(ErrorMessage = "Phone Number is required.")]
 
-    public decimal? PhoneNo { get; set; }
+    public string? PhoneNo { get; set; }
 
     public decimal? PinNo { get; set; }
 

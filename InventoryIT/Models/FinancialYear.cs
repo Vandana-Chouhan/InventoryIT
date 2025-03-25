@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace InventoryIT.Models;
 
 public partial class FinancialYear
 {
     public int FinanYearId { get; set; }
-
+    
     public string FinancialYearName { get; set; } = null!;
 
     public string FinancialYearFrom { get; set; } = null!;
