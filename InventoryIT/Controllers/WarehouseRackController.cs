@@ -24,9 +24,68 @@ namespace InventoryIT.Controllers
             _warehouseLocationRepository = warehouseLocationRepository;
             _warehouseAreaRepository = warehouseAreaRepository;
         }
+        public ActionResult warehouseRackDataTab()
+        {
+            return View("WarehouseRackDataTab");
+        }
+        public ActionResult GetRacks()
+        {
+            // Retrieve session values
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+            var location = _warehouseLocationRepository.GetAllWarehouseLocation().ToList();
+            var area = _warehouseAreaRepository.GetAllWarehouseArea().ToList();
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null || financialYear == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var racks = _warehouseRackRepository.GetFilteredWarehouseRack(company.CompId, branch.BranchId, financialYear.FinanYearId)
+                .Select(r => new
+                {
+                    warehouseLocId = location.FirstOrDefault(loc => loc.WarehouseLocId == r.WarehouseLocId)?.WarehouseName,
+                    warehouseAreaId = area.FirstOrDefault(a => a.WarehouseAreaId == r.WarehouseAreaId)?.WarehouseAreaName,
+                    warehouseRackId = r.WarehouseRackId,
+                    warehouseRackName = r.WarehouseRackName
+                })
+                .ToList();
+            return Json(new { data = racks });
+        }
         public ActionResult AddWarehouseRack()
         {
-            var locations = _warehouseLocationRepository.GetAllWarehouseLocation();
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null || financialYear == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var locations = _warehouseLocationRepository.GetAllWarehouseLocation()
+                            .Where(c => c.CompId == company.CompId && c.BranchId == branch.BranchId && c.FinanYearId == financialYear.FinanYearId)
+                            .ToList();
             ViewBag.WarehouseLocationMasters = locations.Select(c => new SelectListItem
             {
                 Value = c.WarehouseLocId.ToString(),
@@ -39,13 +98,12 @@ namespace InventoryIT.Controllers
         public JsonResult GetAreasByLocation(int locationId)
         {
             var areas = _warehouseAreaRepository.GetAllWarehouseArea()
-                                .Where(a => a.WarehouseLocId == locationId)
-                                .Select(c => new SelectListItem
-                                {
-                                    Value = c.WarehouseAreaId.ToString(),
-                                    Text = c.WarehouseAreaName
-                                }).ToList();
-
+                                            .Where(a => a.WarehouseLocId == locationId)
+                                            .Select(c => new SelectListItem
+                                            {
+                                                Value = c.WarehouseAreaId.ToString(),
+                                                Text = c.WarehouseAreaName
+                                            }).ToList();
             return Json(areas); // Return areas as JSON
         }
         [HttpPost]

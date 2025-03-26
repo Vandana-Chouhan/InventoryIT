@@ -11,9 +11,22 @@ namespace InventoryIT.Repository
         {
             _inventoryContext = inventoryContext;
         }
+        public string GetWarehouseShelfName(int shelfId)
+        {
+            return _inventoryContext.WarehouseShelfMasters
+                   .Where(s => s.WarehouseShelfId == shelfId)
+                   .Select(s => s.WarehouseShelfName)
+                   .FirstOrDefault() ?? "Unknown";
+        }
         public IEnumerable<WarehouseShelfMaster> GetAllWarehouseShelf()
         {
             return _inventoryContext.WarehouseShelfMasters.ToList();
+        }
+        public IEnumerable<WarehouseShelfMaster> GetFilteredWarehouseShelf(int companyId, int branchId, int financialYearId)
+        {
+            return _inventoryContext.WarehouseShelfMasters
+           .Where(loc => loc.CompId == companyId && loc.BranchId == branchId && loc.FinanYearId == financialYearId)
+           .ToList();
         }
         public WarehouseShelfMaster? GetbyId(int warehouseShelfId)
         {

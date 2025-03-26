@@ -14,6 +14,12 @@ namespace InventoryIT.Repository
         {
             return _inventoryContext.SupplierMasters.ToList();
         }
+        public IEnumerable<SupplierMaster> GetFilteredSupplier(int companyId, int branchId)
+        {
+            return _inventoryContext.SupplierMasters
+           .Where(loc => loc.CompId == companyId && loc.BranchId == branchId)
+           .ToList();
+        }
         public SupplierMaster? GetbyId(int SuppId)
         {
             return _inventoryContext.SupplierMasters.Find(SuppId);

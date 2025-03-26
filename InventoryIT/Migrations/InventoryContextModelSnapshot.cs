@@ -143,6 +143,93 @@ namespace InventoryIT.Migrations
                     b.ToTable("ItemCompany", (string)null);
                 });
 
+            modelBuilder.Entity("InventoryIT.Models.ItemMaster", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"));
+
+                    b.Property<int?>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CompId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreationDateTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("FinanYearId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemCatagory")
+                        .HasColumnType("int")
+                        .HasColumnName("Item Catagory");
+
+                    b.Property<string>("ItemCode")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(300)")
+                        .HasColumnName("Item Code");
+
+                    b.Property<int>("ItemCompany")
+                        .HasColumnType("int")
+                        .HasColumnName("Item Company");
+
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(300)")
+                        .HasColumnName("Item Name");
+
+                    b.Property<int>("ItemSubCatagory")
+                        .HasColumnType("int")
+                        .HasColumnName("Item SubCatagory");
+
+                    b.Property<int>("ItemType")
+                        .HasColumnType("int")
+                        .HasColumnName("Item Type");
+
+                    b.Property<int>("ItemUnit1")
+                        .HasColumnType("int")
+                        .HasColumnName("[Item Unit1");
+
+                    b.Property<int>("ItemUnit2")
+                        .HasColumnType("int")
+                        .HasColumnName("Item Unit2");
+
+                    b.Property<string>("PartNo")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("WarehouseArea")
+                        .HasColumnType("int")
+                        .HasColumnName("Warehouse Area");
+
+                    b.Property<int>("WarehouseLocation")
+                        .HasColumnType("int")
+                        .HasColumnName("Warehouse Location");
+
+                    b.Property<int>("WarehouseRack")
+                        .HasColumnType("int")
+                        .HasColumnName("Warehouse Rack");
+
+                    b.Property<int>("WarehouseShelf")
+                        .HasColumnType("int")
+                        .HasColumnName("Warehouse Shelf");
+
+                    b.HasKey("ItemId");
+
+                    b.ToTable("Item Master", (string)null);
+                });
+
             modelBuilder.Entity("InventoryIT.Models.ItemSubCatagory", b =>
                 {
                     b.Property<int>("ItemSubCatId")
@@ -528,6 +615,133 @@ namespace InventoryIT.Migrations
                     b.ToTable("Mast_Country", (string)null);
                 });
 
+            modelBuilder.Entity("InventoryIT.Models.MastItemStk", b =>
+                {
+                    b.Property<int>("StockId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Stock Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockId"));
+
+                    b.Property<int?>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("BufferStock")
+                        .HasColumnType("float")
+                        .HasColumnName("Buffer Stock");
+
+                    b.Property<double?>("ClosingQuantity")
+                        .HasColumnType("float")
+                        .HasColumnName("Closing Quantity");
+
+                    b.Property<int?>("CompId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int")
+                        .HasColumnName("Created By");
+
+                    b.Property<DateTime?>("CreationDateTime")
+                        .HasColumnType("datetime")
+                        .HasColumnName("Creation DateTime");
+
+                    b.Property<double?>("CurrentQuantity")
+                        .HasColumnType("float")
+                        .HasColumnName("Current Quantity");
+
+                    b.Property<int>("EntryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FinanYearId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("Gst")
+                        .HasColumnType("float")
+                        .HasColumnName("GST%");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("OpeningQuantity")
+                        .HasColumnType("float")
+                        .HasColumnName("Opening Quantity");
+
+                    b.Property<double?>("OpeningValue")
+                        .HasColumnType("float")
+                        .HasColumnName("Opening Value");
+
+                    b.Property<double?>("PurchaseRate")
+                        .HasColumnType("float")
+                        .HasColumnName("Purchase Rate");
+
+                    b.Property<double?>("SalesRate")
+                        .HasColumnType("float")
+                        .HasColumnName("Sales Rate");
+
+                    b.HasKey("StockId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Mast_ItemSTK", (string)null);
+                });
+
+            modelBuilder.Entity("InventoryIT.Models.MastItemSupplierRate", b =>
+                {
+                    b.Property<int>("SuppId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SuppId"));
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int")
+                        .HasColumnName("Created By");
+
+                    b.Property<DateTime>("CreationDateTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationDateTime");
+
+                    b.Property<int>("EntryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FinanYearId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SupplierCompanyName")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(300)")
+                        .HasColumnName("Supplier Company  Name");
+
+                    b.Property<string>("SupplierName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Supplier Name");
+
+                    b.Property<double>("SupplierRate")
+                        .HasColumnType("float")
+                        .HasColumnName("Supplier Rate");
+
+                    b.HasKey("SuppId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Mast_ItemSupplierRate", (string)null);
+                });
+
             modelBuilder.Entity("InventoryIT.Models.MastState", b =>
                 {
                     b.Property<int>("StateId")
@@ -565,6 +779,93 @@ namespace InventoryIT.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Mast_State", (string)null);
+                });
+
+            modelBuilder.Entity("InventoryIT.Models.SupplierMaster", b =>
+                {
+                    b.Property<int>("SuppId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SuppId"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<int?>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CompId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Contact Person");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int")
+                        .HasColumnName("Created_By");
+
+                    b.Property<DateTime?>("CreationDateTime")
+                        .HasColumnType("datetime")
+                        .HasColumnName("Creation_DateTime");
+
+                    b.Property<string>("EmailId")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("Email Id");
+
+                    b.Property<string>("GstNo")
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("GST No");
+
+                    b.Property<decimal?>("MobileNo")
+                        .HasColumnType("numeric(12, 0)")
+                        .HasColumnName("Mobile No");
+
+                    b.Property<decimal?>("PhoneNo")
+                        .HasColumnType("numeric(12, 0)")
+                        .HasColumnName("Phone No");
+
+                    b.Property<string>("PinNo")
+                        .HasMaxLength(7)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(7)")
+                        .HasColumnName("PIN No");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("SupplierGstCertificate")
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("Supplier GST Certificate");
+
+                    b.Property<string>("SupplierName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Supplier Name");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("SuppId");
+
+                    b.ToTable("Supplier Master", (string)null);
                 });
 
             modelBuilder.Entity("InventoryIT.Models.UserMaster", b =>
@@ -658,6 +959,8 @@ namespace InventoryIT.Migrations
 
                     b.HasKey("WarehouseAreaId");
 
+                    b.HasIndex("WarehouseLocId");
+
                     b.ToTable("Warehouse Area Master", (string)null);
                 });
 
@@ -737,6 +1040,10 @@ namespace InventoryIT.Migrations
                         .HasColumnName("Warehouse Rack Name");
 
                     b.HasKey("WarehouseRackId");
+
+                    b.HasIndex("WarehouseAreaId");
+
+                    b.HasIndex("WarehouseLocId");
 
                     b.ToTable("Warehouse Rack Master", (string)null);
                 });
@@ -820,6 +1127,28 @@ namespace InventoryIT.Migrations
                     b.Navigation("State");
                 });
 
+            modelBuilder.Entity("InventoryIT.Models.MastItemStk", b =>
+                {
+                    b.HasOne("InventoryIT.Models.ItemMaster", "Item")
+                        .WithMany("MastItemStks")
+                        .HasForeignKey("ItemId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ItemId");
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("InventoryIT.Models.MastItemSupplierRate", b =>
+                {
+                    b.HasOne("InventoryIT.Models.ItemMaster", "Item")
+                        .WithMany("MastItemSupplierRates")
+                        .HasForeignKey("ItemId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ItemId_ItemSupplier");
+
+                    b.Navigation("Item");
+                });
+
             modelBuilder.Entity("InventoryIT.Models.MastState", b =>
                 {
                     b.HasOne("InventoryIT.Models.MastCountry", "Country")
@@ -829,6 +1158,43 @@ namespace InventoryIT.Migrations
                         .HasConstraintName("FK_Mast_State_CountryId");
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("InventoryIT.Models.WarehouseAreaMaster", b =>
+                {
+                    b.HasOne("InventoryIT.Models.WarehouseLocationMaster", "WarehouseLocationMaster")
+                        .WithMany("WarehouseAreaMaster")
+                        .HasForeignKey("WarehouseLocId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WarehouseLocationMaster");
+                });
+
+            modelBuilder.Entity("InventoryIT.Models.WarehouseRackMaster", b =>
+                {
+                    b.HasOne("InventoryIT.Models.WarehouseAreaMaster", "WarehouseArea")
+                        .WithMany()
+                        .HasForeignKey("WarehouseAreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InventoryIT.Models.WarehouseLocationMaster", "WarehouseLocation")
+                        .WithMany()
+                        .HasForeignKey("WarehouseLocId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WarehouseArea");
+
+                    b.Navigation("WarehouseLocation");
+                });
+
+            modelBuilder.Entity("InventoryIT.Models.ItemMaster", b =>
+                {
+                    b.Navigation("MastItemStks");
+
+                    b.Navigation("MastItemSupplierRates");
                 });
 
             modelBuilder.Entity("InventoryIT.Models.MastComp", b =>
@@ -846,6 +1212,11 @@ namespace InventoryIT.Migrations
             modelBuilder.Entity("InventoryIT.Models.MastState", b =>
                 {
                     b.Navigation("MastCities");
+                });
+
+            modelBuilder.Entity("InventoryIT.Models.WarehouseLocationMaster", b =>
+                {
+                    b.Navigation("WarehouseAreaMaster");
                 });
 #pragma warning restore 612, 618
         }

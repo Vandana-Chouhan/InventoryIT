@@ -14,6 +14,12 @@ namespace InventoryIT.Repository
         {
             return _inventoryContext.ItemCompanies.ToList();
         }
+        public IEnumerable<ItemCompany> GetFilteredItemCompany(int companyId, int branchId, int financialYearId)
+        {
+            return _inventoryContext.ItemCompanies
+           .Where(loc => loc.CompId == companyId && loc.BranchId == branchId && loc.FinanYearId == financialYearId)
+           .ToList();
+        }
         public ItemCompany? GetbyId(int itemcompid)
         {
             return _inventoryContext.ItemCompanies.Find(itemcompid);

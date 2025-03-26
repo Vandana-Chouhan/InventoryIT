@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InventoryIT.Models;
 
@@ -22,4 +23,8 @@ public partial class WarehouseRackMaster
     public DateTime CreationDateTime { get; set; } = DateTime.Now;
 
     public int CreatedBy { get; set; }
+	[ForeignKey("WarehouseAreaId")]
+	public WarehouseAreaMaster WarehouseAreaMaster { get; set; }
+	[ForeignKey("WarehouseLocId")]
+	public WarehouseLocationMaster WarehouseLocationMaster { get; set; }
 }

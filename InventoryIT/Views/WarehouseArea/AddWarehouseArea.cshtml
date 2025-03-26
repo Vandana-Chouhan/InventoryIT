@@ -1,44 +1,76 @@
 ﻿<head>
-    <link rel="stylesheet" href="~/Warehouse/style.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/Warehouse/style.css" asp-append-version="true" />
+	<style>
+		div:where(.swal2-container).swal2-center > .swal2-popup {
+			grid-column: 2;
+			grid-row: 2;
+			place-self: center center;
+			width: 35%;
+		}
+	</style>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
 <div class="container mt-4">
-    <div class="ard">
-        <div class="heade">
-            <h4>Warehouse Area</h4>
-            <a href="/WarehouseArea/Index" class="btn btn-dark">RETURN TO VIEW</a>
-        </div>
-        <div class="card-body">
-            <form action="AddWarehouseArea" method="post">
-                @if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
-                {
-                    <div class="alert alert-success">
-                        @TempData["SuccessMessage"]
-                    </div>
-                }
-                <div class="row mb-2 align-items-center">
-                    <label class="col-form-label" for="ddlWarehouseLocation">Warehouse Location Name:</label>
-                    <div>
-                        <select name="WarehouseLocId" class="form-control" required>
-                            <option value="">--Select warehouse location--</option>
-                            @foreach (var location in ViewBag.WarehouseLocationMasters)
-                            {
-                                <option value="@location.Value">@location.Text</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-2 align-items-center">
-                    <label class="col-form-label" for="txtWarehouseArea">Warehouse Area Name:</label>
-                    <div>
-                        <input type="text" class="form-control" name="WarehouseAreaName" id="txtWarehouseArea" required>
-                    </div>
-                </div>
-                <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-success">Save</button>
-                    <button type="reset" class="btn btn-primary" onclick="window.location.href = window.location.href + '?reset=true';">Refresh</button>
-                </div>
-            </form>
-        </div>
-    </div>
+	<div class="ard">
+		<div class="heade">
+			<h4>Warehouse Area</h4>
+			<a href="/WarehouseArea/warehouseAreaDataTab" class="btn btn-light">RETURN TO VIEW</a>
+		</div>
+		<div class="card-body">
+			<form action="AddWarehouseArea" method="post" id="addWarehouseAreaAlert">
+				<div class="row mb-2 align-items-center">
+					<label class="col-form-label" for="ddlWarehouseLocation">Warehouse Location Name:</label>
+					<div>
+						<select name="WarehouseLocId" class="form-control" required>
+							<option value="">--Select warehouse location--</option>
+							@foreach (var location in ViewBag.WarehouseLocationMasters)
+							{
+								<option value="@location.Value">@location.Text</option>
+							}
+						</select>
+					</div>
+				</div>
+				<div class="row mb-2 align-items-center">
+					<label class="col-form-label" for="txtWarehouseArea">Warehouse Area Name:</label>
+					<div>
+						<input type="text" class="form-control" name="WarehouseAreaName" id="txtWarehouseArea" required>
+					</div>
+				</div>
+				<div class="text-center mt-3">
+					<button type="submit" class="btn btn-success equal-width-btn"><i class="bi bi-house-add-fill"></i> Save</button>
+					<button type="reset" class="btn btn-primary equal-width-btn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+	const form = document.getElementById("addWarehouseAreaAlert");
+		form.addEventListener("submit", function (event) {
+			event.preventDefault();
+		Swal.fire({
+				title: "Are you sure?",
+				text: "Create this WarehouseArea Details!",
+				imageUrl: '/assets/img/alert.png',
+				imageHeight: "100px",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, Create it!"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire({
+						title: "Created!",
+						text: "WarehouseArea Details has been created successfully.",
+						icon: "success",
+						timer: 2000,
+						showConfirmButton: false
+					}).then(() => {
+						form.submit();
+					});
+				}
+			});
+		});
+</script>

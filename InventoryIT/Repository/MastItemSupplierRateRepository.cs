@@ -18,6 +18,12 @@ namespace InventoryIT.Repository
         {
             return _inventoryContext.MastItemSupplierRates.Find(suppId);
         }
+        public IEnumerable<MastItemSupplierRate> GetFilteredSupplerRate(int companyId, int branchId, int financialYearId)
+        {
+            return _inventoryContext.MastItemSupplierRates
+           .Where(loc => loc.CompId == companyId && loc.BranchId == branchId && loc.FinanYearId == financialYearId)
+           .ToList();
+        }
         public int AddItemSupplierRate(MastItemSupplierRate mastItemSupplierRate)
         {
             int result = 0;

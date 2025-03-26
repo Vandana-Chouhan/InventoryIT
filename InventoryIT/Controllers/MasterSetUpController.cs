@@ -26,17 +26,45 @@ namespace InventoryIT.Controllers
         [HttpPost]
         public ActionResult Login(UserMaster userMaster)
         {
+            if (userMaster == null)
+            {
+                ViewData["ErrorMessage"] = "Invalid request. Please provide username and password.";
+                return View("Login");
+            }
+
+            if (string.IsNullOrEmpty(userMaster.UserName) || string.IsNullOrEmpty(userMaster.Password))
+            {
+                ViewData["ErrorMessage"] = "Username and password are required.";
+                return View("Login");
+            }
+
             var userDetails = _userMasterRepository.GetAllUserMaster();
             var user = userDetails.FirstOrDefault(x => x.UserName == userMaster.UserName && x.Password == userMaster.Password);
+
             if (user != null)
             {
                 HttpContext.Session.SetInt32("UserId", user.UserId);
-
                 return RedirectToAction("Session", "MasterSetup");
             }
+
             ViewData["ErrorMessage"] = "Invalid username or password.";
             return View("Login");
         }
+
+        //[HttpPost]
+        //public ActionResult Login(UserMaster userMaster)
+        //{
+        //    var userDetails = _userMasterRepository.GetAllUserMaster();
+        //    var user = userDetails.FirstOrDefault(x => x.UserName == userMaster.UserName && x.Password == userMaster.Password);
+        //    if (user != null)
+        //    {
+        //        HttpContext.Session.SetInt32("UserId", user.UserId);
+
+        //        return RedirectToAction("Session", "MasterSetup");
+        //    }
+        //    ViewData["ErrorMessage"] = "Invalid username or password.";
+        //    return View("Login");
+        //}
         public ActionResult Inventory()
         {
             return View();

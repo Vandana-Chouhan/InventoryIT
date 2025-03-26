@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using InventoryIT.Models;
+﻿using InventoryIT.Models;
 using InventoryIT.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,7 +14,20 @@ namespace InventoryIT.Controllers
             _mastStateRepository = mastStateRepository;
             _mastCountryRepository = mastCountryRepository;
         }
-
+        public ActionResult StateDataTab()
+        {
+            return View("stateDataTab");
+        }
+        public ActionResult GetState()
+        {
+            var state = _mastStateRepository.GetAllState().Select(s => new
+            {
+                stateId = s.StateId,
+                stateName = s.StateName,
+                stateShortName = s.StateShortName
+            }).ToList();
+            return Json(new { data = state });
+        }
         public IActionResult AddState()
         {
             var country = _mastCountryRepository.GetAllCountry();
@@ -43,6 +55,7 @@ namespace InventoryIT.Controllers
             };
             // Save the State details to the database
             _mastStateRepository.AddState(state);
+            TempData["SuccessMessage"] = "State details saved successfully.";
             // Redirect to another page or show a success message
             return RedirectToAction("AddState", "MastState");
         }

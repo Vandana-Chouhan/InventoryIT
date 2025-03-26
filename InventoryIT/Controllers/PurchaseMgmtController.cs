@@ -28,7 +28,7 @@ namespace InventoryIT.Controllers
         {
             return View();
         }
-        public IActionResult LoadTransactionCard()
+        public IActionResult ShowTranctionCards()
         {
             return View("TransactionCards");
         }

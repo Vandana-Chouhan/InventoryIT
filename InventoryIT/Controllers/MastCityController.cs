@@ -14,6 +14,20 @@ namespace InventoryIT.Controllers
             _mastCityRepository = mastCityRepository;
             _mastStateRepository = mastStateRepository;
         }
+        public ActionResult CityDataTab()
+        {
+            return View("cityDataTab");
+        }
+        public ActionResult GetCity()
+        {
+            var city = _mastCityRepository.GetAllMastCity().Select(c => new
+            {
+                cityId = c.CityId,
+                cityName = c.CityName,
+                cityShortName = c.CityShortName
+            }).ToList();
+            return Json(new { data = city });
+        }
         public IActionResult AddMastCity()
         {
             var state = _mastStateRepository.GetAllState();
@@ -21,7 +35,7 @@ namespace InventoryIT.Controllers
             {
                 Value = c.StateId.ToString(),
                 Text = c.StateName
-            }); 
+            });
             return View();
         }
         [HttpPost]
@@ -42,8 +56,9 @@ namespace InventoryIT.Controllers
             };
             // Save the city details to the database
             _mastCityRepository.AddMastCity(city);
+            TempData["SuccessMessage"] = "City details saved successfully.";
             // Redirect to another page or show a success message
-            return RedirectToAction("Inventory", "MasterSetup");
+            return RedirectToAction("AddMastCity", "MastCity");
         }
     }
 }

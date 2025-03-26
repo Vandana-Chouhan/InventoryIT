@@ -14,6 +14,12 @@ namespace InventoryIT.Repository
         {
             return _inventoryContext.ItemMasters.ToList();
         }
+        public IEnumerable<ItemMaster> GetFilteredItemMaster(int companyId, int branchId, int financialYearId)
+        {
+            return _inventoryContext.ItemMasters
+           .Where(loc => loc.CompId == companyId && loc.BranchId == branchId && loc.FinanYearId == financialYearId)
+           .ToList();
+        }
         public ItemMaster? GetbyId(int imasterid)
         {
             return _inventoryContext.ItemMasters.Find(imasterid);

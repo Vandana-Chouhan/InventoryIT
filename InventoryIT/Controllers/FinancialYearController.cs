@@ -14,7 +14,7 @@ namespace InventoryIT.Controllers
             _financialYearRepository = financialYearRepository;
             _mastCompRepository = mastCompRepository;
         }
-        public IActionResult AddFinancialYear()
+        public ActionResult AddFinancialYear()
         {
             var companies = _mastCompRepository.GetAllMastcomp();
             ViewBag.MastComps = companies.Select(c => new SelectListItem
@@ -25,17 +25,59 @@ namespace InventoryIT.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddFinancialYear(FinancialYear financialYear)
+        public ActionResult AddFinancialYear(FinancialYear financialYear)
         {
-            int result = _financialYearRepository.AddFinancialYear(financialYear);
+            var existingYear = _financialYearRepository.GetAllFinancialYear()
+                       .FirstOrDefault(y => y.FinancialYearName == financialYear.FinancialYearName);
+            if (existingYear != null)
+            {
+                TempData["Failed"] = "Financial Year Name already exists. Please use a unique Year name.";
+                return RedirectToAction("AddFinancialYear");
+            }
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            financialYear.CreatedBy = userId.Value;
+            var year = new FinancialYear
+            {
+                FinancialYearFrom = financialYear.FinancialYearFrom,
+                FinancialYearTo = financialYear.FinancialYearTo,
+                FinancialYearName = financialYear.FinancialYearName,
+                CreatedBy = financialYear.CreatedBy,
+            };
+            int result = _financialYearRepository.AddFinancialYear(year);
             if (result > 0)
             {
                 return RedirectToAction("AddFinancialYear", "FinancialYear");
             }
             else
             {
-                TempData["Failed"] = "Failed to add the company master.";
+                TempData["Failed"] = "Failed to add the financial year master.";
                 return RedirectToAction("AddFinancialYear");
+            }
+        }
+        public IActionResult ShowFinanYearDataTable()
+        {
+            return View("mastFinancialYearDataTab");
+        }
+        [HttpGet]
+        public IActionResult GetAllYear()
+        {
+            try
+            {
+                var year = _financialYearRepository.GetAllFinancialYear();
+                var company = _mastCompRepository.GetAllMastcomp().ToList();
+                var yearData = year.Select(c => new
+                {
+                    finanYearId = c.FinanYearId,
+                    financialYearFrom = c.FinancialYearFrom,
+                    financialYearTo = c.FinancialYearTo,
+                    financialYear = c.FinancialYearName,
+                    CompanyName = company.FirstOrDefault(comp => comp.CompId == c.CompId)?.CompanyName,
+                }).ToList();
+                return Json(new { data = yearData });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Server Error", message = ex.Message });
             }
         }
     }

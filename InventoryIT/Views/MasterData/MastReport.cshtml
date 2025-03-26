@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Request Register</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ccc;
+        }
+
+        .footer {
+            text-align: right;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        /* Print styles */
+        @@media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .print-area, .print-area * {
+                visibility: visible;
+            }
+
+            .print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+
+            .print-btn {
+                display: none;
+            }
+        }
+
+        .print-btn {
+            margin-bottom: 10px;
+            padding: 8px 15px;
+            font-size: 21px;
+            color: blue;
+            border: none;
+            cursor: pointer;
+            background-color: white;
+        }
+
+            .print-btn:hover {
+                background-color: darkblue;
+                color: white;
+            }
+
+    </style>
+</head>
+<body>
+
+    <button class="print-btn" onclick="printReport()"><i class="bi bi-printer"></i></button>
+
+    <div class="print-area">
+        <div class="header">
+            <strong>AJIT TRANSPORT</strong><br>
+            B/003, Country park, Datapada Road, Opposite Tata Steel, Borivali East, Indore, Madhya Pradesh<br>
+            PIN No : 022 &nbsp;&nbsp; Phone No : 9930817909<br>
+            <strong>Material Request Register as on Date : 07/03/2025</strong>
+        </div>
+
+        <table>
+            <tr>
+                <th>MTR NO</th>
+                <th>DATE</th>
+                <th>Request By</th>
+                <th>ITEM NAME</th>
+                <th>ITEM TYPE</th>
+                <th>ITEM COMPANY</th>
+                <th>ITEM UNIT</th>
+                <th>REQUESTED QTY</th>
+            </tr>
+            <tr>
+                <td rowspan="12">SMTR/1819/12</td>
+                <td rowspan="12">22/09/2021</td>
+                <td rowspan="12"></td>
+                <td>AIR METER PIPE 15 NO NUT 36"</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>0.00</td>
+            </tr>
+            <tr><td>AIR METER PIPE 15 NO NUT 48""</td><td></td><td></td><td></td><td>0.00</td></tr>
+            <tr><td>016323001 O RING 65.0X4.0 NBR70 PUTZMEISTER</td><td></td><td></td><td></td><td>0.00</td></tr>
+            <tr><td>CABIN SHOCK ABSORBER EICHER TERA 25 AMSG 22010</td><td></td><td></td><td></td><td>0.00</td></tr>
+            <tr><td>DOOR GLASS EICHER PRO BS IV</td><td></td><td></td><td></td><td>0.00</td></tr>
+            <tr><td>DOOR GLASS FRONT EICHER JUMBO</td><td></td><td></td><td></td><td>0.00</td></tr>
+            <tr><td>KING PIN SET LEYLAND RLL 1150 TW</td><td></td><td></td><td></td><td>0.00</td></tr>
+            <tr><td>30312 BEARING</td><td></td><td></td><td></td><td>0.00</td></tr>
+            <tr><td>30315 BEARING</td><td></td><td></td><td></td><td>0.00</td></tr>
+            <tr><td>6203 BEARING 2RS</td><td></td><td></td><td></td><td>0.00</td></tr>
+            <tr><td>3M STICKER RIGHT & LEFT</td><td></td><td></td><td></td><td>0.00</td></tr>
+            <tr><td>CABIN SHOCK ABSORBER EICHER TERA 25 AMSG 22010</td><td></td><td></td><td></td><td>0.00</td></tr>
+
+            <tr>
+                <td>SMTR/1819/11</td>
+                <td>26/08/2021</td>
+                <td>VIP</td>
+                <td></td>
+                <td>VIPTEST</td>
+                <td>VIPTEST</td>
+                <td>VIPTEST</td>
+                <td>10.00</td>
+            </tr>
+            <tr>
+                <td>SMTR/1819/10</td>
+                <td>26/08/2021</td>
+                <td>43434</td>
+                <td></td>
+                <td>VIPTEST</td>
+                <td>VIPTEST</td>
+                <td></td>
+                <td>0.00</td>
+            </tr>
+            <tr>
+                <td>SMTR/1819/9</td>
+                <td>25/08/2021</td>
+                <td>DDGFG</td>
+                <td></td>
+                <td>KKKK</td>
+                <td>KKKK</td>
+                <td>KKKK</td>
+                <td>40.00</td>
+            </tr>
+
+            <tr style="background-color:lightgray">
+                <td colspan="7" style="text-align: right;"><strong>TOTAL</strong></td>
+                <td><strong>332.00</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function printReport() {
+            window.print();
+        }
+    </script>
+
+</body>
+</html>

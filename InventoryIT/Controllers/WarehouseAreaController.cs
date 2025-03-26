@@ -21,9 +21,67 @@ namespace InventoryIT.Controllers
             _financialYearRepository = financialYearRepository;
             _warehouseLocationRepository = warehouseLocationRepository;
         }
+        public ActionResult warehouseAreaDataTab()
+        {
+            return View("WarehouseAreaDataTab");
+        }
+        public ActionResult GetArea()
+        {
+            // Retrieve session values
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+            var location = _warehouseLocationRepository.GetAllWarehouseLocation().ToList();
+
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null || financialYear == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var areas = _warehouseAreaRepository.GetFilteredWarehouseArea(company.CompId, branch.BranchId, financialYear.FinanYearId)
+                .Select(c => new
+                {
+                    warehouseLocId = location.FirstOrDefault(loc => loc.WarehouseLocId == c.WarehouseLocId)?.WarehouseName,
+                    warehouseAreaId = c.WarehouseAreaId,
+                    warehouseAreaName = c.WarehouseAreaName
+                })
+                .ToList();
+            return Json(new { data = areas });
+        }
         public ActionResult AddWarehouseArea()
         {
-            var locations = _warehouseLocationRepository.GetAllWarehouseLocation();
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null || financialYear == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var locations = _warehouseLocationRepository.GetAllWarehouseLocation()
+                            .Where(c => c.CompId == company.CompId && c.BranchId == branch.BranchId && c.FinanYearId == financialYear.FinanYearId)
+                            .ToList();
             ViewBag.WarehouseLocationMasters = locations.Select(c => new SelectListItem
             {
                 Value = c.WarehouseLocId.ToString(),
@@ -79,10 +137,6 @@ namespace InventoryIT.Controllers
         public IActionResult ShowWarehousecards()
         {
             return View("WarehouseCards");
-        }
-        public IActionResult ShowTranctionCards()
-        {
-            return View("TransactionCards");
         }
     }
 }

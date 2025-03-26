@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<title>@ViewBag.Title InventoryIT</title>
+	<!-- Favicons -->
+	<link href="~/assets/img/favicon.png" rel="icon">
+	<link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<!-- Google Fonts -->
+	<link href="https://fonts.gstatic.com" rel="preconnect">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+	<!-- Vendor CSS Files -->
+	<link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<!-- Template Main CSS File -->
+	<link href="~/assets/css/style.css" rel="stylesheet">
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		.wrapper {
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+		}
+
+		.main {
+			flex: 1;
+		}
+
+		.footer {
+			text-align: center;
+			padding: 10px;
+		}
+	</style>
+
+</head>
+<body>
+
+	<div class="main-wrapper">
+		@await Html.PartialAsync("_Header")
+	@* 	@await Html.PartialAsync("_Sidebar") *@
+		<main id="main" class="main">
+			<div id="partialContent">
+
+			@RenderBody()
+			</div>
+			<div id="partialContentForm" style="width: 110%;margin-left: -93px;"></div>
+		</main>
+
+		<!-- Footer -->
+		<footer id="footer" class="footer mt-auto" style="margin-left: 22px;">
+			<div class="copyright">
+				&copy; Copyright <strong><span>Aanshisolutions</span></strong>. All Rights Reserved
+			</div> 
+		</footer>
+	</div>
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+		<i class="bi bi-arrow-up-short"></i>
+	</a>
+	<script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="~/assets/js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@* 	<script src="~/assets/js/mstAndwareHouse.js"></script> *@
+	@RenderSection("Scripts", required: false)
+
+</body>
+</html>
+
+
+
+
+

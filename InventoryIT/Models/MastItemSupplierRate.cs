@@ -11,9 +11,9 @@ public partial class MastItemSupplierRate
 
     public double SupplierRate { get; set; }
 
-    public int ItemId { get; set; }
+    public int ItemId { get; set; } 
 
-    public string SupplierCompanyName { get; set; } = null!;
+	public string SupplierCompanyName { get; set; } = null!;
 
     public string SupplierName { get; set; } = null!;
 

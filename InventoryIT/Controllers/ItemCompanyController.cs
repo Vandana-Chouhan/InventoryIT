@@ -23,13 +23,33 @@ namespace InventoryIT.Controllers
         }
         public ActionResult GetAllData()
         {
-            var company = _itemCompanytRepository.GetAllItemCompany();
-            var masterData = company.Select(c => new
+            // Retrieve session values
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+            string? finanYearName = HttpContext.Session.GetString("FinancialYear");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName))
             {
-                ItemComId = c.ItemComId,
-                ItemCompanyName = c.ItemCompanyName
-            }).ToList();
-            return Json(new { data = masterData });
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            var financialYear = _financialYearRepository.GetAllFinancialYear().FirstOrDefault(fy => fy.FinancialYearName == finanYearName);
+
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null || financialYear == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var itemcompany = _itemCompanytRepository.GetFilteredItemCompany(company.CompId, branch.BranchId, financialYear.FinanYearId)
+                .Select(c => new
+                {
+                    ItemComId = c.ItemComId,
+                    ItemCompanyName = c.ItemCompanyName
+                }).ToList();
+            return Json(new { data = itemcompany });
         }
         public ActionResult AddItemCompany()
         {
@@ -42,9 +62,7 @@ namespace InventoryIT.Controllers
             string? compName = HttpContext.Session.GetString("CompanyName");
             string? branchName = HttpContext.Session.GetString("BranchName");
             string? finanYearName = HttpContext.Session.GetString("FinancialYear");
-
             int? userId = HttpContext.Session.GetInt32("UserId");
-
             // Check if session data exists, otherwise redirect to error page
             if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName) || string.IsNullOrEmpty(finanYearName) || userId == null)
             {
@@ -74,7 +92,6 @@ namespace InventoryIT.Controllers
             // Save the itemCompany to the database
             _itemCompanytRepository.AddItemCompany(item);
             TempData["SuccessMessage"] = "ItemCompany details saved successfully.";
-
             // Redirect to another page or show a success message
             return RedirectToAction("AddItemCompany", "ItemCompany");
         }

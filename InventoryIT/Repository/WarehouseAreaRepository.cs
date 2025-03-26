@@ -10,9 +10,22 @@ namespace InventoryIT.Repository
         {
             _inventoryContext = inventoryContext;
         }
+        public string GetWarehouseAreaName(int areaId)
+        {
+            return _inventoryContext.WarehouseAreaMasters
+                   .Where(a => a.WarehouseAreaId == areaId)
+                   .Select(a => a.WarehouseAreaName)
+                   .FirstOrDefault() ?? "Unknown";
+        }
         public IEnumerable<WarehouseAreaMaster> GetAllWarehouseArea()
         {
             return _inventoryContext.WarehouseAreaMasters.ToList();
+        }
+        public IEnumerable<WarehouseAreaMaster> GetFilteredWarehouseArea(int companyId, int branchId, int financialYearId)
+        {
+            return _inventoryContext.WarehouseAreaMasters
+           .Where(loc => loc.CompId == companyId && loc.BranchId == branchId && loc.FinanYearId == financialYearId)
+           .ToList();
         }
         public WarehouseAreaMaster? GetbyId(int warehouseAreaId)
         {

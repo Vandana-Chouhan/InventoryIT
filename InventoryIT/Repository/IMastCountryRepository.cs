@@ -6,7 +6,7 @@ namespace InventoryIT.Repository
     {
         public IEnumerable<MastCountry> GetAllCountry();
         public MastCountry? GetbyId(int countryId);
-        public int AddCountry(MastCountry mastCountry);
+        public int AddCountry( MastCountry mastCountry);
         public int Update(MastCountry mastCountry);
         public void Delete(int countryId);
     }

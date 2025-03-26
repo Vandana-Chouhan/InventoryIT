@@ -4,6 +4,7 @@ using InventoryIT.Models;
 using InventoryIT.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace InventoryIT.Controllers
 {
@@ -28,18 +29,36 @@ namespace InventoryIT.Controllers
         {
             return View("SupplierMasterDataTable");
         }
-        public ActionResult GetAllSupplier()
+        public ActionResult GetSupplier()
         {
-            var supplier = _supplierMasterRepository.GetAllSupplier();
-            var masterData = supplier.Select(c => new
+            // Retrieve session values
+            string? compName = HttpContext.Session.GetString("CompanyName");
+            string? branchName = HttpContext.Session.GetString("BranchName");
+
+            if (string.IsNullOrEmpty(compName) || string.IsNullOrEmpty(branchName))
             {
-                SuppId = c.SuppId,
-                SupplierName = c.SupplierName,
-                MobileNo = c.MobileNo,
-                CityId = c.CityId,
-                Address = c.Address
-            }).ToList();
-            return Json(new { data = masterData });
+                return Json(new { data = new List<object>() });
+            }
+            // Fetch company, branch, and financial year IDs based on session values
+            var company = _mastCompRepository.GetAllMastcomp().FirstOrDefault(c => c.CompanyName == compName);
+            var branch = _mastBranchRepository.GetAllMastBranch().FirstOrDefault(b => b.BranchName == branchName);
+            // If the company, branch, or financial year is not found, return empty data
+            if (company == null || branch == null)
+            {
+                return Json(new { data = new List<object>() });
+            }
+            // Call the repository method to get filtered locations directly
+            var cities = _mastCityRepository.GetAllMastCity().ToList();
+            var supplier = _supplierMasterRepository.GetFilteredSupplier(company.CompId, branch.BranchId)
+                .Select(c => new
+                {
+                    suppId = c.SuppId,
+                    supplierName = c.SupplierName,
+                    mobileNo = c.MobileNo,
+                    city = cities.FirstOrDefault(city => city.CityId == c.CityId)?.CityName,
+                    address = c.Address
+                }).ToList();
+            return Json(new { data = supplier });
         }
         public ActionResult AddSupplierMaster()
         {
@@ -49,13 +68,39 @@ namespace InventoryIT.Controllers
                 Value = c.StateId.ToString(),
                 Text = c.StateName
             });
-            var city = _mastCityRepository.GetAllMastCity();
-            ViewBag.MastCities = city.Select(c => new SelectListItem
-            {
-                Value = c.CityId.ToString(),
-                Text = c.CityName
-            });
             return View();
+        }
+        // Action to fetch city by selected state
+        [HttpGet]
+        public JsonResult GetCityByState(int stateid)
+        {
+            var city = _mastCityRepository.GetAllMastCity()
+                                            .Where(a => a.StateId == stateid)
+                                            .Select(c => new SelectListItem
+                                            {
+                                                Value = c.CityId.ToString(),
+                                                Text = c.CityName
+                                            }).ToList();
+            return Json(city); // Return city as JSON
+        }
+        [HttpPost]
+        public IActionResult SaveCity(MastCity mastCity)
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId != null)
+            {
+                mastCity.CreatedBy = userId.Value;
+            }
+            var city = new MastCity
+            {
+                CityName = mastCity.CityName,
+                StateId = mastCity.StateId,
+                CreatedBy = mastCity.CreatedBy
+            };
+            // Save the city details to the database
+            _mastCityRepository.AddMastCity(city);
+            // Optionally, you can redirect to a success page or return a response
+            return RedirectToAction("AddSupplierMaster", "SupplierMaster");  // Adjust as per your needs
         }
         [HttpPost]
         public ActionResult AddSupplierMaster(SupplierMaster supplierMaster)

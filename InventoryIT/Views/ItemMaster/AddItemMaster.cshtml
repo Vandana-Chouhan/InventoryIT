@@ -4,13 +4,20 @@
 }
 <html>
 <head>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<style>
+		div:where(.swal2-container).swal2-center > .swal2-popup {
+			grid-column: 2;
+			grid-row: 2;
+			place-self: center center;
+			width: 35%;
+		}
+
 		body {
 			background-color: white;
 		}
 
 		.bg-warning {
-			/*   background-color: #4268a1 !important; */
 			border-radius: 5px;
 			height: 42px;
 		}
@@ -21,7 +28,7 @@
 
 		.mt-4 {
 			margin-top: 1.5rem !important;
-			margin-left: -115px;
+			margin-left: 16px;
 		}
 
 		.card-header {
@@ -45,8 +52,25 @@
 		}
 
 		.bg-light {
-			bs-bg-opacity: 1;
 			background-color: rgb(245 245 245 / 0%) !important;
+		}
+
+		.btn-light {
+			color: white;
+			background-color: black;
+			border-color: #f8f9fa;
+			font-weight: bold;
+		}
+
+			.btn-light:hover {
+				background-color: black;
+				border-color: white;
+				color: white;
+			}
+
+		.equal-width-btn {
+			width: 95px;
+			padding: 4px;
 		}
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- Load jQuery -->
@@ -197,23 +221,17 @@
                 font-weight: bold;margin-top:-5px;">
 					PRODUCT DETAILS
 				</h4>
-				<a href="/ItemMaster/ShowItemMasterDataTable" style="background-color:#f8f9fa;color:black;     background-color: black;
+				<a href="/ItemMaster/ShowItemMasterDataTable" class="btn btn-light" style="background-color:#f8f9fa;color:black;     background-color: black;
                color: #f6f9ff;
                font-size: 14px;
                font-weight: bold;
                padding: 6px;
-                 margin-top: -11px;height:33px;">
+                 margin-top: -3px;height:33px;">
 					RETURN TO VIEW
 				</a>
 			</div>
 			<div class="card-body bg-light">
-				<form action="/ItemMaster/AddItemMaster" method="post">
-					@if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
-					{
-						<div class="alert alert-success">
-							@TempData["SuccessMessage"]
-						</div>
-					}
+				<form action="/ItemMaster/AddItemMaster" method="post" id="additemMasterforms">
 					<div class="row mb-3 text-end">
 						<label class="col-sm-2 col-form-label">Item Name :</label>
 						<div class="col-sm-10">
@@ -245,7 +263,7 @@
 						</div>
 						<label class="col-sm-2 col-form-label text-end">Item Unit1:</label>
 						<div class="col-sm-2">
-							<select id="ItemUnit" class="form-control" name="itemMaster.ItemUnit" required>
+							<select id="ItemUnit" class="form-control" name="itemMaster.ItemUnit1" required>
 								<option value="" disabled selected>--Select ItemUnit--</option>
 								@foreach (var itemunit in ViewBag.ItemUnits)
 								{
@@ -255,7 +273,7 @@
 						</div>
 						<label class="col-sm-2 col-form-label text-end">Item Unit2:</label>
 						<div class="col-sm-2">
-							<select id="ItemUnit2" class="form-control" name="itemMaster.ItemUnit" required>
+							<select id="ItemUnit2" class="form-control" name="itemMaster.ItemUnit2" required>
 								<option value="" disabled selected>--Select ItemUnit--</option>
 								@foreach (var itemunit in ViewBag.ItemUnits)
 								{
@@ -387,9 +405,10 @@
 						</div>
 						<div class="card-body">
 							<div class="row mb-3 text-end align-items-center">
+
 								<label class="col-sm-2 col-form-label ">Supplier Name :</label>
 								<div class="col-sm-2">
-									<select id="ddlSupplierName" class="form-control" name="supplierRate.SupplierName" required>
+									<select id="ddlSupplierName" class="form-control" name="supplierRate[].SupplierName">
 										<option value="" disabled selected>--Select Supplier Name--</option>
 										@foreach (var supplier in ViewBag.SupplierMasters)
 										{
@@ -397,40 +416,38 @@
 										}
 									</select>
 								</div>
-								<label class="col-sm-2 col-form-label"style="margin-left:-28px;">Supplier Company:</label>
+								<label class="col-sm-2 col-form-label" style="margin-left:-28px;">Supplier Company:</label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control" placeholder="Enter SupplierCompanyName" id="txtsuppliercompany" name="supplierRate.SupplierCompanyName">
+									<input type="text" class="form-control" placeholder="Enter SupplierCompanyName" id="txtsuppliercompanyname" name="supplierRate[].SupplierCompanyName">
 								</div>
-								<label class="col-sm-2 col-form-label"style="margin-left:-69px">Supplier Rate :</label>
+								<label class="col-sm-2 col-form-label" style="margin-left:-69px">Supplier Rate :</label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control" placeholder="Enter Supplier Rate" id="txtrate" name="supplierRate.SupplierRate">
+									<input type="text" class="form-control" placeholder="Enter Supplier Rate" id="txtrate" name="supplierRate[].SupplierRate">
 								</div>
-								<div class="col-sm-1 text-start">
-									<button type="button" class="btn btn-warning" style="margin-left: 17px;">OK</button>
+								<div class="col-sm-1 text-start" style="margin-right: inherit;">
+									<button type="button" id="btnAddSupplier" class="btn btn-warning">OK</button>
 								</div>
 							</div>
 							<div class="table-responsive">
-								<table class="table table-bordered">
+								<table class="table table-bordered" id="myTable">
 									<thead>
 										<tr>
 											<th>Supplier Name</th>
-											<th>Company Name</th>
+											<th>Supplier Company Name</th>
 											<th>Rate</th>
 											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td colspan="3" class="text-center">No data available</td>
-										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
+						<input type="hidden" id="SupplierRates" name="SupplierRates" />
 					</div>
 					<div class="text-center mt-3">
-						<button type="submit" class="btn btn-success">Save</button>
-						<button type="reset" class="btn btn-primary" onclick="window.location.href = window.location.href + '?reset=true';">Refresh</button>
+						<button type="submit" class="btn btn-success equal-width-btn" id="btnSave"><i class="bi bi-house-add-fill"></i> Save</button>
+						<button type="reset" class="btn btn-primary equal-width-btn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
 					</div>
 				</form>
 			</div>
@@ -438,3 +455,101 @@
 	</div>
 </body>
 </html>
+<script>
+	  $(document).ready(function () {
+		  // Handle OK button click to add supplier rate data to the table
+		  $('#btnAddSupplier').on('click', function () {
+
+			  var supplierName = $('#ddlSupplierName option:selected').text();
+			  var supplierCompanyName = $('#txtsuppliercompanyname').val();
+			  var supplierRate = $('#txtrate').val();
+			  // Perform client-side validation
+			  if (!supplierName || !supplierCompanyName || !supplierRate) {
+				  alert("Please fill in all fields.");
+				  return;
+			  }
+			 // Find the next index for supplierRate
+			  var index = $('#myTable tbody tr').length; // This gives the current count of rows
+
+			  // Create a new row with hidden inputs for each supplierRate
+			  var newRow = `
+	  <tr>
+		  <td>${supplierName}</td>
+		  <td>${supplierCompanyName}</td>
+		  <td>${supplierRate}</td>
+		  <td>
+			  <button type="button" class="btn btn-danger btn-sm removeRow">Remove</button>
+			  <input type="hidden" name="supplierRate[${index}].SupplierName" value="${supplierName}">
+			  <input type="hidden" name="supplierRate[${index}].SupplierCompanyName" value="${supplierCompanyName}">
+			  <input type="hidden" name="supplierRate[${index}].SupplierRate" value="${supplierRate}">
+		  </td>
+	  </tr>
+			  `;
+		// Append the new row to the table
+			  $('#myTable tbody').append(newRow);
+			  // Clear input fields after adding
+			  $('#ddlSupplierName').val('');
+			  $('#txtsuppliercompanyname').val('');
+			  $('#txtrate').val('');
+		  });
+		  // Handle removing a row from the table
+		  $(document).on('click', '.removeRow', function () {
+			var row = $(this).closest('tr');
+			  row.remove();
+		  });
+
+		  // On form submit, collect all table rows and set them into the hidden input
+		  $('#btnSave').on('click', function () {
+			  // Collect all supplier rate data from hidden inputs
+			  var supplierRates = [];
+			  $('#myTable tbody tr').each(function () {
+				  var supplierName = $(this).find('td').eq(0).text().trim();
+				  var supplierCompanyName = $(this).find('td').eq(1).text().trim();
+				  var supplierRate = $(this).find('td').eq(2).text().trim();
+				  // Add only non-empty values
+				  if (supplierName && supplierCompanyName && supplierRate) {
+					  supplierRates.push({
+						  SupplierName: supplierName,
+						  SupplierCompanyName: supplierCompanyName,
+						  SupplierRate: supplierRate
+					  });
+				  }
+			  });
+			  // Set the data into hidden input as a JSON string
+	  $('#SupplierRates').val(JSON.stringify(supplierRates));
+	// You can now submit the form
+			  $('form').submit();  // Optionally use AJAX instead of traditional form submission
+		  });
+	  });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+	const form = document.getElementById("additemMasterforms");
+		form.addEventListener("submit", function (event) {
+			event.preventDefault();
+		Swal.fire({
+				title: "Are you sure?",
+				text: "Create this ProductMaster!",
+				imageUrl: '/assets/img/alert.png',
+				imageHeight: "100px",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, Create it!"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire({
+						title: "Created!",
+						text: "ProductMaster has been created successfully.",
+						icon: "success",
+						timer: 2000,
+						showConfirmButton: false
+					}).then(() => {
+						form.submit();
+					});
+				}
+			});
+		});
+</script>

@@ -5,6 +5,7 @@ namespace InventoryIT.Repository
     public interface IMastItemSupplierRateRepository
     {
         public IEnumerable<MastItemSupplierRate> GetAllItemSupplierRate();
+        public IEnumerable<MastItemSupplierRate> GetFilteredSupplerRate(int companyId, int branchId, int financialYearId);
         public MastItemSupplierRate? GetbyId(int suppId);
         public int AddItemSupplierRate(MastItemSupplierRate mastItemSupplierRate);
         public int Update(MastItemSupplierRate mastItemSupplierRate);

@@ -46,4 +46,5 @@ public partial class ItemMaster
     public virtual ICollection<MastItemStk> MastItemStks { get; set; } = new List<MastItemStk>();
 
     public virtual ICollection<MastItemSupplierRate> MastItemSupplierRates { get; set; } = new List<MastItemSupplierRate>();
+	
 }
