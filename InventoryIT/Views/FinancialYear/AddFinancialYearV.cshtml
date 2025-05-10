@@ -1,0 +1,62 @@
+﻿ <html>
+<head>
+    <link href="~/css/mastersetup.css" rel="stylesheet" />
+    <script>
+        // Function to handle Financial Year From input and auto-fill other fields
+        function updateFinancialYearFields() {
+            var financialYearFrom = document.getElementById("FinancialYearFrom").value;
+            var financialYearToField = document.getElementById("FinancialYearTo");
+            var financialYearNameField = document.getElementById("FinancialYearName");
+
+            if (financialYearFrom) {
+                // Increment the 'Financial Year From' value by 1 for the 'Financial Year To' field
+                var financialYearTo = parseInt(financialYearFrom) + 1;
+                financialYearToField.value = financialYearTo;
+
+                // Concatenate 'Financial Year From' and 'Financial Year To' for the 'Financial Year Name'
+                financialYearNameField.value = financialYearFrom + financialYearTo;
+            } else {
+                // Clear the fields if 'Financial Year From' is empty
+                financialYearToField.value = '';
+                financialYearNameField.value = '';
+            }
+        }
+    </script>
+</head>
+<body>
+    <form asp-action="AddFinancialYear" method="post">
+        <div class="panel">
+            <div class="header">
+                <h4>Financial Year Details</h4>
+                <input type="button" id="return-to-view" value="Return to View" />
+            </div>
+            <div class="form-group">
+                <span class="required">*</span><label for="city">Company Name:</label>
+                <select name="CompId" class="input-large" required>
+                    <option value="" disabled selected>Select Company</option>
+                    @foreach (var company in ViewBag.MastComps)
+                    {
+                        <option value="@company.Value">@company.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <span class="required">*</span><label for="FinancialYearFrom">Start From 1/April/20:</label>
+                <input type="text" id="FinancialYearFrom" class="input-small" name="FinancialYearFrom" required oninput="updateFinancialYearFields()"><br />
+            </div>
+            <div class="form-group">
+                <span class="required">*</span><label for="FinancialYearTo">End on 31/March/20:</label>
+                <input type="text" id="FinancialYearTo" class="input-small" name="FinancialYearTo" readonly><br />
+            </div>
+            <div class="form-group">
+                <span class="required">*</span><label for="FinancialYearName">Financial Year Name:</label>
+                <input type="text" id="FinancialYearName" class="input-small" name="FinancialYearName" readonly><br />
+            </div>
+            <div class="form-group form-group-flex">
+                <input type="submit" id="Save" value="Save" />
+                <input type="button" id="Refresh" value="Refresh" />
+            </div>
+        </div>
+    </form>
+</body>
+</html>

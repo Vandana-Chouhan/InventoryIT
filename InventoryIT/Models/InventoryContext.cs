@@ -9,22 +9,192 @@ public partial class InventoryContext : DbContext
     public InventoryContext()
     {
     }
-
     public InventoryContext(DbContextOptions<InventoryContext> options)
-        : base(options)
+            : base(options)
     {
     }
+    public virtual DbSet<FinancialYear> FinancialYears { get; set; }
+
+    public virtual DbSet<ItemCatagory> ItemCatagories { get; set; }
+
+    public virtual DbSet<ItemCompany> ItemCompanies { get; set; }
+
+    public virtual DbSet<ItemMaster> ItemMasters { get; set; }
+
+    public virtual DbSet<ItemSubCatagory> ItemSubCatagories { get; set; }
+
+    public virtual DbSet<ItemType> ItemTypes { get; set; }
+
+    public virtual DbSet<ItemUnit> ItemUnits { get; set; }
 
     public virtual DbSet<MastBranch> MastBranches { get; set; }
 
+    public virtual DbSet<MastCity> MastCities { get; set; }
+
     public virtual DbSet<MastComp> MastComps { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-P99NB78;Database=Inventory;Integrated Security=True;TrustServerCertificate=True;");
+    public virtual DbSet<MastCountry> MastCountries { get; set; }
 
+    public virtual DbSet<MastItemStk> MastItemStks { get; set; }
+
+    public virtual DbSet<MastItemSupplierRate> MastItemSupplierRates { get; set; }
+
+    public virtual DbSet<MastState> MastStates { get; set; }
+
+    public virtual DbSet<SupplierMaster> SupplierMasters { get; set; }
+
+    public virtual DbSet<UserMaster> UserMasters { get; set; }
+
+    public virtual DbSet<WarehouseAreaMaster> WarehouseAreaMasters { get; set; }
+
+    public virtual DbSet<WarehouseLocationMaster> WarehouseLocationMasters { get; set; }
+
+    public virtual DbSet<WarehouseRackMaster> WarehouseRackMasters { get; set; }
+
+    public virtual DbSet<WarehouseShelfMaster> WarehouseShelfMasters { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer("Server=DESKTOP-P99NB78;Database=Inventory;Integrated Security=True;TrustServerCertificate=True;");
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<FinancialYear>(entity =>
+        {
+            entity.HasKey(e => e.FinanYearId).HasName("PK_Financial Year");
+
+            entity.ToTable("FinancialYear");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
+            entity.Property(e => e.CreationDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("Creation_Date");
+            entity.Property(e => e.FinancialYearFrom)
+                .HasMaxLength(4)
+                .IsUnicode(false);
+            entity.Property(e => e.FinancialYearName)
+                .HasMaxLength(4)
+                .IsUnicode(false);
+            entity.Property(e => e.FinancialYearTo)
+                .HasMaxLength(4)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.Comp).WithMany(p => p.FinancialYears)
+                .HasForeignKey(d => d.CompId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_FinanCompId");
+        });
+
+        modelBuilder.Entity<ItemCatagory>(entity =>
+        {
+            entity.HasKey(e => e.ItemCatId);
+
+            entity.ToTable("Item Catagory");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.ItemCatagoryName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Item Catagory Name");
+        });
+
+        modelBuilder.Entity<ItemCompany>(entity =>
+        {
+            entity.HasKey(e => e.ItemComId);
+
+            entity.ToTable("ItemCompany");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation Date Time");
+            entity.Property(e => e.ItemCompanyName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Item Company Name");
+        });
+
+        modelBuilder.Entity<ItemMaster>(entity =>
+        {
+            entity.HasKey(e => e.ItemId);
+
+            entity.ToTable("Item Master");
+
+            entity.Property(e => e.CreationDateTime).HasColumnType("datetime");
+            entity.Property(e => e.ItemCatagory).HasColumnName("Item Catagory");
+            entity.Property(e => e.ItemCode)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("Item Code");
+            entity.Property(e => e.ItemCompany).HasColumnName("Item Company");
+            entity.Property(e => e.ItemName)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("Item Name");
+            entity.Property(e => e.ItemSubCatagory).HasColumnName("Item SubCatagory");
+            entity.Property(e => e.ItemType).HasColumnName("Item Type");
+            entity.Property(e => e.ItemUnit1).HasColumnName("[Item Unit1");
+            entity.Property(e => e.ItemUnit2).HasColumnName("Item Unit2");
+            entity.Property(e => e.PartNo)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.WarehouseArea).HasColumnName("Warehouse Area");
+            entity.Property(e => e.WarehouseLocation).HasColumnName("Warehouse Location");
+            entity.Property(e => e.WarehouseRack).HasColumnName("Warehouse Rack");
+            entity.Property(e => e.WarehouseShelf).HasColumnName("Warehouse Shelf");
+        });
+
+        modelBuilder.Entity<ItemSubCatagory>(entity =>
+        {
+            entity.HasKey(e => e.ItemSubCatId);
+
+            entity.ToTable("ItemSubCatagory");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.SubCatagoryName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Sub Catagory Name");
+        });
+
+        modelBuilder.Entity<ItemType>(entity =>
+        {
+            entity.HasKey(e => e.ItemId);
+
+            entity.ToTable("ItemType");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.ItemName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<ItemUnit>(entity =>
+        {
+            entity.HasKey(e => e.ItemUnitId);
+
+            entity.ToTable("ItemUnit");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.ItemUnitName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Item Unit Name");
+        });
+
         modelBuilder.Entity<MastBranch>(entity =>
         {
             entity.HasKey(e => e.BranchId);
@@ -77,6 +247,39 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Website)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.Comp).WithMany(p => p.MastBranches)
+                .HasForeignKey(d => d.CompId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_CompId");
+        });
+
+        modelBuilder.Entity<MastCity>(entity =>
+        {
+            entity.HasKey(e => e.CityId);
+
+            entity.ToTable("Mast_City");
+
+            entity.Property(e => e.CityName)
+                .HasMaxLength(150)
+                .IsUnicode(false)
+                .HasColumnName("City Name");
+            entity.Property(e => e.CityShortName)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("City Short Name");
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDatetime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation Datetime");
+            entity.Property(e => e.PinCode)
+                .HasMaxLength(10)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.State).WithMany(p => p.MastCities)
+                .HasForeignKey(d => d.StateId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Mast_City_StateId");
         });
 
         modelBuilder.Entity<MastComp>(entity =>
@@ -102,8 +305,8 @@ public partial class InventoryContext : DbContext
                 .HasColumnName("Contact Person");
             entity.Property(e => e.CreatedBy).HasColumnName("Created By");
             entity.Property(e => e.DateTime)
-                .HasColumnType("datetime")
-                .HasColumnName("Date Time");
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -131,6 +334,239 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Website)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<MastCountry>(entity =>
+        {
+            entity.HasKey(e => e.CountryId);
+
+            entity.ToTable("Mast_Country");
+
+            entity.Property(e => e.CountryName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Country Name");
+            entity.Property(e => e.CountryShortName)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("Country Short Name");
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+        });
+
+        modelBuilder.Entity<MastItemStk>(entity =>
+        {
+            entity.HasKey(e => e.StockId);
+
+            entity.ToTable("Mast_ItemSTK");
+
+            entity.Property(e => e.StockId).HasColumnName("Stock Id");
+            entity.Property(e => e.BufferStock).HasColumnName("Buffer Stock");
+            entity.Property(e => e.ClosingQuantity).HasColumnName("Closing Quantity");
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.CurrentQuantity).HasColumnName("Current Quantity");
+            entity.Property(e => e.Gst).HasColumnName("GST%");
+            entity.Property(e => e.OpeningQuantity).HasColumnName("Opening Quantity");
+            entity.Property(e => e.OpeningValue).HasColumnName("Opening Value");
+            entity.Property(e => e.PurchaseRate).HasColumnName("Purchase Rate");
+            entity.Property(e => e.SalesRate).HasColumnName("Sales Rate");
+
+            entity.HasOne(d => d.Item).WithMany(p => p.MastItemStks)
+                .HasForeignKey(d => d.ItemId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ItemId");
+        });
+
+        modelBuilder.Entity<MastItemSupplierRate>(entity =>
+        {
+            entity.HasKey(e => e.SuppId);
+
+            entity.ToTable("Mast_ItemSupplierRate");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime).HasColumnName("CreationDateTime");
+            entity.Property(e => e.SupplierCompanyName)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("Supplier Company  Name");
+            entity.Property(e => e.SupplierName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Supplier Name");
+            entity.Property(e => e.SupplierRate).HasColumnName("Supplier Rate");
+
+            entity.HasOne(d => d.Item).WithMany(p => p.MastItemSupplierRates)
+                .HasForeignKey(d => d.ItemId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ItemId_ItemSupplier");
+        });
+
+        modelBuilder.Entity<MastState>(entity =>
+        {
+            entity.HasKey(e => e.StateId);
+
+            entity.ToTable("Mast_State");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDatetime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation Datetime");
+            entity.Property(e => e.StateName)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("State Name");
+            entity.Property(e => e.StateShortName)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("State Short Name");
+
+            entity.HasOne(d => d.Country).WithMany(p => p.MastStates)
+                .HasForeignKey(d => d.CountryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Mast_State_CountryId");
+        });
+
+        modelBuilder.Entity<SupplierMaster>(entity =>
+        {
+            entity.HasKey(e => e.SuppId);
+
+            entity.ToTable("Supplier Master");
+
+            entity.Property(e => e.Address)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.ContactPerson)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Contact Person");
+            entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation_DateTime");
+            entity.Property(e => e.EmailId)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("Email Id");
+            entity.Property(e => e.GstNo)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("GST No");
+            entity.Property(e => e.MobileNo)
+                .HasColumnType("numeric(12, 0)")
+                .HasColumnName("Mobile No");
+            entity.Property(e => e.PhoneNo)
+                .HasColumnType("numeric(12, 0)")
+                .HasColumnName("Phone No");
+            entity.Property(e => e.PinNo)
+                .HasMaxLength(7)
+                .IsUnicode(false)
+                .HasColumnName("PIN No");
+            entity.Property(e => e.SupplierGstCertificate).HasColumnName("Supplier GST Certificate");
+            entity.Property(e => e.SupplierName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Supplier Name");
+            entity.Property(e => e.Website)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<UserMaster>(entity =>
+        {
+            entity.HasKey(e => e.UserId);
+
+            entity.ToTable("UserMaster");
+
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.Password)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.PersonName)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("Person Name");
+            entity.Property(e => e.UpdationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Updation DateTime");
+            entity.Property(e => e.UserName)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("User Name");
+            entity.Property(e => e.UserType)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("User Type");
+        });
+
+        modelBuilder.Entity<WarehouseAreaMaster>(entity =>
+        {
+            entity.HasKey(e => e.WarehouseAreaId);
+
+            entity.ToTable("Warehouse Area Master");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.WarehouseAreaName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Warehouse Area Name");
+        });
+
+        modelBuilder.Entity<WarehouseLocationMaster>(entity =>
+        {
+            entity.HasKey(e => e.WarehouseLocId);
+
+            entity.ToTable("Warehouse Location Master");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.WarehouseName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Warehouse Name");
+        });
+
+        modelBuilder.Entity<WarehouseRackMaster>(entity =>
+        {
+            entity.HasKey(e => e.WarehouseRackId);
+
+            entity.ToTable("Warehouse Rack Master");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.WarehouseRackName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Warehouse Rack Name");
+        });
+
+        modelBuilder.Entity<WarehouseShelfMaster>(entity =>
+        {
+            entity.HasKey(e => e.WarehouseShelfId);
+
+            entity.ToTable("Warehouse Shelf Master");
+
+            entity.Property(e => e.CreatedBy).HasColumnName("Created By");
+            entity.Property(e => e.CreationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Creation DateTime");
+            entity.Property(e => e.WarehouseShelfName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Warehouse Shelf Name");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -1,0 +1,35 @@
+﻿<html>
+<head>
+	<link href="~/css/mastersetup.css" rel="stylesheet" />
+</head>
+<body>
+	<form asp-action="AddUserMaster" method="post">
+		<div class="panel">
+			<div class="header">
+				<h5>User Master Details</h5>
+				<input type="button" id="return-to-view" value="Return to View" />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="UserName">User Name:</label>
+				<input type="text" id="UserName" class="input-small" name="UserName" required><br />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="Password">Password:</label>
+				<input type="password" id="Password" class="input-small" name="Password" required><br />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="PersonName">Person Name:</label>
+				<input type="text" id="PersonName" class="input-small" name="PersonName" required><br />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="UserType">User Type:</label>
+				<input type="text" id="UserType" class="input-small" name="UserType" required><br />
+			</div>
+			<div class="form-group form-group-flex">
+				<input type="submit" id="Save" value="Save" />
+				<input type="button" id="Refresh" value="Refresh" />
+			</div>
+		</div>
+	</form>
+</body>
+</html>

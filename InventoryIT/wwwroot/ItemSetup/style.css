@@ -1,0 +1,96 @@
+﻿
+body {
+    background-color: white;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 3px;
+    padding: 0px;
+    margin: 0 auto;
+}
+
+.heade {
+    background: linear-gradient(to right, #093f82, #2b71c7);
+    color: white;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+    border-radius: 5px;
+    height: 42px;
+}
+
+.form-container {
+    padding: 15px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+    .form-group label {
+        font-weight: 600;
+        min-width: 200px;
+        text-align: right;
+    }
+
+    .form-group input {
+        flex-grow: 1;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+.btn-dark {
+   /* padding: 5px 10px;*/
+    text-decoration: none;
+    border-radius: 3px;
+    background-color:#f8f9fa;
+    color:black;    
+    background-color: black; 
+    color: #f6f9ff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px;
+    text-decoration: none;
+    
+}
+
+.buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-success, .btn-primary {
+    padding: 5px 15px;
+}
+h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 7px;
+}
+
+.col-form-label{
+    font-size:14px;
+    font-weight:bold;
+    color:black;
+}
+.form-control{
+    font-size:14px;
+    color:black;
+}
+
+.mt-4 {
+    margin-left: -115px;
+}

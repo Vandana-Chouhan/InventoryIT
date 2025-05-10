@@ -1,0 +1,126 @@
+﻿
+.container {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%;
+}
+
+.ard {
+    background-color: white;
+    border-radius: 3px;
+    padding: 0px;
+    margin: 0 auto;
+    width: 112%;
+    margin-left: -123px;
+    min-height: 500px;
+    margin-top: -36px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.heade {
+    /* background-color: #4268a1;
+    color: white;
+    padding: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 2px;
+    width: 100%;*/
+    background: linear-gradient(to right, #093f82, #2b71c7);
+    color: white;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    height: 42px;
+}
+
+.form-control {
+    padding: 5px;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.btn-dark {
+    background-color: #f8f9fa;
+    color: black;
+    background-color: black;
+    color: #f6f9ff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px;
+    margin-top: -1px;
+    height: 33px;
+    border-radius:0px;
+}
+/*
+.btn-success, .btn-primary {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+}*/
+
+.form-group, .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    width: 100%;
+  
+}
+
+    .form-group label, .row label {
+        flex: 0 0 25%;
+        text-align: right;
+        margin-right: 10px;
+        font-weight: normal;
+    }
+
+    .form-group .form-control, .row div {
+        flex: 1;
+    }
+
+.required {
+    color: red;
+    margin-right: 3px;
+}
+
+/* Responsive Design */
+@@media (min-width: 1200px) {
+    .container {
+        max-width: 1161px;
+    }
+}
+
+
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+.text-end, .row label, .form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+.form-group, .row mb-2 {
+    margin-top: 8px;
+}
+
+.form-control{
+    font-size:14px;
+    color:black;
+}
+
+h4 {
+    font-size: 20px;
+    margin-top: 8px;
+    font-weight:bold;
+    color:white;
+}
+
+
+.mt-3 {
+    margin-top: 19rem !important;
+}

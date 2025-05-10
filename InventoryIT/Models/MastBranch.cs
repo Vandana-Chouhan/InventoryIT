@@ -37,7 +37,9 @@ public partial class MastBranch
 
     public int CompId { get; set; }
 
-    public DateTime CreationDate { get; set; }
+    public DateTime CreationDate { get; set; } = DateTime.Now;
 
     public int CreatedBy { get; set; }
+
+    public virtual MastComp Comp { get; set; } = null!;
 }

@@ -1,0 +1,129 @@
+﻿<head>
+	<link rel="stylesheet" href="~/Warehouse/style.css" asp-append-version="true" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- Load jQuery -->
+	<script type="text/javascript">
+		// Wait until the DOM is fully loaded before running the script
+		$(document).ready(function () {
+			// When the location dropdown changes, update the areas dropdown.
+			$('#WarehouseLocId').change(function () {
+				debugger;
+				var locationId = $(this).val();
+
+				if (locationId) {
+					$.ajax({
+						url: '@Url.Action("GetAreasByLocation", "WarehouseShelf")',  // Controller action to fetch areas
+						type: 'GET',
+						data: { locationId: locationId },
+						success: function (data) {
+							var areaDropdown = $('#WarehouseAreaId');
+							areaDropdown.empty();  // Clear existing options
+							areaDropdown.append('<option value="">Select warehouse area</option>'); // Default option
+
+							// Populate the area dropdown with new options
+							$.each(data, function (index, item) {
+								areaDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+							});
+						},
+						error: function () {
+							alert('Error fetching areas. Please try again.');
+						}
+					});
+				} else {
+					// If no location is selected, clear the areas dropdown
+					$('#WarehouseAreaId').empty();
+					$('#WarehouseAreaId').append('<option value="">Select warehouse area</option>');
+				}
+			});
+
+			// When the area dropdown changes, update the racks dropdown.
+			$('#WarehouseAreaId').change(function () {
+				var areaId = $(this).val();
+				if (areaId) {
+					$.ajax({
+						url: '@Url.Action("GetRackByAreas", "WarehouseShelf")', // Controller action to fetch racks
+						type: 'GET',
+						data: { areaId: areaId },
+						success: function (data) {
+							var rackDropdown = $('#WarehouseRackId');
+							rackDropdown.empty();  // Clear existing options
+							rackDropdown.append('<option value="">Select warehouse rack</option>'); // Default option
+					   // Check if racks are available
+					   if (data.length === 0) {
+						   // Show message if no racks are available
+						   $('#noRacksMessage').show();
+					   } else {
+						   // Hide message if racks are available
+						   $('#noRacksMessage').hide();
+					   }
+							// Populate the rack dropdown with new options
+							$.each(data, function (index, item) {
+								rackDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+							});
+						},
+						error: function () {
+							alert('Error fetching rack details. Please try again.');
+						}
+					});
+				} else {
+					// If no area is selected, clear the racks dropdown
+					$('#WarehouseRackId').empty();
+					$('#WarehouseRackId').append('<option value="">Select warehouse rack</option>');
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container mt-4">
+		<div class="ard">
+			<div class="heade">
+				<h4>Warehouse Shelf Details</h4>
+				<a href="/WarehouseShelf/warehouseShelfDataTab" class="btn btn-dark">RETURN TO VIEW</a>
+			</div>
+			<div class="card-body">
+				<form asp-action="AddWarehouseShelf" method="post">
+					@if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
+					{
+						<div class="alert alert-success">
+							@TempData["SuccessMessage"]
+						</div>
+					}
+					<div class="form-group">
+						<label for="ddlWarehouseLocation">Warehouse Location Name:</label>
+						<select id="WarehouseLocId" class="form-control" name="WarehouseLocId" required>
+							<option value="" disabled selected>--Select warehouse location--</option>
+							@foreach (var location in ViewBag.WarehouseLocationMasters)
+							{
+								<option value="@location.Value">@location.Text</option>
+							}
+						</select>
+					</div>
+					<div class="form-group">
+						@* <span class="required">*</span> *@<label for="WarehouseAreaId">Warehouse Area:</label>
+						<select id="WarehouseAreaId" name="WarehouseAreaId" class="form-control" required>
+							<option value="" disabled selected>--Select warehouse area--</option>
+						</select>
+					</div>
+					<div class="form-group">
+						@* <span class="required">*</span> *@<label for="WarehouseRackId">Warehouse Rack:</label>
+						<select id="WarehouseRackId" name="WarehouseRackId" class="form-control" required>
+							<option value="" disabled selected>--Select warehouse rack--</option>
+						</select>
+					</div>
+					<div class="form-group">
+						@* <span class="required">*</span> *@<label for="warehouseShelfName">Warehouse Shelf Name:</label>
+						<input type="text" id="WarehouseShelfName" class="form-control" name="WarehouseShelfName" required><br />
+					</div>
+					<div id="noRacksMessage" style="color: red; display:none;">
+						<p>No racks available for the selected area. Please select another area.</p>
+					</div>
+					<div class="text-center mt-3">
+						<button type="submit" class="btn btn-success">Save</button>
+						<button type="reset" class="btn btn-primary" onclick="window.location.href = window.location.href + '?reset=true';">Refresh</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+

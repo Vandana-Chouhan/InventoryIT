@@ -1,0 +1,42 @@
+﻿<html>
+<head>
+	<link href="~/css/mastersetup.css" rel="stylesheet" />
+</head>
+<body>
+	<form asp-action="AddMastCity" method="post">
+		<div class="panel">
+			<div class="header">
+				<h5>City Details</h5>
+				<input type="button" id="return-to-view" value="Return to View" />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="StateId">State Name:</label>
+				<select name="StateId" class="input-small" required>
+					<option value="" disabled selected>Select State Name</option>
+					@foreach (var state in ViewBag.MastStates)
+					{
+						<option value="@state.Value">@state.Text</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="CityName">City Name:</label>
+				<input type="text" id="CityName" class="input-small" name="CityName" required><br />
+			</div>
+			
+			<div class="form-group">
+				<span class="required">*</span><label for="CityShortName">City Short Name:</label>
+				<input type="text" id="CityShortName" class="input-small" name="CityShortName" required><br />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="PinCode">PIN Code:</label>
+				<input type="text" id="PinCode" class="input-small" name="PinCode" required><br />
+			</div>
+			<div class="form-group form-group-flex">
+				<input type="submit" id="Save" value="Save" />
+				<input type="button" id="Refresh" value="Refresh" />
+			</div>
+		</div>
+	</form>
+</body>
+</html>

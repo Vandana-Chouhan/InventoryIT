@@ -1,0 +1,33 @@
+﻿<html>
+<head>
+	<link href="~/css/mastersetup.css" rel="stylesheet" />
+</head>
+<body>
+	<form asp-action="AddItemSubCat" method="post">
+		<div class="panel">
+			<div class="header">
+				<h5>Item Catagory Details</h5>
+				<input type="button" id="return-to-view" value="Return to View" />
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="ItemCatagoryName">Item Catagory Name:</label>
+				<select name="ItemMainCatId" class="input-small" required>
+					<option value="" disabled selected>Select item Catagory</option>
+					@foreach (var catagory in ViewBag.ItemCatagories)
+					{
+						<option value="@catagory.Value">@catagory.Text</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<span class="required">*</span><label for="ItemSubCatagory">Item  Sub Catagory Name:</label>
+				<input type="text" id="SubCatagoryName" class="input-small" name="SubCatagoryName" required><br />
+			</div>
+			<div class="form-group form-group-flex">
+				<input type="submit" id="Save" value="Save" />
+				<input type="button" id="Refresh" value="Refresh" />
+			</div>
+		</div>
+	</form>
+</body>
+</html>

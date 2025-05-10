@@ -1,0 +1,84 @@
+﻿<html>
+<head>
+	<link rel="stylesheet" href="~/Warehouse/style.css" asp-append-version="true" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- Load jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- Load jQuery -->
+	<script type="text/javascript">
+		// Wait until the DOM is fully loaded before running the script
+		$(document).ready(function () {
+			// When the location dropdown changes, update the areas dropdown.
+			$('#WarehouseLocId').change(function () {
+				var locationId = $(this).val();
+
+				if (locationId) {
+					$.ajax({
+						url: '@Url.Action("GetAreasByLocation", "WarehouseRack")',  // Controller action to fetch areas
+						type: 'GET',
+						data: { locationId: locationId },
+						success: function (data) {
+							var areaDropdown = $('#WarehouseAreaId');
+							areaDropdown.empty();  // Clear existing options
+							areaDropdown.append('<option value="">Select warehouse area</option>'); // Default option
+
+							// Populate the area dropdown with new options
+							$.each(data, function (index, item) {
+								areaDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+							});
+						},
+						error: function () {
+							alert('Error fetching areas. Please try again.');
+						}
+					});
+				} else {
+					$('#WarehouseAreaId').empty();
+					$('#WarehouseAreaId').append('<option value="">Select warehouse area</option>');
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container mt-4">
+		<div class="ard">
+			<div class="heade">
+				<h4>Warehouse Rack Details</h4>
+				<a href="/WarehouseRack/warehouseRackDataTab" class="btn btn-dark">RETURN TO VIEW</a>
+			</div>
+			<div class="card-body">
+				<form action="AddWarehouseRack" method="post">
+					@if (TempData["SuccessMessage"] != null && !Context.Request.Query.ContainsKey("reset"))
+					{
+						<div class="alert alert-success">
+							@TempData["SuccessMessage"]
+						</div>
+					}
+					<div class="form-group">
+						<label for="ddlWarehouseLocation">Warehouse Location:</label>
+						<select class="form-control" name="WarehouseLocId" id="WarehouseLocId" required>
+							<option value="">--Select warehouse location--</option>
+							@foreach (var location in ViewBag.WarehouseLocationMasters)
+							{
+								<option value="@location.Value">@location.Text</option>
+							}
+						</select>
+					</div>
+					<div class="form-group">
+						@* <span class="required">*</span> *@<label for="WarehouseAreaId">Warehouse Area Name:</label>
+						<select id="WarehouseAreaId" name="WarehouseAreaId" class="form-control" required>
+							<option value="">--Select warehouse area--</option>
+						</select>
+					</div>
+					<div class="form-group">
+						@* <span class="required">*</span> *@<label for="warehouseRackName">Warehouse Rack Name:</label>
+						<input type="text" id="WarehouseRackName" class="form-control" name="WarehouseRackName" required><br />
+					</div>
+					<div class="text-center mt-3">
+						<button type="submit" class="btn btn-success">Save</button>
+						<button type="reset" class="btn btn-primary" onclick="window.location.href = window.location.href + '?reset=true';">Refresh</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

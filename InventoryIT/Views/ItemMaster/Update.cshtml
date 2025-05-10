@@ -1,0 +1,245 @@
+﻿<style>
+	body {
+		background-color: white;
+	}
+
+	.bg-warning {
+		/*   background-color: #4268a1 !important; */
+		border-radius: 5px;
+		height: 42px;
+	}
+
+	.container {
+		border-radius: 10px !important;
+	}
+
+	.mt-4 {
+		margin-top: 1.5rem !important;
+		margin-left: -115px;
+	}
+
+	.card-header {
+		background: linear-gradient(to right, #093f82, #2b71c7);
+	}
+
+	.mb-3 {
+		margin-top: 13px !important;
+	}
+
+	.form-control {
+		margin-left: -16px;
+		font-size: 14px;
+		color: black;
+	}
+
+	.col-sm-2 {
+		font-size: 14px;
+		font-weight: bold;
+		color: black;
+	}
+
+	.bg-light {
+		bs-bg-opacity: 1;
+		background-color: rgb(245 245 245 / 0%) !important;
+	}
+</style>
+@{
+	ViewData["Title"] = "Product Item";
+}
+
+<div class="container mt-4">
+	<div class="card" style="box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);border-style:solid;border-color:#2b71c7;">
+
+
+		<div class="card-header text-white d-flex justify-content-between" style="border-radius:5px;height:42px;margin-top: -3px;">
+			<h4 style="font-size: 20px;
+                font-weight: bold;margin-top:-5px;">
+				PRODUCT DETAILS
+			</h4>
+			<a href="/SpareItem/Index" style="background-color:#f8f9fa;color:black;     background-color: black;
+               color: #f6f9ff;
+               font-size: 14px;
+               font-weight: bold;
+               padding: 6px;
+                 margin-top: -11px;height:33px;">
+				RETURN TO VIEW
+			</a>
+		</div>
+
+		<div class="card-body bg-light">
+			<form method="post">
+				<div class="row mb-3 text-end">
+					<label class="col-sm-2 col-form-label">Item Name :</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="txtitemName" placeholder="Enter Item Name" name="SpareName">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-2 col-form-label text-end">Item Type:</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="txtitemType" placeholder="Enter Item Type" name="Type">
+					</div>
+					<label class="col-sm-2 col-form-label text-end">Item Unit :</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="txtitemUnit" placeholder="Enter Item Unit" name="Item unit">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-2 col-form-label text-end">Item Category:</label>
+					<div class="col-sm-2">
+						<select class="form-control" id="ddlItemCategory" name="ItemCategory">
+							<option value="">--Select Category Item--</option>
+							<option value="Category1">Raw Material</option>
+							<option value="Category2">Finished Goods</option>
+							<option value="Category3">Reusable Goods</option>
+						</select>
+					</div>
+					<label class="col-sm-2 col-form-label text-end">Item SubCategory:</label>
+					<div class="col-sm-6">
+						<select class="form-control" id="ddlItemSubCategory" name="ItemSubCategory">
+							<option value="">--Select SubCategory Item--</option>
+							<option value="SubCategory1">R1</option>
+							<option value="SubCategory2">R2</option>
+							<option value="SubCategory3">R3</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row mb-3 text-end">
+					<label class="col-sm-2 col-form-label">Item Company :</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="txtcomany" placeholder="Enter Company" name="Company">
+					</div>
+				</div>
+				<div class="card mt-3" style=" box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);">
+
+					<div class="card-head text-white" style="background-color:#1c6fb7;border-radius:5px;">
+						<h5 style="margin-top: 5px;
+                           color: black;">
+							WAREHOUSE DETAILS
+						</h5>
+					</div>
+					<div class="row mb-2" style="margin-top: 14px;">
+						<label class="col-sm-2 col-form-label text-end">Warehouse Location:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="txtsupplierLocation" name="Location">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Warehouse Area:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="txtsupplierArea" name="Area">
+						</div>
+					</div>
+					<div class="row mb-2">
+						<label class="col-sm-2 col-form-label text-end">Warehouse Rack :</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="txtsupplierRack" name="Rack">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Warehouse Shelf:</label>
+						<div class="col-sm-4">
+							<input type="url" class="form-control" id="txtsuppliershelf" name="Shelf">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="card mt-3" style="box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);">
+					<div class="card-head text-white" style="background-color:#1c6fb7;border-radius:5px;">
+						<h5 style="margin-top: 5px;
+                           color: black;">
+							STOCK DETAILS
+						</h5>
+					</div>
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label text-end">Opening Stk :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtopeningstk" name="OpeningStock">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Current Stk :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtcurrentstk" name="CurrentStock">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Buffer Stk :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtbufferstk" name="BufferStock">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label text-end">Rate :</label>
+						<diva class="col-sm-2">
+							<input type="text" class="form-control" id="txtRate" name="Rate">
+						</diva>
+						<label class="col-sm-2 col-form-label text-end">VAT % :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtvat" name="Vat">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Value Of Stk :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtvalueofstk" name="ValueOfStock">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label text-end">Part No :</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="txtpartno" name="PartNo">
+						</div>
+						<label class="col-sm-2 col-form-label text-end">Sales Price :</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="txtsalesprice" name="SalesPrice">
+						</div>
+					</div>
+				</div>
+				<div class="card mt-3" style="box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);">
+					<div class="card-head text-white" style="background-color:#1c6fb7;border-radius:5px;">
+						<h5 style="margin-top: 5px;
+                              color: black;">
+							SUPPLIER INFORMATION FOR ABOVE PRODUCT
+						</h5>
+					</div>
+					<div class="card-body">
+						<div class="row mb-3 text-end align-items-center">
+							<label class="col-sm-2 col-form-label">Supplier Name :</label>
+							<div class="col-sm-2">
+								<select class="form-control" id="ddlsuppliername" name="SupplierName">
+									<option>--Select Supplier Name--</option>
+								</select>
+							</div>
+							<label class="col-sm-2 col-form-label" style="margin-left:-28px">Company Name: </label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" placeholder="Enter Company Name" id="txtsuppliercompanyname" name="CompanyName">
+							</div>
+							<label class="col-sm-2 col-form-label" style="margin-left:-109px">Rate :</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" placeholder="Enter Supplier Rate" id="txtrate" name="SupplierRate">
+							</div>
+							<div class="col-sm-1 text-start">
+								<button type="button" class="btn btn-warning" style="margin-left: 84px;">OK</button>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Supplier Name</th>
+										<th>Company Name</th>
+										<th>Rate</th>
+										<th>Action</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="3" class="text-center">No data available</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="text-center mt-3">
+					<button type="submit" class="btn btn-success"><i class="bi bi-house-add-fill"></i>Save</button>
+					<button type="reset" class="btn btn-primary"><i class="bi bi-arrow-clockwise"></i>Refresh</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

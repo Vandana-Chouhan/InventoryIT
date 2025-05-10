@@ -1,0 +1,58 @@
+﻿
+<head>
+    <link rel="stylesheet" href="~/Warehouse/style.css" asp-append-version="true" />
+</head>
+<div class="container mt-4">
+    <div class="ard">
+        <div class="heade">
+            <h4>Warehouse Shelf Details</h4>
+            <a href="/WarehouseShelf/Index" class="btn btn-dark">RETURN TO VIEW</a>
+        </div>
+        <div class="card-body">
+            <form asp-action="WarehouseShelf" method="post">
+                <div class="form-group">
+                    <label for="ddlWarehouseLocation">Warehouse Location Name:</label>
+                    <select id="ddlWarehouseLocation" class="form-control" name="WarehouseLocationName" required>
+                        <option value="" disabled selected>Select Location</option>
+                        <option value="Indore">Location1</option>
+                        <option value="Pune">Location2</option>
+                        <option value="Dhar">Location3</option>
+                        <option value="Mumbai">Location4</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ddlWarehouseArea">Warehouse Area Name:</label>
+                    <select id="ddlWarehouseArea" class="form-control" name="WarehouseAreaName" required>
+                        <option value="" disabled selected>Select Area</option>
+                        <option value="Indore">Area1</option>
+                        <option value="Pune">Area2</option>
+                        <option value="Dhar">Area3</option>
+                        <option value="Mumbai">Area4</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ddlWarehouseRack">Warehouse Rack Name:</label>
+                    <select id="ddlWarehouseRack" class="form-control" name="WarehouseRackName" required>
+                        <option value="" disabled selected>Select Rack</option>
+                        <option value="Indore">Rack1</option>
+                        <option value="Pune">Rack2</option>
+                        <option value="Dhar">Rack3</option>
+                        <option value="Mumbai">Rack4</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="txtWarehouseShelf">Warehouse Shelf Name:</label>
+                    <input type="text" id="txtWarehouseShelf" class="form-control" name="WarehouseShelfName" required>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" id="btnSave" class="btn btn-success">Save</button>
+                    <button type="reset" id="btnRefresh" class="btn btn-primary">Refresh</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
